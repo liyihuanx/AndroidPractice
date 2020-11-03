@@ -1,66 +1,86 @@
 package liyihuan.app.android.androidpractice.swipecard;
 
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import liyihuan.app.android.androidpractice.R;
 
-import android.os.Bundle;
-import android.util.Log;
+import com.chad.library.adapter.base.BaseQuickAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwipeCardActivity extends AppCompatActivity {
+import liyihuan.app.android.androidpractice.R;
 
-    RecyclerView recyclerView;
-    SwipeCardAdapter swipeCardAdapter;
-
+public class SwipeCardActivity extends AppCompatActivity implements onSwipeListener<String>, BaseQuickAdapter.OnItemClickListener {
+    RecyclerView rvSwipeCard;
+    SwipeAdapter swipeAdapter;
+    List<String> itemData;
+    MyItemTouchHelpCallback itemTouchHelpCallback;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swipe_card);
-        initRv();
+
+        initView();
     }
 
-    private void initRv() {
-        List<Integer> list = new ArrayList<>();
-        list.add(R.mipmap.img1);
-        list.add(R.mipmap.img2);
-        list.add(R.mipmap.img3);
-        list.add(R.mipmap.img4);
+    private void initView(){
+        itemData = new ArrayList<>();
+        for (int i = 1; i < 10; i++) {
+            itemData.add("第" + i + "张");
+        }
+        rvSwipeCard = findViewById(R.id.rv_swipe_card);
+        swipeAdapter = new SwipeAdapter();
+        swipeAdapter.setOnItemClickListener(this);
+        swipeAdapter.setNewData(itemData);
+        itemTouchHelpCallback = new MyItemTouchHelpCallback(itemData);
+        itemTouchHelpCallback.setListener(this);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelpCallback);
+        itemTouchHelper.attachToRecyclerView(rvSwipeCard);
+        SwipeCardLayout swipeCardLayout = new SwipeCardLayout(rvSwipeCard, itemTouchHelper);
+        rvSwipeCard.setLayoutManager(swipeCardLayout);
+        rvSwipeCard.setAdapter(swipeAdapter);
+    }
 
-//        list.add(R.mipmap.tab_icon_homework_default);
-//        list.add(R.mipmap.tab_icon_homework_selected);
-//        list.add(R.mipmap.tab_icon_lesson_default);
-//        list.add(R.mipmap.tab_icon_lesson_selected);
-//        list.add(R.mipmap.tab_icon_mine_default);
-//        list.add(R.mipmap.tab_icon_mine_selected);
-//        list.add(R.mipmap.tab_icon_qa_default);
-//        list.add(R.mipmap.tab_icon_qa_selected);
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        Log.d("QWER", "onItemClick: ");
+    }
 
-        swipeCardAdapter = new SwipeCardAdapter();
-        swipeCardAdapter.setNewData(list);
-        recyclerView = findViewById(R.id.rv_swipe);
+    @Override
+    public void Swiping(View itemChild, float ratio, int direction) {
+        if (direction == ItemTouchHelper.RIGHT || direction == ItemTouchHelper.LEFT) {
+            itemChild.setAlpha(1 - Math.abs(ratio) * 0.2f);
+        } else {
+            itemChild.setAlpha(1f);
+        }
+    }
 
-        myItemTouchHelperCallback itemTouchHelperCallback = new myItemTouchHelperCallback();
-        itemTouchHelperCallback.setSwipeInterface(new SwipeInterface() {
-            @Override
-            public void onSwiping() {
-                Log.d("QWER", "onSwiping: ");
-            }
+    @Override
+    public void Swiped(String data) {
 
-            @Override
-            public void onSwiped() {
-                Log.d("QWER", "onSwiped: ");
-            }
+        itemData.remove(data);
+        swipeAdapter.notifyItemRemoved(0);
+        itemTouchHelpCallback.setItemData(itemData);
 
-        });
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        SwipeCardLayout swipeCardLayout = new SwipeCardLayout();
-        recyclerView.setLayoutManager(swipeCardLayout);
-        recyclerView.setAdapter(swipeCardAdapter);
+    }
+
+    @Override
+    public void SwipeNoData() {
+        itemData.clear();
+        for (int i = 1; i < 10; i++) {
+            itemData.add("第" + i + "张");
+        }
+        swipeAdapter.setNewData(itemData);
+        swipeAdapter.notifyDataSetChanged();
+    }
+
+    private void startAnimation(View view){
+
     }
 }

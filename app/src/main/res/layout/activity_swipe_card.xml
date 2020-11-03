@@ -7,7 +7,7 @@
     tools:context=".swipecard.SwipeCardActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_swipe"
+        android:id="@+id/rv_swipe_card"
         android:layout_width="match_parent"
         android:layout_height="500dp"/>
 
