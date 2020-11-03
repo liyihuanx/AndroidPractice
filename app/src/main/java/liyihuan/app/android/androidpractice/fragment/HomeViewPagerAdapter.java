@@ -16,7 +16,7 @@ import androidx.fragment.app.FragmentPagerAdapter;
  * @Author: liyihuan
  * @Date: 2020/10/18 16:20
  */
-class HomeViewPagerAdapter extends FragmentPagerAdapter {
+public class HomeViewPagerAdapter extends FragmentPagerAdapter {
     private ArrayList<Fragment> fragmentsList;
     private FragmentManager mFm;
 

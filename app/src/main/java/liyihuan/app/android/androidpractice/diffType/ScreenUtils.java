@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.DiffType;
+package liyihuan.app.android.androidpractice.diffType;
 
 import android.content.Context;
 import android.util.DisplayMetrics;

@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.DiffType;
+package liyihuan.app.android.androidpractice.diffType;
 
 /**
  * @author created by liyihuanx
