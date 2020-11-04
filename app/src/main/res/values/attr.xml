@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+    <!--倒计时的样式-->
     <declare-styleable name="CountDownView">
         <!--颜色-->
         <attr name="ringColor" format="color" />
@@ -12,5 +12,13 @@
         <attr name="progressTextColor" format="color"/>
         <!--倒计时-->
         <attr name="countdownTime" format="integer"/>
+    </declare-styleable>
+
+    <!-- ViewPagerLineIndicator 指示器的样式 -->
+    <declare-styleable name="ViewPagerLineIndicator">
+        <attr name="line_color" format="color" />
+        <attr name="item_count" format="integer" />
+        <attr name="text_select" format="color" />
+        <attr name="text_unselect" format="color" />
     </declare-styleable>
 </resources>

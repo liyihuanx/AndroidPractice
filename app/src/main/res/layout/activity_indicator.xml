@@ -7,11 +7,24 @@
     android:orientation="vertical"
     tools:context=".Indicator.IndicatorActivity">
 
+    <liyihuan.app.android.androidpractice.Indicator.ViewPagerIndicator
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
+    <liyihuan.app.android.androidpractice.Indicator.IndicatorViewpager
+        android:id="@+id/title2"
+        android:layout_below="@+id/title"
+        android:layout_width="match_parent"
+        app:text_select="@color/red"
+        app:text_unselect="@color/black"
+        android:layout_height="30dp" />
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_indication"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/title2"
         android:layout_height="400dp"/>
-
 
     <liyihuan.app.android.androidpractice.Indicator.IndicatorView
         android:id="@+id/indicatorView"
