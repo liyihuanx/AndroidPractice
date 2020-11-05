@@ -98,10 +98,6 @@ public class IndicatorViewpager extends LinearLayout implements ViewPager.OnPage
         for (int i = 0; i < mTitles.size(); i++) {
             addView(generateTextView(mTitles.get(i)));
 
-            LayoutParams params = (LayoutParams) getChildAt(i).getLayoutParams();
-            params.weight = 0;
-            params.width =(int) getScreenWidth() / mTitles.size();
-            getChildAt(i).setLayoutParams(params);
         }
         // 设置点击事件
         setItemClickEvent();
@@ -116,6 +112,10 @@ public class IndicatorViewpager extends LinearLayout implements ViewPager.OnPage
         textView.setText(text);
         textView.setGravity(Gravity.CENTER);
         textView.setTextSize(20f);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        lp.width = 100;
+        mLineWidth = lp.width;
+        textView.setLayoutParams(lp);
         return textView;
     }
 
@@ -134,8 +134,7 @@ public class IndicatorViewpager extends LinearLayout implements ViewPager.OnPage
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
-        // 计算线的长度
-        mLineWidth = getWidth() / mTabVisibleCount;
+
         // 初始化tab的矩形
         mRect = new Rect(0,0,mLineWidth,10);
     }
@@ -182,7 +181,7 @@ public class IndicatorViewpager extends LinearLayout implements ViewPager.OnPage
 
     private void scroll(int position, float offset){
         // 计算偏移量
-        mTranslationX = getWidth() / mTabVisibleCount * (position + offset);
+        mTranslationX = mLineWidth * (position + offset);
 
         // 重画，刷新界面
         invalidate();

@@ -12,7 +12,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import liyihuan.app.android.androidpractice.R;
+import liyihuan.app.android.androidpractice.fragment.Home.HomeFourFragment;
 import liyihuan.app.android.androidpractice.fragment.Home.HomeOneFragment;
+import liyihuan.app.android.androidpractice.fragment.Home.HomeThreeFragment;
 import liyihuan.app.android.androidpractice.fragment.Home.HomeTwoFragment;
 import liyihuan.app.android.androidpractice.fragment.HomeViewPagerAdapter;
 
@@ -21,7 +23,6 @@ public class IndicatorActivity extends AppCompatActivity {
     private HomeViewPagerAdapter homeViewPagerAdapter;
     private ArrayList<Fragment> fragmentsList;
     private IndicatorView indicatorView;
-    private ViewPagerIndicator title;
     private IndicatorViewpager title2;
 
     @Override
@@ -31,26 +32,25 @@ public class IndicatorActivity extends AppCompatActivity {
 
         vp_indication = findViewById(R.id.vp_indication);
         indicatorView = findViewById(R.id.indicatorView);
-        title = findViewById(R.id.title);
         title2 = findViewById(R.id.title2);
 
         HomeOneFragment homeOneFragment = new HomeOneFragment();
         HomeTwoFragment homeTwoFragment = new HomeTwoFragment();
+        HomeThreeFragment homeThreeFragment = new HomeThreeFragment();
+        HomeFourFragment homeFourFragment = new HomeFourFragment();
         fragmentsList = new ArrayList<>();
         fragmentsList.add(homeOneFragment);
         fragmentsList.add(homeTwoFragment);
+        fragmentsList.add(homeThreeFragment);
+        fragmentsList.add(homeFourFragment);
 
-        List<Integer> colors = Arrays.asList(getResources().getColor(R.color.red),
-                getResources().getColor(R.color.blue), getResources().getColor(R.color.yellow), 14, 25);
-        List<String> mTitles=Arrays.asList("1","2");
+        List<String> mTitles=Arrays.asList("标题1","标题2","标题3","标题4");
 
-        title.setTabItemTitles(mTitles, colors);
         title2.setTabItemTitles(mTitles);
         homeViewPagerAdapter = new HomeViewPagerAdapter(getSupportFragmentManager(),fragmentsList);
         vp_indication.setAdapter(homeViewPagerAdapter);
 
         indicatorView.bindViewPager(vp_indication);
-        title.setViewPager(vp_indication,0);
         title2.setViewPager2(vp_indication,0);
     }
 }

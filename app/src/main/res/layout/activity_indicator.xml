@@ -7,14 +7,9 @@
     android:orientation="vertical"
     tools:context=".Indicator.IndicatorActivity">
 
-    <liyihuan.app.android.androidpractice.Indicator.ViewPagerIndicator
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="30dp" />
 
     <liyihuan.app.android.androidpractice.Indicator.IndicatorViewpager
         android:id="@+id/title2"
-        android:layout_below="@+id/title"
         android:layout_width="match_parent"
         app:text_select="@color/red"
         app:text_unselect="@color/black"
