@@ -15,6 +15,7 @@ import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,10 +30,11 @@ import liyihuan.app.android.androidpractice.R;
  * @Author: liyihuan
  * @Date: 2020/10/21 21:05
  */
-class TarotView extends FrameLayout implements View.OnLongClickListener {
+class TarotView extends FrameLayout implements View.OnLongClickListener, View.OnClickListener {
 
     private int totalcount = 10;
     private LayoutInflater layoutInflater;
+    private TarotViewListener tarotViewListener;
 
     public TarotView(@NonNull Context context) {
         this(context, null);
@@ -53,13 +55,12 @@ class TarotView extends FrameLayout implements View.OnLongClickListener {
             View view = layoutInflater.inflate(R.layout.tarot_view, this, false);
             view.setTranslationX(i * 5);
             view.setTranslationY(i * 5);
-            view.setOnLongClickListener(this);
+            view.setOnClickListener(this);
             addView(view);
         }
     }
 
     public void washCard() {
-        boolean flag = false;
         for (int i = 0; i < totalcount; i++) {
             View view = getChildAt(i);
             washStep1(view, i * 5, i * 5, i);
@@ -124,9 +125,20 @@ class TarotView extends FrameLayout implements View.OnLongClickListener {
     public boolean onLongClick(View view) {
         ObjectAnimator rotateAnimator = ObjectAnimator.ofFloat(view, "rotation", 0, 360,0);
         rotateAnimator.setDuration(500);
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.play(rotateAnimator);
-        animatorSet.start();
+        rotateAnimator.start();
         return false;
+    }
+
+    @Override
+    public void onClick(View view) {
+        tarotViewListener.sendCard(view);
+    }
+
+    interface TarotViewListener{
+        void sendCard(View view);
+    }
+
+    public void setTarotViewListener(TarotViewListener tarotViewListener) {
+        this.tarotViewListener = tarotViewListener;
     }
 }
