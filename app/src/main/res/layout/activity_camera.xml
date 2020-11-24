@@ -26,4 +26,16 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"/>
+
+    <com.example.planet.view.SoulPlanetsView
+        android:id="@+id/soulPlanetView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        app:autoScrollMode="decelerate"
+        app:darkColor="#FFB23C"
+        app:lightColor="#FFB23C"
+        app:radiusPercent="0.75"
+        app:scrollSpeed="20" />
 </LinearLayout>

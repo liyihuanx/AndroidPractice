@@ -1,2 +1,3 @@
+include ':planet'
 include ':app'
 rootProject.name = "AndroidPractice"
