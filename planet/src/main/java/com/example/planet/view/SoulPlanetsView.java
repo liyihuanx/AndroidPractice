@@ -8,6 +8,7 @@ import android.graphics.Point;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -138,6 +139,7 @@ public class SoulPlanetsView extends ViewGroup implements Runnable, PlanetAdapte
      * 初始化VIew根据Adapter
      */
     public void initFromAdapter() {
+        Log.d("QWER", "initFromAdapter: ");
         this.post(new Runnable() {
             @Override
             public void run() {

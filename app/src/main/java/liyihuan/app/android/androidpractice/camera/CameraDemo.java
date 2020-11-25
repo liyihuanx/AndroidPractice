@@ -87,12 +87,12 @@ public class CameraDemo extends AppCompatActivity {
             }
         });
 
-        for (int i = 0; i < 60; i++) {
-            labelList.add("star" + i);
-        }
-        labelAdapter.setLabelList(labelList);
-        soulPlanetView = findViewById(R.id.soulPlanetView);
-        soulPlanetView.setAdapter(labelAdapter);
+//        for (int i = 0; i < 4; i++) {
+//            labelList.add("star" + i);
+//        }
+//        labelAdapter.setLabelList(labelList);
+//        soulPlanetView = findViewById(R.id.soulPlanetView);
+//        soulPlanetView.setAdapter(labelAdapter);
     }
 
     /**
