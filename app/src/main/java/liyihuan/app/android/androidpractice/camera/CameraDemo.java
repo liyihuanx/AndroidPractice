@@ -24,6 +24,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
+import com.example.planet.mypratice.PlanetView;
 import com.example.planet.view.SoulPlanetsView;
 
 import java.io.File;
@@ -56,7 +57,7 @@ public class CameraDemo extends AppCompatActivity {
 
     private TestAdapter labelAdapter = new TestAdapter();
     private ArrayList<String> labelList = new ArrayList<>();
-    private SoulPlanetsView soulPlanetView;
+    private PlanetView soulPlanetView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,12 +88,12 @@ public class CameraDemo extends AppCompatActivity {
             }
         });
 
-//        for (int i = 0; i < 4; i++) {
-//            labelList.add("star" + i);
-//        }
-//        labelAdapter.setLabelList(labelList);
-//        soulPlanetView = findViewById(R.id.soulPlanetView);
-//        soulPlanetView.setAdapter(labelAdapter);
+        for (int i = 0; i < 60; i++) {
+            labelList.add("star" + i);
+        }
+        labelAdapter.setLabelList(labelList);
+        soulPlanetView = findViewById(R.id.soulPlanetView);
+        soulPlanetView.setPlanetAdapter(labelAdapter);
     }
 
     /**

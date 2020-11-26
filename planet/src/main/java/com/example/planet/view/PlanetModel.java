@@ -3,6 +3,8 @@ package com.example.planet.view;
 import android.graphics.Color;
 import android.view.View;
 
+import com.example.planet.mypratice.PlanetView;
+
 /**
  * 星球属性实体
  */
@@ -103,7 +105,7 @@ public class PlanetModel {
     public void setScale(float scale) {
         this.scale = scale;
         if (this.mView != null) {
-            //((PlanetView) this.mView).setScale(scale);
+//            ((PlanetView) this.mView).setScale(scale);
         }
     }
 

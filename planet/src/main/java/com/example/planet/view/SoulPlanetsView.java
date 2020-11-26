@@ -139,7 +139,6 @@ public class SoulPlanetsView extends ViewGroup implements Runnable, PlanetAdapte
      * 初始化VIew根据Adapter
      */
     public void initFromAdapter() {
-        Log.d("QWER", "initFromAdapter: ");
         this.post(new Runnable() {
             @Override
             public void run() {
