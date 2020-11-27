@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="liyihuan.app.android.androidpractice">
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,18 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".camera.CameraActivity">
-
-        </activity>
-        <activity android:name=".camera.CameraDemo">
+        <activity android:name=".imdemo.ImDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".tarotview.TarotActivity"></activity>
-        <activity android:name=".Indicator.IndicatorActivity"></activity>
+        <activity android:name=".camera.CameraActivity"></activity>
+        <activity android:name=".camera.CameraDemo">
+        </activity>
+        <activity android:name=".tarotview.TarotActivity" />
+        <activity android:name=".Indicator.IndicatorActivity" />
         <activity android:name=".permission.PermissionActivity" />
         <activity android:name=".wechat.WechatActivity" />
         <activity android:name=".swipecard.SwipeCardActivity" />
@@ -28,8 +30,8 @@
         <activity android:name=".MainActivity" />
 
         <provider
-            android:authorities="liyihuan.app.android.androidpractice.fileprovider"
             android:name="androidx.core.content.FileProvider"
+            android:authorities="liyihuan.app.android.androidpractice.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -37,6 +39,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 
 </manifest>
