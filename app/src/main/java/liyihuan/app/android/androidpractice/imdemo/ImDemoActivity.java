@@ -1,14 +1,27 @@
 package liyihuan.app.android.androidpractice.imdemo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.TargetApi;
+import android.content.ContentUris;
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.gson.Gson;
 import com.tencent.imsdk.TIMManager;
+import com.tencent.imsdk.conversation.Msg;
 import com.tencent.imsdk.v2.V2TIMAdvancedMsgListener;
 import com.tencent.imsdk.v2.V2TIMCallback;
 import com.tencent.imsdk.v2.V2TIMCustomElem;
@@ -38,29 +51,44 @@ import com.tencent.imsdk.v2.V2TIMVideoElem;
 import com.tencent.openqq.protocol.imsdk.msg;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import liyihuan.app.android.androidpractice.R;
 
 public class ImDemoActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btn_init_im,btn_im_login,btn_im_send_c2c,btn_im_receive_c2c;
+    Button btn_im_send_c2c,btn_im_refresh,btn_im_send_img;
+    private RecyclerView rv_msg;
+    private MsgAdapter msgAdapter;
+    private List<MsgBean> rvMsgList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_im_demo);
 
-        btn_init_im = findViewById(R.id.btn_init_im);
-        btn_init_im.setOnClickListener(this);
-
-        btn_im_login = findViewById(R.id.btn_im_login);
-        btn_im_login.setOnClickListener(this);
-
         btn_im_send_c2c = findViewById(R.id.btn_im_send_c2c);
         btn_im_send_c2c.setOnClickListener(this);
 
-        btn_im_receive_c2c = findViewById(R.id.btn_im_receive_c2c);
-        btn_im_receive_c2c.setOnClickListener(this);
+        btn_im_refresh = findViewById(R.id.btn_im_refresh);
+        btn_im_refresh.setOnClickListener(this);
 
+        btn_im_send_img = findViewById(R.id.btn_im_send_img);
+        btn_im_send_img.setOnClickListener(this);
+
+        msgAdapter = new MsgAdapter();
+        rv_msg = findViewById(R.id.rv_msg);
+        rv_msg.setLayoutManager(new LinearLayoutManager(this));
+        rv_msg.setAdapter(msgAdapter);
+
+        rvMsgList = new ArrayList<>();
+        // IM初始化
+        initIM();
+        // 登录账号
+        loginIM("liyihuanx");
+        // 消息接收
+        receiveAdvancedMsg();
     }
 
     private void initIM(){
@@ -153,23 +181,51 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.btn_init_im :
-                initIM();
-                break;
-            case R.id.btn_im_login:
-                loginIM("liyihuanx");
-                break;
             case R.id.btn_im_send_c2c:
 //                sendC2CTextMsg("liyihuanx发送消息","chenyalunx");
                 createAdvancedMsg("1234","chenyalunx");
                 break;
-            case R.id.btn_im_receive_c2c:
-                receiveAdvancedMsg();
-//                receiveC2CTextMsg();
+            case R.id.btn_im_refresh:
+                refreshData();
+                break;
+            case R.id.btn_im_send_img:
+                openAlbum();
                 break;
             default:
                 break;
         }
+    }
+
+    private void createImgMsg(String path, String userid) {
+        // 创建图片消息
+        V2TIMMessage v2TIMMessage = V2TIMManager.getMessageManager().createImageMessage(path);
+        // 发送图片消息
+        V2TIMManager.getMessageManager().sendMessage(v2TIMMessage, userid, null,
+                V2TIMMessage.V2TIM_PRIORITY_DEFAULT, false, null,  new V2TIMSendCallback<V2TIMMessage>() {
+            @Override
+            public void onError(int code, String desc) {
+                // 图片消息发送失败
+                Log.d("QWER", "ImgMsg-onError: " + code + "----" + desc);
+
+            }
+            @Override
+            public void onSuccess(V2TIMMessage v2TIMMessage) {
+                // 图片消息发送成功
+                Log.d("QWER", "ImgMsg-onSuccess: " + new Gson().toJson(v2TIMMessage));
+
+            }
+            @Override
+            public void onProgress(int progress) {
+                // 图片上传进度（0-100）
+                Log.d("QWER", "ImgMsg-onProgress: " + progress);
+
+            }
+        });
+    }
+
+    private void refreshData() {
+        msgAdapter.setNewData(rvMsgList);
+        msgAdapter.notifyDataSetChanged();
     }
 
     private V2TIMMessageManager msgManager = V2TIMManager.getMessageManager();
@@ -229,6 +285,9 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
             V2TIMTextElem v2TIMTextElem = msg.getTextElem();
             String text = v2TIMTextElem.getText();
             Log.d("QWER", "decodeMsg: " + text);
+            MsgBean msgBean = new MsgBean();
+            msgBean.setTextContent(text);
+            rvMsgList.add(msgBean);
         } else if (elemType == V2TIMMessage.V2TIM_ELEM_TYPE_CUSTOM) {
             // 自定义消息
             V2TIMCustomElem v2TIMCustomElem = msg.getCustomElem();
@@ -275,6 +334,19 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                     // 图片已存在
                 }
             }
+//            MsgBean msgBean = new MsgBean();
+//            Uri mImageCaptureUri = Uri.parse(imageList.get(0).getUrl());
+//            Bitmap photoBmp = null;
+//            if (mImageCaptureUri != null) {
+//                try {
+//                    photoBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageCaptureUri);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//            msgBean.setImgContent(photoBmp);
+//            rvMsgList.add(msgBean);
+
         } else if (elemType == V2TIMMessage.V2TIM_ELEM_TYPE_SOUND) {
             // 语音消息
             V2TIMSoundElem v2TIMSoundElem = msg.getSoundElem();
@@ -430,5 +502,85 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
             // 当前群在线人数
             int memberCount = v2TIMGroupTipsElem.getMemberCount();
         }
+    }
+
+    /**
+     * 打开相册
+     */
+    private static final int CHOOSE_PHOTO = 385;
+    private void openAlbum() {
+        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        openAlbumIntent.setType("image/*");
+        startActivityForResult(openAlbumIntent, CHOOSE_PHOTO);//打开相册
+    }
+
+    /*相机或者相册返回来的数据*/
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case CHOOSE_PHOTO:
+                if (data == null) {//如果没有选取照片，则直接返回
+                    return;
+                }
+                Log.i("QWER", "onActivityResult: ImageUriFromAlbum: " + data.getData());
+                if (resultCode == RESULT_OK) {
+                    handleImageOnKitKat(data);//4.4之后图片解析
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    /**
+     * 4.4版本以上对返回的图片Uri的处理：
+     * 返回的Uri是经过封装的，要进行处理才能得到真实路径
+     * @param data 调用系统相册之后返回的Uri
+     */
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (DocumentsContract.isDocumentUri(this, uri)) {
+            //如果是document类型的Uri，则提供document id处理
+            String docId = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docId.split(":")[1];//解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            //如果是content类型的uri，则进行普通处理
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            //如果是file类型的uri，则直接获取路径
+            imagePath = uri.getPath();
+        }
+        Log.d("QWER", "handleImageOnKitKat: " + imagePath);
+        // 发送文本消息
+        createImgMsg(imagePath,"chenyalunx");
+    }
+
+    /**
+     * 将Uri转化为路径
+     * @param uri 要转化的Uri
+     * @param selection 4.4之后需要解析Uri，因此需要该参数
+     * @return 转化之后的路径
+     */
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
     }
 }

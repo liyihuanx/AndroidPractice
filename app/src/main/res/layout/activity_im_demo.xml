@@ -7,21 +7,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/btn_init_im"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_msg"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="IM初始化"
-        android:textSize="20dp"
-        />
+        android:layout_height="wrap_content"/>
 
-    <Button
-        android:id="@+id/btn_im_login"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="IM登录"
-        android:textSize="20dp"
-        />
+<!--    <Button-->
+<!--        android:id="@+id/btn_init_im"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:text="IM初始化"-->
+<!--        android:textSize="20dp"-->
+<!--        />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_im_login"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:text="IM登录"-->
+<!--        android:textSize="20dp"-->
+<!--        />-->
 
     <Button
         android:id="@+id/btn_im_send_c2c"
@@ -32,10 +37,18 @@
         />
 
     <Button
-        android:id="@+id/btn_im_receive_c2c"
+        android:id="@+id/btn_im_send_img"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="IM消息接收"
+        android:text="发送图片"
+        android:textSize="20dp"
+        />
+
+    <Button
+        android:id="@+id/btn_im_refresh"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="IM消息刷新"
         android:textSize="20dp"
         />
 
