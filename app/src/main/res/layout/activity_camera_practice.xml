@@ -20,10 +20,4 @@
         android:textSize="20dp"
         android:text="Open Album"/>
 
-    <ImageView
-        android:id="@+id/iv_picture"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center_horizontal"/>
-
 </LinearLayout>

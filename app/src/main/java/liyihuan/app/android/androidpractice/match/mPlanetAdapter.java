@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.camera;
+package liyihuan.app.android.androidpractice.match;
 
 import android.content.Context;
 import android.view.View;
@@ -9,10 +9,11 @@ import com.example.planet.utils.SizeUtils;
 
 import java.util.ArrayList;
 
-public class TestAdapter extends PlanetAdapter {
+public class mPlanetAdapter extends PlanetAdapter {
     ArrayList<String> label;
     int len = -1;
-    public void setLabelList(ArrayList<String> label){
+
+    public void setLabelList(ArrayList<String> label) {
         this.label = label;
     }
 
@@ -27,16 +28,17 @@ public class TestAdapter extends PlanetAdapter {
         int starHeight = SizeUtils.dp2px(context, 85.0f);
         int starPaddingTop = SizeUtils.dp2px(context, 30.0f);
         ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(starWidth, starHeight);
-        MyTextView myTextView  = new MyTextView(context);
+        MyTextView myTextView = new MyTextView(context);
         myTextView.setSign(getLabel());
         myTextView.setPadding(0, starPaddingTop, 0, 0);
         myTextView.setLayoutParams(layoutParams);
         return myTextView;
     }
+
     public String getLabel() {
-        len ++;
-        String str ;
-        if (len >= label.size()){
+        len++;
+        String str;
+        if (len >= label.size()) {
             str = "1";
         } else {
             str = label.get(len);

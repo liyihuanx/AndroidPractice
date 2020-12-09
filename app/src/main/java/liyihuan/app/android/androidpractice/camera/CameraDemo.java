@@ -24,7 +24,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.example.planet.mypratice.PlanetView;
 import com.example.planet.view.SoulPlanetsView;
 
 import java.io.File;
@@ -33,9 +32,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import liyihuan.app.android.androidpractice.R;
+import liyihuan.app.android.androidpractice.match.mPlanetAdapter;
 
 /**
  * @author created by liyihuanx
@@ -55,9 +54,7 @@ public class CameraDemo extends AppCompatActivity {
     private Uri mImageUri, mImageUriFromFile;
     private File imageFile;
 
-    private TestAdapter labelAdapter = new TestAdapter();
-    private ArrayList<String> labelList = new ArrayList<>();
-    private SoulPlanetsView soulPlanetView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,12 +85,6 @@ public class CameraDemo extends AppCompatActivity {
             }
         });
 
-        for (int i = 0; i < 60; i++) {
-            labelList.add("star" + i);
-        }
-        labelAdapter.setLabelList(labelList);
-        soulPlanetView = findViewById(R.id.soulPlanetView2);
-        soulPlanetView.setAdapter(labelAdapter);
     }
 
     /**

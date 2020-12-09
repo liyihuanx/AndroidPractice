@@ -525,7 +525,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 Log.i("QWER", "onActivityResult: ImageUriFromAlbum: " + data.getData());
                 if (resultCode == RESULT_OK) {
-                    handleImageOnKitKat(data);//4.4之后图片解析
+
                 }
                 break;
             default:
@@ -533,54 +533,4 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-
-    /**
-     * 4.4版本以上对返回的图片Uri的处理：
-     * 返回的Uri是经过封装的，要进行处理才能得到真实路径
-     * @param data 调用系统相册之后返回的Uri
-     */
-    @TargetApi(19)
-    private void handleImageOnKitKat(Intent data) {
-        String imagePath = null;
-        Uri uri = data.getData();
-        if (DocumentsContract.isDocumentUri(this, uri)) {
-            //如果是document类型的Uri，则提供document id处理
-            String docId = DocumentsContract.getDocumentId(uri);
-            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
-                String id = docId.split(":")[1];//解析出数字格式的id
-                String selection = MediaStore.Images.Media._ID + "=" + id;
-                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
-            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
-                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
-                imagePath = getImagePath(contentUri, null);
-            }
-        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
-            //如果是content类型的uri，则进行普通处理
-            imagePath = getImagePath(uri, null);
-        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
-            //如果是file类型的uri，则直接获取路径
-            imagePath = uri.getPath();
-        }
-        Log.d("QWER", "handleImageOnKitKat: " + imagePath);
-        // 发送文本消息
-        createImgMsg(imagePath,"chenyalunx");
-    }
-
-    /**
-     * 将Uri转化为路径
-     * @param uri 要转化的Uri
-     * @param selection 4.4之后需要解析Uri，因此需要该参数
-     * @return 转化之后的路径
-     */
-    private String getImagePath(Uri uri, String selection) {
-        String path = null;
-        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-            }
-            cursor.close();
-        }
-        return path;
-    }
 }
