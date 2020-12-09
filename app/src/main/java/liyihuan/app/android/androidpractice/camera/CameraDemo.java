@@ -57,7 +57,7 @@ public class CameraDemo extends AppCompatActivity {
 
     private TestAdapter labelAdapter = new TestAdapter();
     private ArrayList<String> labelList = new ArrayList<>();
-    private PlanetView soulPlanetView;
+    private SoulPlanetsView soulPlanetView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,8 +92,8 @@ public class CameraDemo extends AppCompatActivity {
             labelList.add("star" + i);
         }
         labelAdapter.setLabelList(labelList);
-        soulPlanetView = findViewById(R.id.soulPlanetView);
-        soulPlanetView.setPlanetAdapter(labelAdapter);
+        soulPlanetView = findViewById(R.id.soulPlanetView2);
+        soulPlanetView.setAdapter(labelAdapter);
     }
 
     /**
