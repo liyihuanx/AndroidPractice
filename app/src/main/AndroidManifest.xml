@@ -11,19 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".danmu.DanmuActivity">
+        <activity android:name=".camera.CameraPractice"></activity>
+        <activity android:name=".match.PlanetActivity"></activity>
+        <activity android:name=".imdemo.ImDemoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera.CameraPractice" />
-        <activity android:name=".match.PlanetActivity" />
-        <activity android:name=".imdemo.ImDemoActivity">
-
-        </activity>
-        <activity android:name=".camera.CameraDemo" />
+        <activity android:name=".camera.CameraDemo"></activity>
         <activity android:name=".tarotview.TarotActivity" />
         <activity android:name=".Indicator.IndicatorActivity" />
         <activity android:name=".permission.PermissionActivity" />
