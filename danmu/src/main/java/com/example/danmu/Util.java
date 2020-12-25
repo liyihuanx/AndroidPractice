@@ -36,12 +36,6 @@ public class Util {
         view.draw(canvas);
         return bitmap;
     }
-
-    public static void restoreBitmap(Bitmap bitmap) {
-        if (bitmap == null || bitmap.isRecycled()) return;
-        bitmap.recycle();
-    }
-
     public static int dp2px(Context context, float dipValue) {
         final float scale = context.getResources().getDisplayMetrics().density;
         return (int) (dipValue * scale + 0.5f);

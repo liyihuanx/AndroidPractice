@@ -11,81 +11,74 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.transition.Transition;
+import com.example.danmu.OnDMAddListener;
+import com.example.danmu.control.Controller;
+import com.example.danmu.entity.BaseDmEntity;
 import com.example.danmu.widget.DMSurfaceView;
 
+import liyihuan.app.android.androidpractice.MainActivity;
 import liyihuan.app.android.androidpractice.R;
 
 public class DanmuActivity extends AppCompatActivity {
 
     private DMSurfaceView dmSurfaceView;
 
-    private final Handler handler = new Handler();
 
-    private Runnable runnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danmu);
         dmSurfaceView = findViewById(R.id.dmView);
+        dmSurfaceView.setOnDMAddListener(new OnDMAddListener() {
+            @Override
+            public void added(BaseDmEntity dmEntity) {
+
+            }
+
+            @Override
+            public void addedAll() {
+                Toast.makeText(DanmuActivity.this, "弹幕该轮显示完毕", Toast.LENGTH_SHORT).show();
+                for (int i = 0; i < 35; i++) {
+                    DamuBean damuBean = new DamuBean();
+                    damuBean.setName("小明" + i);
+                    damuBean.setMsg("1111111111111222222222222");
+                    addDM(damuBean);
+                }
+            }
+        });
+
 
     }
+
 
     @Override
     protected void onPause() {
         super.onPause();
         dmSurfaceView.getController().pause();
 
-        if (runnable != null) {
-            handler.removeCallbacks(runnable);
-            runnable = null;
-        }
     }
 
     public void onClickAdd5NoOver(View view) {
-
-
-        if (runnable == null) {
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    addDM("小明11", "1111111111111111111111111111111111 11111111111 ", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=3512331237,2033775251&fm=27&gp=0.jpg");
-                    addDM("小明21", "21212121212121212121212121212121212121消息2 sdaf", "https://ss0.bdstatic.com/70cFvHSh_Q1YnxGkpoWK1HF6hhy/it/u=1881776517,987084327&fm=27&gp=0.jpg");
-                    addDM("小明31", "31313131313131313131313131313131313131313消息3dsfabcdefghi", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=16550438,2220103346&fm=27&gp=0.jpg");
-                    addDM("小明41", "4141414141414141414141414141414141414141414141414141414141414消息4ds", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=2237097328,2363045038&fm=27&gp=0.jpg");
-                    addDM("小明51", "51515151515151515151515151515151515151515151515151消息5", "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=586574978,3261086036&fm=27&gp=0.jpg");
-
-                }
-            };
-            handler.post(runnable);
-        }
+        DamuBean damuBean = new DamuBean();
+        damuBean.setName("小明");
+        damuBean.setMsg("1111111111111222222222222222222");
+        addDM(damuBean);
     }
 
-    private void addDM(String name, String msg, String imgUrl) {
+    private void addDM(DamuBean damuBean) {
         final View templateView = LayoutInflater.from(this).inflate(R.layout.barrage, null);
         final ViewHolder mViewHolder = new ViewHolder(templateView);
-        mViewHolder.tvBarrageName.setText(name);
-        mViewHolder.tvBarrageMsg.setText(msg);
+        mViewHolder.tvBarrageName.setText(damuBean.getName());
+        mViewHolder.tvBarrageMsg.setText(damuBean.getMsg());
 
-        Glide.with(this)
-                .load(imgUrl)
-                .into(new SimpleTarget<Drawable>() {
-                    @Override
-                    public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                        mViewHolder.imgBarrageHead.setImageDrawable(resource);
-                        dmSurfaceView.getController().add(templateView);
+        dmSurfaceView.getController().add(templateView);
 
-                    }
-                });
-    }
-
-
-    public void onClickClearScreen(View view) {
-        dmSurfaceView.getController().clean();
     }
 
     private static class ViewHolder {

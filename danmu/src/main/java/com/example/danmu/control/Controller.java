@@ -1,19 +1,5 @@
 package com.example.danmu.control;
-/*
- * Copyright 2018 xujiaji
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,11 +7,12 @@ import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.SystemClock;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
 
-import com.example.danmu.Direction;
+import com.example.danmu.OnDMAddListener;
 import com.example.danmu.entity.BaseDmEntity;
 
 import java.util.Iterator;
@@ -39,7 +26,6 @@ import java.util.concurrent.Executors;
  * 动画路径绘制登帮助类
  */
 public class Controller {
-    private Direction mDirection = Direction.RIGHT_LEFT;
     // 新弹幕
     private Queue<BaseDmEntity> mNewDMQueue = new ConcurrentLinkedQueue<>();
     // 已添加到屏幕的弹幕
@@ -51,14 +37,18 @@ public class Controller {
     private float span = 5F;// 刷新一次的跨度
     private int spanTime = 0; // 一个跨度需要多少时间
     private float speed = 0F; //速度
-    private boolean isH; // 是否是横向跑的
     private ExecutorService exec = Executors.newCachedThreadPool();
     private Handler mMainHandler;
     private DrawThread mDrawThread;
+    private OnDMAddListener mOnDMAddListener;
 
+    public void setOnDMAddListener(OnDMAddListener l) {
+        this.mOnDMAddListener = l;
+    }
     private Controller() {
 
     }
+
 
     public void setDrawThread(SurfaceProxy surfaceProxy) {
         mDrawThread = new DrawThread(surfaceProxy);
@@ -71,21 +61,8 @@ public class Controller {
     }
 
     public void initOffset() {
-        switch (mDirection) {
-            case RIGHT_LEFT:
-                offset = mWidth;
-                if (span > 0) span = -span;
-                break;
-            case LEFT_RIGHT:
-            case UP_DOWN:
-                offset = 0;
-                if (span < 0) span = -span;
-                break;
-            case DOWN_UP:
-                offset = mHeight;
-                if (span > 0) span = -span;
-                break;
-        }
+        offset = mWidth;
+        if (span > 0) span = -span;
         updateSpeed();
     }
 
@@ -109,71 +86,61 @@ public class Controller {
 
     private long lastTime = 0L;
     private void runTask(Canvas canvas) {
-        if (spanTime > 0) {
-            final long nowTime = SystemClock.uptimeMillis();
-            final long disTime = nowTime - lastTime;
-            if (lastTime != 0L && disTime < 100) { // 第一次进入时lastTime=0，同时暂停后的时间差比较大如果大于100ms就可以判断为暂停过，需要从新计时
-                offset += speed * disTime;
-            }
-            lastTime = nowTime;
-        } else {
-            offset += span;
-        }
-
+        offset += span;
         drawDM(canvas, offset, false);
         if (addDMInQueue()) {
 
         } else if (mAddedMDList.size() == 0) {
             mDrawThread.setDraw(false);
-               }
+//            if (mOnDMAddListener != null && !first) {
+//                getMainHandler().post(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mOnDMAddListener.addedAll();
+////                        cleanAddedMDList();
+//                    }
+//                });
+//            }
+//            first = false;
+        }
     }
+    private boolean first = true;
 
     private void drawDM(Canvas canvas, float value, boolean isOnlyClear) {
         canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         if (isOnlyClear) return;
         canvas.save();
-        if (isH) {
-            canvas.translate(value, 0);
-        }
-        else {
-            canvas.translate(0, value);
-        }
+        canvas.translate(value, 0);
 
         Iterator<BaseDmEntity> iterator = mAddedMDList.iterator();
         while (iterator.hasNext()) {
             BaseDmEntity entity = iterator.next();
             boolean removeThisEntity = false;
-            switch (mDirection) {
-                case RIGHT_LEFT:
-                    removeThisEntity = offset < -entity.rect.right;
-                    break;
-                case LEFT_RIGHT:
-                    removeThisEntity = offset > mWidth + entity.rect.right;
-                    break;
-                case DOWN_UP:
-                    removeThisEntity = offset < -entity.rect.bottom;
-                    break;
-                case UP_DOWN:
-                    removeThisEntity = offset > mHeight + entity.rect.bottom;
-                    break;
-
-            }
+            removeThisEntity = offset < -entity.rect.right;
             if (removeThisEntity) {
                 iterator.remove();
+                if (mOnDMAddListener != null && mAddedMDList.size() == 0) {
+                    getMainHandler().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            mOnDMAddListener.addedAll();
+                        }
+                    });
+                }
+                Log.d("QWER", "drawDM: " + mAddedMDList.size());
             }
-
-            switch (mDirection) {
-                case RIGHT_LEFT:
-                case DOWN_UP:
-                    canvas.drawBitmap(entity.bitmap, entity.rect.left, entity.rect.top, null);
-                    break;
-                case LEFT_RIGHT:
-                    canvas.drawBitmap(entity.bitmap, -entity.rect.left - entity.rect.width(), entity.rect.top, null);
-                    break;
-                case UP_DOWN:
-                    canvas.drawBitmap(entity.bitmap, entity.rect.left, -entity.rect.top - entity.rect.height(), null);
-                    break;
+            canvas.drawBitmap(entity.bitmap, entity.rect.left, entity.rect.top, null);
+        }
+        if (!iterator.hasNext() && first) {
+            if (mOnDMAddListener != null) {
+                getMainHandler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mOnDMAddListener.addedAll();
+                    }
+                });
             }
+            first = false;
         }
         canvas.restore();
     }
@@ -199,55 +166,26 @@ public class Controller {
     }
 
     private SparseArray<LinkedList<BaseDmEntity>> hierarchy = new SparseArray<>();
+
     private boolean addDMInQueue() {
         BaseDmEntity entity = mNewDMQueue.peek();
 
         if (entity == null) return false;
         final float minLimit;
         final float maxLimit;
-        switch (mDirection) {
-            case RIGHT_LEFT:
-                minLimit = mWidth - offset;
-                maxLimit = minLimit + mWidth;
-                break;
-            case LEFT_RIGHT:
-                minLimit = offset;
-                maxLimit = minLimit + mWidth;
-                break;
-            case DOWN_UP:
-                minLimit = mHeight - offset;
-                maxLimit = minLimit + mHeight;
-                break;
-            case UP_DOWN:
-                minLimit = offset;
-                maxLimit = minLimit + mHeight;
-                break;
-            default:
-                minLimit = 0;
-                maxLimit = 0;
-                break;
-        }
+        minLimit = mWidth - offset;
+        maxLimit = minLimit + mWidth;
         // 没有添加过弹幕的时候
         if (mAddedMDList.size() == 0) {
             addToDisplay(entity);
             return true;
         }
 
-        if (isH) {
-            for (BaseDmEntity addedDM: mAddedMDList) {
-                if (hierarchy.get((int)addedDM.rect.top) == null) {// 没有初始化的情况
-                    hierarchy.put((int)addedDM.rect.top, new LinkedList<BaseDmEntity>());
-                }
-                hierarchy.get((int)addedDM.rect.top).addFirst(addedDM);
+        for (BaseDmEntity addedDM : mAddedMDList) {
+            if (hierarchy.get((int) addedDM.rect.top) == null) {// 没有初始化的情况
+                hierarchy.put((int) addedDM.rect.top, new LinkedList<BaseDmEntity>());
             }
-        }
-        else {
-            for (BaseDmEntity addedDM: mAddedMDList) {
-                if (hierarchy.get((int)addedDM.rect.left) == null) {// 没有初始化的情况
-                    hierarchy.put((int)addedDM.rect.left, new LinkedList<BaseDmEntity>());
-                }
-                hierarchy.get((int)addedDM.rect.left).addFirst(addedDM);
-            }
+            hierarchy.get((int) addedDM.rect.top).addFirst(addedDM);
         }
 
         BaseDmEntity lastDm = null;
@@ -257,71 +195,35 @@ public class Controller {
             BaseDmEntity lastEntity = linkedList.getFirst();
 
             // 上面或左边被空起来的情况
-            if (isH) {
-                if (lastDm == null && lastEntity.rect.top >= lastEntity.rect.height() + vSpace) {
-                    entity.rect.offsetTo(minLimit, 0);
-                    addToDisplay(entity);
-                    return true;
-                }
-            }
-            else {
-                if (lastDm == null && lastEntity.rect.left >= lastEntity.rect.width() + hSpace) {
-                    entity.rect.offsetTo(0, minLimit);
-                    addToDisplay(entity);
-                    return true;
-                }
+            if (lastDm == null && lastEntity.rect.top >= lastEntity.rect.height() + vSpace) {
+                entity.rect.offsetTo(minLimit, 0);
+                addToDisplay(entity);
+                return true;
             }
 
             // 中间有可能被空起来的情况
-            if (isH) {
-                if (lastDm != null && lastDm.rect.bottom + lastEntity.rect.height() < lastEntity.rect.top) {
-                    entity.rect.offsetTo(minLimit, lastDm.rect.bottom + vSpace);
-                    addToDisplay(entity);
-                    return true;
-                }
-            }
-            else {
-                if (lastDm != null && lastDm.rect.right + lastEntity.rect.width() < lastEntity.rect.left) {
-                    entity.rect.offsetTo(lastDm.rect.right + hSpace, minLimit);
-                    addToDisplay(entity);
-                    return true;
-                }
+            if (lastDm != null && lastDm.rect.bottom + lastEntity.rect.height() < lastEntity.rect.top) {
+                entity.rect.offsetTo(minLimit, lastDm.rect.bottom + vSpace);
+                addToDisplay(entity);
+                return true;
             }
 
             lastDm = lastEntity;
 
-            if (isH) {
-                if (lastEntity.rect.right < maxLimit) {
-                    entity.rect.offsetTo((Math.max(lastEntity.rect.right, minLimit)) + hSpace, lastEntity.rect.top);
-                    addToDisplay(entity);
-                    return true;
-                }
-            }
-            else {
-                if (lastEntity.rect.bottom < maxLimit) {
-                    entity.rect.offsetTo(lastEntity.rect.left, (Math.max(lastEntity.rect.bottom, minLimit)) + vSpace);
-                    addToDisplay(entity);
-                    return true;
-                }
+            if (lastEntity.rect.right < maxLimit) {
+                entity.rect.offsetTo((Math.max(lastEntity.rect.right, minLimit)) + hSpace, lastEntity.rect.top);
+                addToDisplay(entity);
+                return true;
             }
 
         }
 
         if (lastDm == null) throw new RuntimeException("lastDm can not null");
 
-        if (isH) {
-            if (lastDm.rect.bottom < mHeight - lastDm.rect.height()) {
-                entity.rect.offsetTo(minLimit, lastDm.rect.bottom + vSpace);
-                addToDisplay(entity);
-                return true;
-            }
-        }
-        else {
-            if (lastDm.rect.right < mWidth - lastDm.rect.width()) {
-                entity.rect.offsetTo(lastDm.rect.right + hSpace, minLimit);
-                addToDisplay(entity);
-                return true;
-            }
+        if (lastDm.rect.bottom < mHeight - lastDm.rect.height()) {
+            entity.rect.offsetTo(minLimit, lastDm.rect.bottom + vSpace);
+            addToDisplay(entity);
+            return true;
         }
 
 
@@ -359,10 +261,6 @@ public class Controller {
         mDrawThread.interrupt();
     }
 
-    public void setDirection(Direction mDirection) {
-        this.mDirection = mDirection;
-        this.isH = mDirection == Direction.LEFT_RIGHT || mDirection == Direction.RIGHT_LEFT; // 是否是横向
-    }
 
     public void sethSpace(int hSpace) {
         this.hSpace = hSpace;
@@ -391,7 +289,6 @@ public class Controller {
 
     public static class Builder {
         private SurfaceProxy surfaceProxy;
-        private Direction direction;
         private int span;
         private int sleep;
         private int spanTime;
@@ -399,6 +296,7 @@ public class Controller {
         private int hSpace;
         private int width;
         private int height;
+        private OnDMAddListener mOnDMAddListener;
 
         public Builder() {
         }
@@ -408,10 +306,6 @@ public class Controller {
             return this;
         }
 
-        public Builder setDirection(Direction direction) {
-            this.direction = direction;
-            return this;
-        }
 
         public Builder setSpan(int span) {
             this.span = span;
@@ -448,16 +342,20 @@ public class Controller {
             return this;
         }
 
+        public void setOnDMAddListener(OnDMAddListener l) {
+            this.mOnDMAddListener = l;
+        }
+
 
         public Controller build() {
             Controller controller = new Controller();
             controller.setDrawThread(surfaceProxy);
-            controller.setDirection(direction);
             controller.setSpan(span);
             controller.setSpanTime(spanTime == 0 ? sleep : spanTime);
             controller.setvSpace(vSpace);
             controller.sethSpace(hSpace);
             controller.setSize(width, height);
+            controller.setOnDMAddListener(mOnDMAddListener);
             return controller;
         }
     }

@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.danmu.Direction;
+import com.example.danmu.OnDMAddListener;
 import com.example.danmu.R;
 import com.example.danmu.Util;
 import com.example.danmu.control.Controller;
@@ -56,7 +56,6 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DMSurfaceView, defStyleAttr, 0);
 
-        final Direction direction = Direction.getType(a.getInt(R.styleable.DMSurfaceView_dm_direction, Direction.RIGHT_LEFT.value));
         final int span = a.getDimensionPixelOffset(R.styleable.DMSurfaceView_dm_span, Util.dp2px(context, 2));
         final int sleep = a.getInteger(R.styleable.DMSurfaceView_dm_sleep, 0);
         final int spanTime = a.getInteger(R.styleable.DMSurfaceView_dm_span_time, 0);
@@ -64,7 +63,6 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         final int hSpace = a.getDimensionPixelOffset(R.styleable.DMSurfaceView_dm_h_space, Util.dp2px(context, 10));
 
         builder = new Controller.Builder()
-                .setDirection(direction)
                 .setSpan(span)
                 .setSleep(sleep)
                 .setSpanTime(spanTime)
@@ -121,6 +119,9 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         mController.pause();
     }
 
+    public void setOnDMAddListener(OnDMAddListener l) {
+        builder.setOnDMAddListener(l);
+    }
 
     public Controller getController() {
         return mController;

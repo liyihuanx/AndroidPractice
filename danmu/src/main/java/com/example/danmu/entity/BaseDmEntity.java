@@ -19,7 +19,6 @@ import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.view.View;
 
-import com.example.danmu.Direction;
 import com.example.danmu.Util;
 
 /**
@@ -42,23 +41,7 @@ public class BaseDmEntity {
         this.rect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
     }
 
-    /**
-     * 是否需要绘制
-     * @param direction 弹幕运动方向
-     * @param displayDis 展示区域长度（相对于运动方向的长度）
-     * @return 是否需要绘制该弹幕（如果没有展示出来，则不需要绘制）
-     */
-    public boolean isNeedDraw(Direction direction, int displayDis) {
-        switch (direction) {
-            case RIGHT_LEFT:
-            case LEFT_RIGHT:
-                return rect.left < displayDis;
-            case DOWN_UP:
-            case UP_DOWN:
-                return rect.top < displayDis;
-        }
-        throw new RuntimeException("not direction " + direction.name() + " in 'isNeedDraw()'");
-    }
+
 
     @Override
     public boolean equals(Object obj) {
