@@ -1,6 +1,8 @@
 package com.example.planet;
 
 
+import android.util.Log;
+
 import com.example.planet.view.PlanetModel;
 
 import java.util.ArrayList;

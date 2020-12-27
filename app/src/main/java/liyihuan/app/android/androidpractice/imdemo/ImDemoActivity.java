@@ -18,6 +18,8 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.tencent.imsdk.TIMManager;
@@ -63,6 +65,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
     private RecyclerView rv_msg;
     private MsgAdapter msgAdapter;
     private List<MsgBean> rvMsgList;
+    private EditText et_input;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +80,8 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         btn_im_send_img = findViewById(R.id.btn_im_send_img);
         btn_im_send_img.setOnClickListener(this);
 
+        et_input = findViewById(R.id.et_input);
+
         msgAdapter = new MsgAdapter();
         rv_msg = findViewById(R.id.rv_msg);
         rv_msg.setLayoutManager(new LinearLayoutManager(this));
@@ -86,7 +91,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         // IM初始化
         initIM();
         // 登录账号
-        loginIM("liyihuanx");
+        loginIM("chenyalunx");
         // 消息接收
         receiveAdvancedMsg();
     }
@@ -182,8 +187,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btn_im_send_c2c:
-//                sendC2CTextMsg("liyihuanx发送消息","chenyalunx");
-                createAdvancedMsg("1234","chenyalunx");
+                sendMsg();
                 break;
             case R.id.btn_im_refresh:
                 refreshData();
@@ -193,6 +197,14 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             default:
                 break;
+        }
+    }
+
+    private void sendMsg() {
+        if (et_input.getText().toString().isEmpty()) {
+            Toast.makeText(this, "text is empty", Toast.LENGTH_SHORT).show();
+        } else {
+            createAdvancedMsg(et_input.getText().toString().trim(), "liyihuanx");
         }
     }
 
@@ -217,7 +229,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onProgress(int progress) {
                 // 图片上传进度（0-100）
-                Log.d("QWER", "ImgMsg-onProgress: " + progress);
 
             }
         });
@@ -249,6 +260,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                     @Override
                     public void onSuccess(V2TIMMessage v2TIMMessage) {
                         Log.d("QWER", "createAdvancedMsg-onSuccess: " + new Gson().toJson(v2TIMMessage));
+                        et_input.getText().clear();
                     }
                 });
     }
@@ -324,29 +336,22 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                         @Override
                         public void onError(int code, String desc) {
                             // 下载失败
+                            Log.d("QWER", "onError: ");
+
                         }
                         @Override
                         public void onSuccess() {
                             // 下载完成
+                            Log.d("QWER", "onSuccess: ");
                         }
                     });
+                    Log.d("QWER", "decodeMsg: " + imagePath);
+
                 } else {
                     // 图片已存在
+                    Log.d("QWER", "decodeMsg: 图片已存在");
                 }
             }
-//            MsgBean msgBean = new MsgBean();
-//            Uri mImageCaptureUri = Uri.parse(imageList.get(0).getUrl());
-//            Bitmap photoBmp = null;
-//            if (mImageCaptureUri != null) {
-//                try {
-//                    photoBmp = MediaStore.Images.Media.getBitmap(getContentResolver(), mImageCaptureUri);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//            msgBean.setImgContent(photoBmp);
-//            rvMsgList.add(msgBean);
-
         } else if (elemType == V2TIMMessage.V2TIM_ELEM_TYPE_SOUND) {
             // 语音消息
             V2TIMSoundElem v2TIMSoundElem = msg.getSoundElem();
@@ -525,7 +530,7 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                 }
                 Log.i("QWER", "onActivityResult: ImageUriFromAlbum: " + data.getData());
                 if (resultCode == RESULT_OK) {
-
+                    handleImageOnKitKat(data);//4.4之后图片解析
                 }
                 break;
             default:
@@ -533,4 +538,54 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+
+    /**
+     * 4.4版本以上对返回的图片Uri的处理：
+     * 返回的Uri是经过封装的，要进行处理才能得到真实路径
+     * @param data 调用系统相册之后返回的Uri
+     */
+    @TargetApi(19)
+    private void handleImageOnKitKat(Intent data) {
+        String imagePath = null;
+        Uri uri = data.getData();
+        if (DocumentsContract.isDocumentUri(this, uri)) {
+            //如果是document类型的Uri，则提供document id处理
+            String docId = DocumentsContract.getDocumentId(uri);
+            if ("com.android.providers.media.documents".equals(uri.getAuthority())) {
+                String id = docId.split(":")[1];//解析出数字格式的id
+                String selection = MediaStore.Images.Media._ID + "=" + id;
+                imagePath = getImagePath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, selection);
+            } else if ("com.android.providers.downloads.documents".equals(uri.getAuthority())) {
+                Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(docId));
+                imagePath = getImagePath(contentUri, null);
+            }
+        } else if ("content".equalsIgnoreCase(uri.getScheme())) {
+            //如果是content类型的uri，则进行普通处理
+            imagePath = getImagePath(uri, null);
+        } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+            //如果是file类型的uri，则直接获取路径
+            imagePath = uri.getPath();
+        }
+        Log.d("QWER", "handleImageOnKitKat: " + imagePath);
+        // 发送文本消息
+        createImgMsg(imagePath,"liyihuanx");
+    }
+
+    /**
+     * 将Uri转化为路径
+     * @param uri 要转化的Uri
+     * @param selection 4.4之后需要解析Uri，因此需要该参数
+     * @return 转化之后的路径
+     */
+    private String getImagePath(Uri uri, String selection) {
+        String path = null;
+        Cursor cursor = getContentResolver().query(uri, null, selection, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
+            }
+            cursor.close();
+        }
+        return path;
+    }
 }
