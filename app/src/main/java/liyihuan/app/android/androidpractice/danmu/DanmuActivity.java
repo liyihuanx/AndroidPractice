@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -21,7 +22,6 @@ import com.example.danmu.control.Controller;
 import com.example.danmu.entity.BaseDmEntity;
 import com.example.danmu.widget.DMSurfaceView;
 
-import liyihuan.app.android.androidpractice.MainActivity;
 import liyihuan.app.android.androidpractice.R;
 
 public class DanmuActivity extends AppCompatActivity {
@@ -72,15 +72,16 @@ public class DanmuActivity extends AppCompatActivity {
     }
 
     private void addDM(DamuBean damuBean) {
-        final View templateView = LayoutInflater.from(this).inflate(R.layout.barrage, null);
+        final View templateView = LayoutInflater.from(this).inflate(R.layout.barrage, null,false);
         final ViewHolder mViewHolder = new ViewHolder(templateView);
         mViewHolder.tvBarrageName.setText(damuBean.getName());
         mViewHolder.tvBarrageMsg.setText(damuBean.getMsg());
-
         dmSurfaceView.getController().add(templateView);
 
     }
 
+
+    // 相当于一个bean类
     private static class ViewHolder {
         TextView tvBarrageName;
         TextView tvBarrageMsg;

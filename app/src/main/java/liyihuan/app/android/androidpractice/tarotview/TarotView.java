@@ -52,12 +52,12 @@ class TarotView extends FrameLayout implements View.OnLongClickListener, View.On
     private void initView(Context context) {
         layoutInflater = LayoutInflater.from(context);
         for (int i = 0; i < totalcount; i++) {
-            View view = layoutInflater.inflate(R.layout.tarot_view, this, false);
-            view.setTranslationX(i * 5);
-            view.setTranslationY(i * 5);
-            view.setOnClickListener(this);
-            addView(view);
+
         }
+        View view = layoutInflater.inflate(R.layout.tarot_view, this, false);
+
+        view.setOnClickListener(this);
+        addView(view);
     }
 
     public void washCard() {
