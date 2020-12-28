@@ -1,4 +1,4 @@
-package com.example.danmu.control;
+package com.example.danmu.danmu.control;
 
 import android.graphics.Canvas;
 

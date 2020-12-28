@@ -1,4 +1,4 @@
-package com.example.danmu.control;
+package com.example.danmu.danmu.control;
 
 
 import android.graphics.Canvas;
@@ -6,14 +6,12 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.SystemClock;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
 
-import com.example.danmu.OnDMAddListener;
-import com.example.danmu.entity.BaseDmEntity;
+import com.example.danmu.danmu.OnDMAddListener;
+import com.example.danmu.danmu.entity.BaseDmEntity;
 
 import java.util.Iterator;
 import java.util.LinkedList;

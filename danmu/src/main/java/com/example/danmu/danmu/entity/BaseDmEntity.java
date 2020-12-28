@@ -1,4 +1,4 @@
-package com.example.danmu.entity;
+package com.example.danmu.danmu.entity;
 /*
  * Copyright 2018 xujiaji
  *
@@ -20,7 +20,7 @@ import android.graphics.RectF;
 import android.util.Log;
 import android.view.View;
 
-import com.example.danmu.Util;
+import com.example.danmu.danmu.Util;
 
 /**
  * 弹幕实体类

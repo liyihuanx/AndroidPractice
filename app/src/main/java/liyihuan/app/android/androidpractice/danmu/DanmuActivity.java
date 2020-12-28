@@ -1,96 +1,78 @@
 package liyihuan.app.android.androidpractice.danmu;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
-import com.example.danmu.OnDMAddListener;
-import com.example.danmu.control.Controller;
-import com.example.danmu.entity.BaseDmEntity;
-import com.example.danmu.widget.DMSurfaceView;
+import com.example.danmu.danmu.OnDMAddListener;
+import com.example.danmu.danmu.entity.BaseDmEntity;
+import com.example.danmu.danmu.widget.DMSurfaceView;
+import com.example.danmu.newdanmu.DanMuView;
 
 import liyihuan.app.android.androidpractice.R;
 
 public class DanmuActivity extends AppCompatActivity {
 
-    private DMSurfaceView dmSurfaceView;
 
+    private DanMuView mDanMuContainerRoom;
+    private DanMuHelper mDanMuHelper;
+    private Button mButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_danmu);
-        dmSurfaceView = findViewById(R.id.dmView);
-        dmSurfaceView.setOnDMAddListener(new OnDMAddListener() {
-            @Override
-            public void added(BaseDmEntity dmEntity) {
 
-            }
+        mDanMuHelper = new DanMuHelper(this);
 
+        // 当前房间内的弹幕
+        mDanMuContainerRoom = (DanMuView) findViewById(R.id.danmaku_container_room);
+        mDanMuContainerRoom.prepare();
+        mDanMuHelper.add(mDanMuContainerRoom);
+
+        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void addedAll() {
-                Toast.makeText(DanmuActivity.this, "弹幕该轮显示完毕", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
                 for (int i = 0; i < 35; i++) {
-                    DamuBean damuBean = new DamuBean();
-                    damuBean.setName("小明" + i);
-                    damuBean.setMsg("1111111111111222222222222");
-                    addDM(damuBean);
+                    DanmakuEntity danmakuEntity = new DanmakuEntity();
+                    danmakuEntity.setType(DanmakuEntity.DANMAKU_TYPE_USERCHAT);
+                    danmakuEntity.setName("小A" + i);
+                    danmakuEntity.setAvatar("https://q.qlogo.cn/qqapp/100229475/E573B01150734A02F25D8E9C76AFD138/100");
+                    danmakuEntity.setLevel(23);
+                    danmakuEntity.setText("滚滚长江东逝水，浪花淘尽英雄~~");
+
+                    addRoomDanmaku(danmakuEntity);
                 }
             }
         });
+    }
 
 
+
+    /**
+     * 发送一条房间内的弹幕
+     */
+    private void addRoomDanmaku(DanmakuEntity danmakuEntity) {
+        if (mDanMuHelper != null) {
+            mDanMuHelper.addDanMu(danmakuEntity);
+        }
     }
 
 
     @Override
-    protected void onPause() {
-        super.onPause();
-        dmSurfaceView.getController().pause();
-
-    }
-
-    public void onClickAdd5NoOver(View view) {
-        DamuBean damuBean = new DamuBean();
-        damuBean.setName("小明");
-        damuBean.setMsg("1111111111111222222222222222222");
-        addDM(damuBean);
-    }
-
-    private void addDM(DamuBean damuBean) {
-        final View templateView = LayoutInflater.from(this).inflate(R.layout.barrage, null,false);
-        final ViewHolder mViewHolder = new ViewHolder(templateView);
-        mViewHolder.tvBarrageName.setText(damuBean.getName());
-        mViewHolder.tvBarrageMsg.setText(damuBean.getMsg());
-        dmSurfaceView.getController().add(templateView);
-
-    }
-
-
-    // 相当于一个bean类
-    private static class ViewHolder {
-        TextView tvBarrageName;
-        TextView tvBarrageMsg;
-        ImageView imgBarrageHead;
-
-        ViewHolder(View view) {
-            tvBarrageName = view.findViewById(R.id.tvBarrageName);
-            tvBarrageMsg = view.findViewById(R.id.tvBarrageMsg);
-            imgBarrageHead = view.findViewById(R.id.imgBarrageHead);
+    protected void onDestroy() {
+        if (mDanMuHelper != null) {
+            mDanMuHelper.release();
+            mDanMuHelper = null;
         }
+
+        super.onDestroy();
     }
 }

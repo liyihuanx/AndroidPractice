@@ -1,7 +1,7 @@
-package com.example.danmu;
+package com.example.danmu.danmu;
 
 
-import com.example.danmu.entity.BaseDmEntity;
+import com.example.danmu.danmu.entity.BaseDmEntity;
 
 public interface OnDMAddListener {
     void added(BaseDmEntity dmEntity);

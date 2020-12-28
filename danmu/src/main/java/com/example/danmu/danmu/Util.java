@@ -1,4 +1,4 @@
-package com.example.danmu;
+package com.example.danmu.danmu;
 /*
  * Copyright 2018 xujiaji
  *

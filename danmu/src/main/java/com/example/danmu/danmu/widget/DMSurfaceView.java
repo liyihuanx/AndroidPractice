@@ -1,4 +1,4 @@
-package com.example.danmu.widget;
+package com.example.danmu.danmu.widget;
 /*
  * Copyright 2018 xujiaji
  *
@@ -22,11 +22,11 @@ import android.util.AttributeSet;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
-import com.example.danmu.OnDMAddListener;
+import com.example.danmu.danmu.OnDMAddListener;
 import com.example.danmu.R;
-import com.example.danmu.Util;
-import com.example.danmu.control.Controller;
-import com.example.danmu.control.SurfaceProxy;
+import com.example.danmu.danmu.Util;
+import com.example.danmu.danmu.control.Controller;
+import com.example.danmu.danmu.control.SurfaceProxy;
 
 
 /**
