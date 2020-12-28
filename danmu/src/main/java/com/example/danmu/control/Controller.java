@@ -92,16 +92,6 @@ public class Controller {
 
         } else if (mAddedMDList.size() == 0) {
             mDrawThread.setDraw(false);
-//            if (mOnDMAddListener != null && !first) {
-//                getMainHandler().post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mOnDMAddListener.addedAll();
-////                        cleanAddedMDList();
-//                    }
-//                });
-//            }
-//            first = false;
         }
     }
     private boolean first = true;
@@ -127,7 +117,6 @@ public class Controller {
                         }
                     });
                 }
-                Log.d("QWER", "drawDM: " + mAddedMDList.size());
             }
             canvas.drawBitmap(entity.bitmap, entity.rect.left, entity.rect.top, null);
         }

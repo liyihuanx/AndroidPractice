@@ -17,6 +17,7 @@ package com.example.danmu.entity;
 
 import android.graphics.Bitmap;
 import android.graphics.RectF;
+import android.util.Log;
 import android.view.View;
 
 import com.example.danmu.Util;
@@ -30,6 +31,7 @@ public class BaseDmEntity {
     public final Bitmap bitmap;
     public final RectF rect = new RectF();
     public final int priority;
+    public final View view;
 
     public BaseDmEntity(View itemView) {
         this(itemView, 0);
@@ -37,8 +39,15 @@ public class BaseDmEntity {
 
     public BaseDmEntity(View itemView, int priority) {
         bitmap = Util.convertViewToBitmap(itemView);
+        this.view = itemView;
         this.priority = priority;
         this.rect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("QWER", "onClick: ");
+            }
+        });
     }
 
 
