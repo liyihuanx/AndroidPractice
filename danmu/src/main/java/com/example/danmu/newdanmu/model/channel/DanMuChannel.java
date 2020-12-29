@@ -31,15 +31,6 @@ public class DanMuChannel {
                 danMuView.setAttached(true);
                 r2lReferenceView = danMuView;
             }
-        } else if (danMuView.getDisplayType() == DanMuModel.LEFT_TO_RIGHT) {
-            int mDeltaX = 0;
-            if (l2rReferenceView != null) {
-                mDeltaX = (int) l2rReferenceView.getX();
-            }
-            if (l2rReferenceView == null || !l2rReferenceView.isAlive() || mDeltaX > space) {
-                danMuView.setAttached(true);
-                l2rReferenceView = danMuView;
-            }
         }
     }
 

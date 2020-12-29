@@ -8,6 +8,6 @@ import com.example.danmu.newdanmu.model.channel.DanMuChannel;
  */
 public interface IDanMuDispatcher {
 
-    void dispatch(DanMuModel iDanMuView, DanMuChannel[] danMuChannels);
+    void dispatch(DanMuModel iDanMuView, DanMuChannel[] danMuChannels, int position);
 
 }

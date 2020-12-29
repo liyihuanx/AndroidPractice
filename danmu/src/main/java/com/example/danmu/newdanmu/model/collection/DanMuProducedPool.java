@@ -68,13 +68,12 @@ public class DanMuProducedPool {
         }
         ArrayList<DanMuModel> danMuViews = fastDanMuViewPendingQueue.size() > 0 ? fastDanMuViewPendingQueue : mixedDanMuViewPendingQueue;
         ArrayList<DanMuModel> validateDanMuViews = new ArrayList<>();
-        for (int i = 0; i < (danMuViews.size() > MAX_COUNT_IN_SCREEN ? MAX_COUNT_IN_SCREEN : danMuViews.size()); i++) {
+        for (int i = 0; i <  danMuViews.size(); i++) {
             DanMuModel danMuView = danMuViews.get(i);
-            iDanMuDispatcher.dispatch(danMuView, danMuChannels);
+            iDanMuDispatcher.dispatch(danMuView, danMuChannels, i);
             validateDanMuViews.add(danMuView);
-            danMuViews.remove(i);
-            i--;
         }
+        danMuViews.clear();
 
         if (validateDanMuViews.size() > 0) {
             return validateDanMuViews;
@@ -88,7 +87,7 @@ public class DanMuProducedPool {
 
     public void divide(int width, int height) {
         int singleHeight = DimensionUtil.dpToPx(context, DEFAULT_SINGLE_CHANNEL_HEIGHT);
-        int count = height / singleHeight;
+        int count = 6;
 
         danMuChannels = new DanMuChannel[count];
         for (int i = 0; i < count; i++) {

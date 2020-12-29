@@ -27,9 +27,9 @@ public class DanMuDispatcher implements IDanMuDispatcher {
     }
 
     @Override
-    public synchronized void dispatch(DanMuModel danMuView, DanMuChannel[] danMuChannels) {
+    public synchronized void dispatch(DanMuModel danMuView, DanMuChannel[] danMuChannels, int position) {
         if (!danMuView.isAttached() && danMuChannels != null) {
-            int index = selectChannelRandomly(danMuChannels);
+            int index = position % 6;
             danMuView.selectChannel(index);
             DanMuChannel danMuChannel = danMuChannels[index];
             if (danMuChannel == null) {
@@ -79,8 +79,6 @@ public class DanMuDispatcher implements IDanMuDispatcher {
 
         if (danMuView.getDisplayType() == DanMuModel.RIGHT_TO_LEFT) {
             danMuView.setStartPositionX(danMuChannel.width);
-        } else if (danMuView.getDisplayType() == DanMuModel.LEFT_TO_RIGHT) {
-            danMuView.setStartPositionX(-danMuView.getWidth());
         }
 
         danMuView.setMeasured(true);

@@ -7,7 +7,6 @@ import com.example.danmu.newdanmu.control.speed.SpeedController;
 import com.example.danmu.newdanmu.model.DanMuModel;
 import com.example.danmu.newdanmu.model.channel.DanMuChannel;
 import com.example.danmu.newdanmu.model.painter.DanMuPainter;
-import com.example.danmu.newdanmu.model.painter.L2RPainter;
 import com.example.danmu.newdanmu.model.painter.R2LPainter;
 import com.example.danmu.newdanmu.model.utils.DimensionUtil;
 
@@ -122,8 +121,7 @@ public final class DanMuConsumedPool {
 
     private void initDefaultPainters() {
         R2LPainter r2LPainter = new R2LPainter();
-        L2RPainter l2RPainter = new L2RPainter();
-        danMuPainterHashMap.put(DanMuModel.LEFT_TO_RIGHT, l2RPainter);
+
         danMuPainterHashMap.put(DanMuModel.RIGHT_TO_LEFT, r2LPainter);
     }
 
@@ -138,7 +136,7 @@ public final class DanMuConsumedPool {
 
     public void divide(int width, int height) {
         int singleHeight = DimensionUtil.dpToPx(context, DEFAULT_SINGLE_CHANNEL_HEIGHT);
-        int count = height / singleHeight;
+        int count = 6;
 
         danMuChannels = new DanMuChannel[count];
         for (int i = 0; i < count; i++) {

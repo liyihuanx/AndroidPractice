@@ -19,10 +19,8 @@ import liyihuan.app.android.androidpractice.R;
 
 public class DanmuActivity extends AppCompatActivity {
 
-
     private DanMuView mDanMuContainerRoom;
     private DanMuHelper mDanMuHelper;
-    private Button mButton;
 
 
     @Override
@@ -46,7 +44,11 @@ public class DanmuActivity extends AppCompatActivity {
                     danmakuEntity.setName("小A" + i);
                     danmakuEntity.setAvatar("https://q.qlogo.cn/qqapp/100229475/E573B01150734A02F25D8E9C76AFD138/100");
                     danmakuEntity.setLevel(23);
-                    danmakuEntity.setText("滚滚长江东逝水，浪花淘尽英雄~~");
+                    if ( i % 2 == 1){
+                        danmakuEntity.setText("这是长度长度长度长度比较长的");
+                    } else {
+                        danmakuEntity.setText("长度比较短的");
+                    }
 
                     addRoomDanmaku(danmakuEntity);
                 }
