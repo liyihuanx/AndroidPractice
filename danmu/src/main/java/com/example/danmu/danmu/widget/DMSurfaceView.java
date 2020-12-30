@@ -19,14 +19,24 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.example.danmu.danmu.OnDMAddListener;
 import com.example.danmu.R;
 import com.example.danmu.danmu.Util;
 import com.example.danmu.danmu.control.Controller;
+import com.example.danmu.danmu.control.DamuBean;
 import com.example.danmu.danmu.control.SurfaceProxy;
+import com.example.danmu.danmu.entity.BaseDmEntity;
+import com.example.danmu.danmu.onMyClickListener;
+import com.example.danmu.newdanmu.model.DanMuModel;
+import com.example.danmu.newdanmu.view.OnDanMuViewTouchListener;
+
+import java.util.ArrayList;
 
 
 /**
@@ -40,6 +50,7 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
     private int mWidth;
     private int mHeight;
     private Controller.Builder builder;
+    private volatile ArrayList<OnDanMuViewTouchListener> onDanMuViewTouchListeners;
 
 
     public DMSurfaceView(Context context) {
@@ -53,6 +64,7 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
     public DMSurfaceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initHolder();
+        onDanMuViewTouchListeners = new ArrayList<>();
 
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.DMSurfaceView, defStyleAttr, 0);
 
@@ -77,6 +89,20 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         mSurfaceHolder.addCallback(this);
         setZOrderOnTop(true);
         mSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
+    }
+
+    public void Viewadd(View templateView, DamuBean bean){
+        BaseDmEntity entity = new BaseDmEntity(templateView);
+        entity.setBean(bean);
+        entity.setView(templateView);
+        mController.add(entity);
+        entity.setOnMyClickListener(new onMyClickListener() {
+            @Override
+            public void onClickItem(BaseDmEntity baseDmEntity) {
+                Log.d("QWER", "onClickItem: "+baseDmEntity.getBean().getName());
+            }
+        });
+        onDanMuViewTouchListeners.add(entity);
     }
 
     @Override
@@ -125,5 +151,33 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
 
     public Controller getController() {
         return mController;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+
+        getParent().requestDisallowInterceptTouchEvent(true);
+        switch (event.getAction() & MotionEvent.ACTION_MASK) {
+            case MotionEvent.ACTION_DOWN:
+                break;
+            case MotionEvent.ACTION_POINTER_DOWN:
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                break;
+            case MotionEvent.ACTION_MOVE:
+                break;
+            case MotionEvent.ACTION_UP:
+                for (int i = 0; i < onDanMuViewTouchListeners.size(); i++) {
+                    OnDanMuViewTouchListener onDanMuViewTouchListener = onDanMuViewTouchListeners.get(i);
+                    boolean onTouched = onDanMuViewTouchListener.onTouch(event.getX(), event.getY());
+
+                    if (((BaseDmEntity) onDanMuViewTouchListener).getOnMyClickListener() != null && onTouched) {
+                        ((BaseDmEntity) onDanMuViewTouchListener).getOnMyClickListener().onClickItem((BaseDmEntity) onDanMuViewTouchListener);
+                        return true;
+                    }
+                }
+                break;
+        }
+        return true;
     }
 }

@@ -29,7 +29,7 @@ public class DanMuDispatcher implements IDanMuDispatcher {
     @Override
     public synchronized void dispatch(DanMuModel danMuView, DanMuChannel[] danMuChannels, int position) {
         if (!danMuView.isAttached() && danMuChannels != null) {
-            int index = position % 6;
+            int index = selectChannelRandomly(danMuChannels);
             danMuView.selectChannel(index);
             DanMuChannel danMuChannel = danMuChannels[index];
             if (danMuChannel == null) {

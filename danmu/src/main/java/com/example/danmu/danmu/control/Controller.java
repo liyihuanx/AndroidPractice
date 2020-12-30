@@ -6,12 +6,14 @@ import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
 
 import com.example.danmu.danmu.OnDMAddListener;
 import com.example.danmu.danmu.entity.BaseDmEntity;
+import com.example.danmu.danmu.onMyClickListener;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -133,12 +135,13 @@ public class Controller {
     }
 
 
-    public void add(final View templateView) {
+    public void add(final BaseDmEntity entity) {
         exec.execute(new Runnable() {
             @Override
             public void run() {
-                BaseDmEntity entity = new BaseDmEntity(templateView);
+//                BaseDmEntity entity = new BaseDmEntity(templateView);
                 addToQueue(entity);
+
             }
         });
     }

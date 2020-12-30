@@ -95,11 +95,11 @@ public class DanMuSurfaceView extends SurfaceView implements IDanMuParent, Surfa
                 int size = onDanMuViewTouchListeners.size();
                 for (int i = 0; i < size; i++) {
                     OnDanMuViewTouchListener onDanMuViewTouchListener = onDanMuViewTouchListeners.get(i);
-                    boolean onTouched = onDanMuViewTouchListener.onTouch(event.getX(), event.getY());
-                    if (((DanMuModel) onDanMuViewTouchListener).getOnTouchCallBackListener() != null && onTouched) {
-                        ((DanMuModel) onDanMuViewTouchListener).getOnTouchCallBackListener().callBack((DanMuModel) onDanMuViewTouchListener);
-                        return true;
-                    }
+//                    boolean onTouched = onDanMuViewTouchListener.onTouch(event.getX(), event.getY());
+//                    if (((DanMuModel) onDanMuViewTouchListener).getOnTouchCallBackListener() != null && onTouched) {
+//                        ((DanMuModel) onDanMuViewTouchListener).getOnTouchCallBackListener().callBack((DanMuModel) onDanMuViewTouchListener);
+//                        return true;
+//                    }
                 }
                 if (hasCanTouchDanMus()) {
                     if (onDanMuParentViewTouchCallBackListener != null) {

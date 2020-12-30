@@ -21,17 +21,46 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.danmu.danmu.Util;
+import com.example.danmu.danmu.control.DamuBean;
+import com.example.danmu.danmu.onMyClickListener;
+import com.example.danmu.newdanmu.view.OnDanMuViewTouchListener;
 
 /**
  * 弹幕实体类
  * Created by jiaji on 2018/2/26.
  */
 
-public class BaseDmEntity {
+public class BaseDmEntity implements OnDanMuViewTouchListener {
     public final Bitmap bitmap;
     public final RectF rect = new RectF();
     public final int priority;
-    public final View view;
+    public View view;
+    public onMyClickListener onMyClickListener;
+    public DamuBean bean;
+
+    public onMyClickListener getOnMyClickListener() {
+        return onMyClickListener;
+    }
+
+    public void setOnMyClickListener(com.example.danmu.danmu.onMyClickListener onMyClickListener) {
+        this.onMyClickListener = onMyClickListener;
+    }
+
+    public DamuBean getBean() {
+        return bean;
+    }
+
+    public void setBean(DamuBean bean) {
+        this.bean = bean;
+    }
+
+    public View getView() {
+        return view;
+    }
+
+    public void setView(View view) {
+        this.view = view;
+    }
 
     public BaseDmEntity(View itemView) {
         this(itemView, 0);
@@ -42,12 +71,6 @@ public class BaseDmEntity {
         this.view = itemView;
         this.priority = priority;
         this.rect.set(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("QWER", "onClick: ");
-            }
-        });
     }
 
 
@@ -61,4 +84,16 @@ public class BaseDmEntity {
     public int hashCode() {
         return super.hashCode();
     }
+
+    @Override
+    public boolean onTouch(float x, float y) {
+        return true;
+    }
+
+
+    public void release() {
+
+    }
+
+
 }

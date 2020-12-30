@@ -1,6 +1,12 @@
 package liyihuan.app.android.androidpractice.danmu;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.NinePatchDrawable;
 import android.util.Log;
 
 
@@ -79,6 +85,10 @@ public final class DanMuHelper {
             // 加载头像
             String avatarImageUrl = entity.getAvatar();
 
+            int avatarSize = DimensionUtil.dpToPx(mContext, 30);
+            danMuView.avatarWidth = avatarSize;
+            danMuView.avatarHeight = avatarSize;
+            danMuView.avatar = drawable2Bitmap(ContextCompat.getDrawable(mContext, R.drawable.boy_head));
 
             // 显示的文本内容
             String name = entity.getName() + "：";
@@ -102,11 +112,38 @@ public final class DanMuHelper {
 
                 @Override
                 public void callBack(DanMuModel danMuView) {
-                    Log.d("QWER", "callBack: ");
+                    Log.d("QWER", "callBack: "+danMuView.text);
                 }
             });
         }
 
         return danMuView;
+    }
+
+    /**
+     * Drawable转换成Bitmap
+     *
+     * @param drawable
+     * @return
+     */
+    public Bitmap drawable2Bitmap(Drawable drawable) {
+        if (drawable instanceof BitmapDrawable) {
+            // 转换成Bitmap
+            return ((BitmapDrawable) drawable).getBitmap();
+        } else if (drawable instanceof NinePatchDrawable) {
+            // .9图片转换成Bitmap
+            Bitmap bitmap = Bitmap.createBitmap(
+                    drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight(),
+                    drawable.getOpacity() != PixelFormat.OPAQUE ?
+                            Bitmap.Config.ARGB_8888 : Bitmap.Config.RGB_565);
+            Canvas canvas = new Canvas(bitmap);
+            drawable.setBounds(0, 0, drawable.getIntrinsicWidth(),
+                    drawable.getIntrinsicHeight());
+            drawable.draw(canvas);
+            return bitmap;
+        } else {
+            return null;
+        }
     }
 }

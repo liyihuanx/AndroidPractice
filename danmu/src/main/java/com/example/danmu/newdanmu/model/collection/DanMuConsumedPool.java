@@ -136,7 +136,7 @@ public final class DanMuConsumedPool {
 
     public void divide(int width, int height) {
         int singleHeight = DimensionUtil.dpToPx(context, DEFAULT_SINGLE_CHANNEL_HEIGHT);
-        int count = 6;
+        int count = height / singleHeight;
 
         danMuChannels = new DanMuChannel[count];
         for (int i = 0; i < count; i++) {

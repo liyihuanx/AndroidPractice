@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.os.Build;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.danmu.danmu.entity.BaseDmEntity;
 import com.example.danmu.newdanmu.control.DanMuController;
 import com.example.danmu.newdanmu.control.speed.SpeedController;
 import com.example.danmu.newdanmu.model.DanMuModel;
@@ -122,15 +124,15 @@ public class DanMuView extends View implements IDanMuParent {
                         return true;
                     }
                 }
-                if (!hasCanTouchDanMus()) {
-                    if (onDanMuParentViewTouchCallBackListener != null) {
-                        onDanMuParentViewTouchCallBackListener.callBack();
-                    }
-                } else {
-                    if (onDanMuParentViewTouchCallBackListener != null) {
-                        onDanMuParentViewTouchCallBackListener.hideControlPanel();
-                    }
-                }
+//                if (!hasCanTouchDanMus()) {
+//                    if (onDanMuParentViewTouchCallBackListener != null) {
+//                        onDanMuParentViewTouchCallBackListener.callBack();
+//                    }
+//                } else {
+//                    if (onDanMuParentViewTouchCallBackListener != null) {
+//                        onDanMuParentViewTouchCallBackListener.hideControlPanel();
+//                    }
+//                }
                 break;
         }
         return true;
