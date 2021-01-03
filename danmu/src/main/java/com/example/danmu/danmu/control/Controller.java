@@ -222,8 +222,12 @@ public class Controller {
 
     private synchronized void addToDisplay(final BaseDmEntity entity) {
         if (entity == null) return;
+        // 移除当前弹幕item
         mNewDMQueue.remove(entity);
+        // 添加到待绘制弹幕列表中
         mAddedMDList.add(entity);
+        // 重新添加弹幕列表中
+        mNewDMQueue.add(entity);
         hierarchy.clear();
 
     }
