@@ -45,12 +45,9 @@ public class DrawThread extends Thread {
             // 锁定并且获得当前canvas
             Canvas canvas = surfaceHolder.lockCanvas();
             drawListener.onDraw(canvas);
-            Log.d("QWER", "draw: 222");
 
             if (canvas != null) {
                 surfaceHolder.unlockCanvasAndPost(canvas);
-                Log.d("QWER", "draw: 3333");
-
             }
 
         }

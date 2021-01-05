@@ -17,6 +17,8 @@ public interface ControllerInterface {
 
     void addDmList(ArrayList<DmInfo> data);
 
+    void addDmItem(DmInfo item);
+
     void start();
 
     void pause();

@@ -226,8 +226,7 @@ public class Controller {
         mNewDMQueue.remove(entity);
         // 添加到待绘制弹幕列表中
         mAddedMDList.add(entity);
-        // 重新添加弹幕列表中
-        mNewDMQueue.add(entity);
+
         hierarchy.clear();
 
     }

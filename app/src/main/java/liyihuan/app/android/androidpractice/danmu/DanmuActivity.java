@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.example.danmu.mydanmu.bean.DmInfo;
 import com.example.danmu.mydanmu.view.MyDmView;
 
 
@@ -19,6 +20,9 @@ public class DanmuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_danmu);
         dmSurfaceView = findViewById(R.id.my_dm_view);
         findViewById(R.id.btn_start).setOnClickListener(v -> {
+            DmInfo dmInfo = new DmInfo(new DamuView(this));
+            dmSurfaceView.getController().addDmItem(dmInfo);
+
             dmSurfaceView.getController().startThread();
         });
 
