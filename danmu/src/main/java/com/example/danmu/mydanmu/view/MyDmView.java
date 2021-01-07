@@ -99,6 +99,6 @@ public class MyDmView extends SurfaceView implements SurfaceHolder.Callback, dmV
 
     @Override
     public void addDmList(ArrayList<DmInfo> data) {
-        controller.addDmList(data);
+
     }
 }

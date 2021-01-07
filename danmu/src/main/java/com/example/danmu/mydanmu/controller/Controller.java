@@ -22,8 +22,10 @@ public class Controller implements ControllerInterface {
     private DrawThread drawThread;
     private int offsetX = 0;
 
-
+    // 所有弹幕列表
     private ArrayList<DmInfo> dmList;
+    // 等待添加的弹幕列表
+    private ArrayList<DmInfo> waitAddList;
 
     public Controller() {
         init();
@@ -31,6 +33,7 @@ public class Controller implements ControllerInterface {
 
     private void init() {
         dmList = new ArrayList<>();
+        waitAddList = new ArrayList<>();
         drawThread = new DrawThread();
     }
 
@@ -56,13 +59,52 @@ public class Controller implements ControllerInterface {
      * @param canvas
      */
     private void runDrawTask(Canvas canvas) {
+        // 先绘制
+        DrawDmItem(canvas);
+
+    }
+
+
+
+    private void DrawDmItem(Canvas canvas) {
+        if (waitAddList.size() <= 0 || waitAddList == null) {
+            // 添加弹幕当待绘制列表中
+            addDm();
+            return;
+        }
+        offsetX = offsetX - span;
         canvas.save();
         // 平移offsetX 绘制下一个，offsetX怎么更新??
         canvas.translate(offsetX,0);
+        // 先从待绘制列表中取出
+        for (DmInfo dmInfo: waitAddList) {
+            // 绘制
+            canvas.drawBitmap(dmInfo.getBitmap(),dmInfo.getLeft(),dmInfo.getTop(),null);
 
+        }
+        waitAddList.clear();
         canvas.restore();
     }
 
+
+    private void addDm() {
+        if (dmList.size() <= 0 || dmList == null) {
+            return;
+        }
+
+        for (int i = 0; i < dmList.size(); i++) {
+            if (i == 0) {
+                dmList.get(0).setTop(0);
+                dmList.get(0).setLeft(0);
+            } else {
+                DmInfo lastOne = dmList.get(i - 1);
+                DmInfo currentOne = dmList.get(i);
+                currentOne.setTop(lastOne.getBottom());
+                currentOne.setLeft(lastOne.getRight());
+            }
+            waitAddList.add(dmList.get(i));
+        }
+    }
 
     /**
      * 添加弹幕数据
@@ -71,6 +113,16 @@ public class Controller implements ControllerInterface {
     public void addDmList(ArrayList<DmInfo> data) {
         dmList.clear();
         dmList.addAll(data);
+    }
+
+    @Override
+    public void addDmItem(DmInfo item) {
+        // 保存在弹幕列表中
+        dmList.add(item);
+        // 如果没在绘制，则开启绘制
+        if (!drawThread.isDraw()){
+            drawThread.setDraw(true);
+        }
     }
 
     /**
@@ -111,6 +163,7 @@ public class Controller implements ControllerInterface {
     private Paint paint; // 画笔
 
     public Controller setWidth(int width) {
+        this.offsetX = width;
         this.width = width;
         return this;
     }
