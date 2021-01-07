@@ -57,6 +57,7 @@ public class Controller {
     public void setSize(int width, int height) {
         this.mWidth = width;
         this.mHeight = height;
+        Log.d("QWER", "setSize: " + mWidth);
         initOffset();
     }
 
@@ -87,6 +88,7 @@ public class Controller {
     private long lastTime = 0L;
     private void runTask(Canvas canvas) {
         offset += span;
+        Log.d("QWER", "runTask: " + offset);
         drawDM(canvas, offset, false);
         if (addDMInQueue()) {
 
@@ -226,8 +228,7 @@ public class Controller {
         mNewDMQueue.remove(entity);
         // 添加到待绘制弹幕列表中
         mAddedMDList.add(entity);
-        // 重新添加弹幕列表中
-        mNewDMQueue.add(entity);
+
         hierarchy.clear();
 
     }

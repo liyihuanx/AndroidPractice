@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".lifecycle.LifeActivity"></activity>
         <activity android:name=".danmu.DanmuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,11 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera.CameraPractice" />
         <activity android:name=".match.PlanetActivity" />
-        <activity android:name=".imdemo.ImDemoActivity">
-
-        </activity>
+        <activity android:name=".imdemo.ImDemoActivity"/>
         <activity android:name=".camera.CameraDemo" />
         <activity android:name=".tarotview.TarotActivity" />
         <activity android:name=".Indicator.IndicatorActivity" />

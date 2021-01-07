@@ -7,21 +7,38 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <com.example.danmu.mydanmu.view.MyDmView
-        android:id="@+id/my_dm_view"
+    <com.example.danmu.newdanmu.DanMuParentView
         android:layout_width="match_parent"
-        android:layout_height="350dp"/>
+        android:layout_height="300dp">
+        <com.example.danmu.danmu.widget.DMSurfaceView
+            android:id="@+id/dmView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:dm_direction="right_left"
+            app:dm_span="2dp"
+            app:dm_v_space="8dp"
+            app:dm_h_space="16dp"
+            app:dm_span_time="16" />
+    </com.example.danmu.newdanmu.DanMuParentView>
+
+
+
 
     <Button
-        android:id="@+id/btn_start"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="start"/>
+        android:layout_height="wrap_content"
+        android:onClick="onClickAdd5NoOver"
+        android:text="轮询的加5个弹幕"/>
 
-    <Button
-        android:id="@+id/btn_stop"
+    <com.example.danmu.newdanmu.DanMuParentView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:text="start"/>
+        android:layout_height="match_parent">
+
+        <com.example.danmu.newdanmu.DanMuView
+            android:id="@+id/danmaku_container_room"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"/>
+
+    </com.example.danmu.newdanmu.DanMuParentView>
 
 </LinearLayout>
