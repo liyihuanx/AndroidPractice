@@ -52,8 +52,7 @@ public class CardLayoutManager extends RecyclerView.LayoutManager {
         measureChildWithMargins(first, 0, 0);
         int itemWidth = getDecoratedMeasuredWidth(first);
         int itemHeight = getDecoratedMeasuredHeight(first);
-        Log.d("QWER", "itemWidth: " + itemWidth);
-        Log.d("QWER", "itemHeight: " + itemHeight);
+
 
         int firstLineSize = mGroupSize / 2 + 1;
         int secondLineSize = firstLineSize + mGroupSize / 2;

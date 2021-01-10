@@ -25,6 +25,12 @@ class MyRvLayout extends RecyclerView.LayoutManager {
     private int maxItemWidth = 0;
     private ArrayList<ViewInfo> mView;
 
+    // 竖向滑动总距离
+    private int mVerticalOffset;
+    // 总高度
+    private int mTotalHeight;
+
+
     public MyRvLayout(Context context) {
         this.mContext = context;
         mView = new ArrayList<>();
@@ -41,23 +47,33 @@ class MyRvLayout extends RecyclerView.LayoutManager {
         return true;
     }
 
+    /**
+     *
+     * @param dy 滑动差
+     * @param recycler
+     * @param state
+     * @return
+     */
     @Override
     public int scrollVerticallyBy(int dy, RecyclerView.Recycler recycler, RecyclerView.State state) {
 //        detachAndScrapAttachedViews(recycler);
-//        if (mVerticalOffset + dy < 0) {
-//            dy = -mVerticalOffset;
-//        } else if (mVerticalOffset + dy > mTotalHeight - getVerticalSpace()) {
-//            dy = mTotalHeight - getVerticalSpace() - mVerticalOffset;
-//        }
-//
-//        offsetChildrenVertical(-dy);
+
+        // 滑到顶部
+        if (mVerticalOffset + dy < 0) {
+            // 下滑，向上移，dy<0, mVerticalOffset=0,
+            dy = -mVerticalOffset;
+        } else if (mVerticalOffset + dy  > mTotalHeight) {
+            // 滑到底部
+            dy = mTotalHeight - mVerticalOffset;
+        }
+
+        offsetChildrenVertical(-dy);
 //        fill(recycler, state);
-//        mVerticalOffset += dy;
-//        return dy;
-        return super.scrollVerticallyBy(dy, recycler, state);
+        mVerticalOffset += dy;
+        Log.d("QWER", "mVerticalOffset: " + mVerticalOffset);
+        return dy;
     }
 
-    private int testHeight = 0;
     /**
      * 1 在RecyclerView初始化时，会被调用两次。
      * 2 在调用adapter.notifyDataSetChanged()时，会被调用。
@@ -88,40 +104,47 @@ class MyRvLayout extends RecyclerView.LayoutManager {
             // 获取每个item的宽高
             int itemWidth = getDecoratedMeasuredWidth(view);
             int itemHeight = getDecoratedMeasuredHeight(view);
-            Log.d("QWER", "itemWidth: " + itemWidth);
-            Log.d("QWER", "itemHeight: " + itemHeight);
-
 
             ViewInfo viewInfo = new ViewInfo();
             viewInfo.setView(view);
             mView.add(viewInfo);
-            // 当前行宽 + 当前item宽度和屏幕宽度比较
 
+            // TODO 这样最后一行的高度无法累加进来
             if (lineWidth + itemWidth > ScreenWidth) {
-                // TODO 在空白区域填充item，以后再写
-                // 需要换行
-                // 行最宽 + 当前item宽 和 屏幕宽做比较
-                if (maxItemWidth + itemWidth <= ScreenWidth){
-                    // 小于则在最大的那个item后面继续摆放
-                    // 行宽 从上一行最大的宽开始？怎么累加
-                    lineWidth = maxItemWidth;
-//                  // 行高
-                    lineHeight += itemHeight;
-
-
-                    testHeight = itemHeight;
-
-                } else {
-                    lineHeight -= testHeight;
-                    // 超过屏幕宽度，重置行宽
-                    lineWidth = 0;
-                    // 每行的高度最大累加
-                    lineHeight += maxItemHeight;
-
-                    // 换行后要 重置maxItemHeight
-                    maxItemHeight = 0;
-                }
+                // 超过屏幕宽度，重置行宽
+                lineWidth = 0;
+                // 每行的高度最大累加
+                lineHeight += maxItemHeight;
+                // 换行后要 重置maxItemHeight
+                maxItemHeight = 0;
             }
+
+            // TODO 在空白区域填充item，以后再写
+            // 当前行宽 + 当前item宽度和屏幕宽度比较
+//            if (lineWidth + itemWidth > ScreenWidth) {
+//                // 需要换行
+//                // 行最宽 + 当前item宽 和 屏幕宽做比较
+//                if (maxItemWidth + itemWidth <= ScreenWidth){
+//                    // 小于则在最大的那个item后面继续摆放
+//                    // 行宽 从上一行最大的宽开始？怎么累加
+//                    lineWidth = maxItemWidth;
+////                  // 行高
+//                    lineHeight += itemHeight;
+//
+//
+//                    testHeight = itemHeight;
+//
+//                } else {
+//                    lineHeight -= testHeight;
+//                    // 超过屏幕宽度，重置行宽
+//                    lineWidth = 0;
+//                    // 每行的高度最大累加
+//                    lineHeight += maxItemHeight;
+//
+//                    // 换行后要 重置maxItemHeight
+//                    maxItemHeight = 0;
+//                }
+//            }
 
             viewInfo.setLeft(lineWidth);
             viewInfo.setTop(lineHeight);
@@ -135,11 +158,15 @@ class MyRvLayout extends RecyclerView.LayoutManager {
             maxItemHeight = Math.max(itemHeight, maxItemHeight);
         } // for end
 
+        mTotalHeight += lineHeight;
+        fill(recycler, state);
+    }
+
+    private void fill(RecyclerView.Recycler recycler, RecyclerView.State state) {
         // 布局
         for (ViewInfo info : mView) {
             layoutDecorated(info.getView(), info.getLeft(), info.getTop(), info.getRight(), info.getBottom());
         }
-
     }
 
 

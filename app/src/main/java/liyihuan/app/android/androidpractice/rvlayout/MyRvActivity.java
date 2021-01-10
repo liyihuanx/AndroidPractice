@@ -27,6 +27,14 @@ public class MyRvActivity extends AppCompatActivity {
 
         List<Integer> list = new ArrayList<>();
         list.add(R.mipmap.tarot);
+
+        list.add(R.mipmap.tab_icon_lesson_default);
+        list.add(R.mipmap.tab_icon_lesson_selected);
+        list.add(R.mipmap.tab_icon_mine_default);
+        list.add(R.mipmap.tab_icon_mine_selected);
+        list.add(R.mipmap.tab_icon_qa_default);
+        list.add(R.mipmap.tab_icon_qa_selected);
+
         list.add(R.mipmap.tab_icon_lesson_default);
         list.add(R.mipmap.tab_icon_lesson_selected);
         list.add(R.mipmap.tab_icon_mine_default);
