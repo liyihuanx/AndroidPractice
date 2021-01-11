@@ -41,6 +41,15 @@ class MyRvLayout extends RecyclerView.LayoutManager {
         return new RecyclerView.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 
+    /**
+     * 设置主动测量规则,适应recyclerView高度为wrap_content
+     * @return
+     */
+    @Override
+    public boolean isAutoMeasureEnabled() {
+        return true;
+    }
+
 
     @Override
     public boolean canScrollVertically() {

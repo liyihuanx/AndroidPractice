@@ -53,8 +53,9 @@ public class MyRvActivity extends AppCompatActivity {
         rvAdapter = new MyRvAdapter();
         rvAdapter.setNewData(list);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        FlowLayoutManager layoutManager = new FlowLayoutManager();
         MyRvLayout myRvLayout = new MyRvLayout(this);
-        rv_layout.setLayoutManager(myRvLayout);
+        rv_layout.setLayoutManager(layoutManager);
         rv_layout.setAdapter(rvAdapter);
     }
 
