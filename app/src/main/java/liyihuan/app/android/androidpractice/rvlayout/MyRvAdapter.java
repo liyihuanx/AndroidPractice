@@ -33,15 +33,15 @@ class MyRvAdapter extends BaseQuickAdapter<Integer, BaseViewHolder> {
         helper.setBackgroundRes(R.id.iv_image,item);
 //        helper.setText(R.id.tv_content, item);
 
-        ViewGroup.LayoutParams layoutParams = helper.itemView.getRootView().getLayoutParams();
-        if (helper.getAdapterPosition() % 3 == 0) {
-            layoutParams.width = ScreenUtils.getScreenWidth(mContext) * 2 / 3;
-            layoutParams.height = ScreenUtils.getScreenWidth(mContext) * 2 / 3;
-        } else {
-            layoutParams.width = ScreenUtils.getScreenWidth(mContext) * 1 / 3;
-            layoutParams.height = ScreenUtils.getScreenWidth(mContext) * 1 / 3;
-        }
-        helper.itemView.getRootView().setLayoutParams(layoutParams);
+//        ViewGroup.LayoutParams layoutParams = helper.itemView.getRootView().getLayoutParams();
+//        if (helper.getAdapterPosition() % 3 == 0) {
+//            layoutParams.width = ScreenUtils.getScreenWidth(mContext) * 2 / 3;
+//            layoutParams.height = ScreenUtils.getScreenWidth(mContext) * 2 / 3;
+//        } else {
+//            layoutParams.width = ScreenUtils.getScreenWidth(mContext) * 1 / 3;
+//            layoutParams.height = ScreenUtils.getScreenWidth(mContext) * 1 / 3;
+//        }
+//        helper.itemView.getRootView().setLayoutParams(layoutParams);
 
     }
 }

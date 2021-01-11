@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.rvlayout;
+package liyihuan.app.android.androidpractice.rvlayout.cardlayout;
 
 import android.content.Context;
 import android.content.res.TypedArray;

@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.rvlayout;
+package liyihuan.app.android.androidpractice.rvlayout.cardlayout;
 
 
 import androidx.collection.SparseArrayCompat;

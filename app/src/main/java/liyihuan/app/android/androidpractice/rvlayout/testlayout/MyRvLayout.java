@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.rvlayout;
+package liyihuan.app.android.androidpractice.rvlayout.testlayout;
 
 import android.content.Context;
 import android.util.Log;
@@ -17,7 +17,7 @@ import liyihuan.app.android.androidpractice.utils.ScreenUtils;
  * @Author: liyihuan
  * @Date: 2020/12/3 21:08
  */
-class MyRvLayout extends RecyclerView.LayoutManager {
+public class MyRvLayout extends RecyclerView.LayoutManager {
     private Context mContext;
     private int lineWidth = 0;
     private int lineHeight = 0;
@@ -178,5 +178,11 @@ class MyRvLayout extends RecyclerView.LayoutManager {
         }
     }
 
+    private int getHorizontalSpace() {
+        return getWidth() - getPaddingLeft() - getPaddingRight();
+    }
 
+    private int getVerticalSpace() {
+        return getHeight() - getPaddingTop() - getPaddingBottom();
+    }
 }

@@ -4,13 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import liyihuan.app.android.androidpractice.R;
+import liyihuan.app.android.androidpractice.rvlayout.myflow.MyFlowLayout;
+import liyihuan.app.android.androidpractice.rvlayout.testlayout.MyRvLayout;
 
 import android.os.Bundle;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class MyRvActivity extends AppCompatActivity {
     RecyclerView rv_layout;
@@ -55,7 +56,9 @@ public class MyRvActivity extends AppCompatActivity {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         FlowLayoutManager layoutManager = new FlowLayoutManager();
         MyRvLayout myRvLayout = new MyRvLayout(this);
-        rv_layout.setLayoutManager(layoutManager);
+        MyFlowLayout myFlowLayout = new MyFlowLayout();
+
+        rv_layout.setLayoutManager(myFlowLayout);
         rv_layout.setAdapter(rvAdapter);
     }
 

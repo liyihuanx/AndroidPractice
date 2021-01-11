@@ -1,11 +1,11 @@
-package liyihuan.app.android.androidpractice.rvlayout;
+package liyihuan.app.android.androidpractice.rvlayout.cardlayout;
 
 import android.graphics.Rect;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.recyclerview.widget.RecyclerView;
+import liyihuan.app.android.androidpractice.rvlayout.cardlayout.Pool;
 
 /**
  * Created by qibin on 16-9-25.
