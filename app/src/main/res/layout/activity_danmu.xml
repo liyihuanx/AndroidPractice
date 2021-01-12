@@ -7,6 +7,24 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <com.example.danmu.danmu.widget.DMSurfaceView
+        android:id="@+id/dmView"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        app:dm_direction="right_left"
+        app:dm_span="2dp"
+        app:dm_v_space="8dp"
+        app:dm_h_space="16dp"
+        app:dm_span_time="16" />
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onClickAdd5NoOver"
+        android:text="轮询的加5个弹幕"/>
+
+
     <com.example.danmu.mydanmu.view.MyDmView
         android:id="@+id/my_dm_view"
         android:layout_width="match_parent"
@@ -22,6 +40,5 @@
         android:id="@+id/btn_stop"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="start"/>
-
+        android:text="stop"/>
 </LinearLayout>

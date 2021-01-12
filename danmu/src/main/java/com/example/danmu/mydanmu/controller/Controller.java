@@ -1,7 +1,9 @@
 package com.example.danmu.mydanmu.controller;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.SurfaceHolder;
@@ -73,6 +75,8 @@ public class Controller implements ControllerInterface {
             return;
         }
         offsetX = offsetX - span;
+        // 清除画布
+        canvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
         canvas.save();
         // 平移offsetX 绘制下一个，offsetX怎么更新??
         canvas.translate(offsetX,0);
@@ -82,7 +86,7 @@ public class Controller implements ControllerInterface {
             canvas.drawBitmap(dmInfo.getBitmap(),dmInfo.getLeft(),dmInfo.getTop(),null);
 
         }
-        waitAddList.clear();
+//        waitAddList.clear();
         canvas.restore();
     }
 
@@ -103,6 +107,7 @@ public class Controller implements ControllerInterface {
                 currentOne.setLeft(lastOne.getRight());
             }
             waitAddList.add(dmList.get(i));
+            dmList.remove(i);
         }
     }
 

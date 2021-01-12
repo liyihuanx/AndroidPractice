@@ -91,19 +91,7 @@ public class DMSurfaceView extends SurfaceView implements SurfaceHolder.Callback
         mSurfaceHolder.setFormat(PixelFormat.TRANSPARENT);
     }
 
-    public void Viewadd(View templateView, DamuBean bean){
-        BaseDmEntity entity = new BaseDmEntity(templateView);
-        entity.setBean(bean);
-        entity.setView(templateView);
-        mController.add(entity);
-        entity.setOnMyClickListener(new onMyClickListener() {
-            @Override
-            public void onClickItem(BaseDmEntity baseDmEntity) {
-                Log.d("QWER", "onClickItem: "+baseDmEntity.getBean().getName());
-            }
-        });
-        onDanMuViewTouchListeners.add(entity);
-    }
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {

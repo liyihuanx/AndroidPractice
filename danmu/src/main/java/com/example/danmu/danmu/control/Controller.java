@@ -57,7 +57,6 @@ public class Controller {
     public void setSize(int width, int height) {
         this.mWidth = width;
         this.mHeight = height;
-        Log.d("QWER", "setSize: " + mWidth);
         initOffset();
     }
 
@@ -88,7 +87,6 @@ public class Controller {
     private long lastTime = 0L;
     private void runTask(Canvas canvas) {
         offset += span;
-        Log.d("QWER", "runTask: " + offset);
         drawDM(canvas, offset, false);
         if (addDMInQueue()) {
 
@@ -111,39 +109,20 @@ public class Controller {
             removeThisEntity = offset < -entity.rect.right;
             if (removeThisEntity) {
                 iterator.remove();
-                if (mOnDMAddListener != null && mAddedMDList.size() == 0) {
-                    getMainHandler().post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mOnDMAddListener.addedAll();
-                        }
-                    });
-                }
             }
             canvas.drawBitmap(entity.bitmap, entity.rect.left, entity.rect.top, null);
         }
-        if (!iterator.hasNext() && first) {
-            if (mOnDMAddListener != null) {
-                getMainHandler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        mOnDMAddListener.addedAll();
-                    }
-                });
-            }
-            first = false;
-        }
+
         canvas.restore();
     }
 
 
-    public void add(final BaseDmEntity entity) {
+    public void add(final View templateView) {
         exec.execute(new Runnable() {
             @Override
             public void run() {
-//                BaseDmEntity entity = new BaseDmEntity(templateView);
+                BaseDmEntity entity = new BaseDmEntity(templateView);
                 addToQueue(entity);
-
             }
         });
     }
