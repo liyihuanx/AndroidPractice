@@ -7,17 +7,12 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_msg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
     <EditText
         android:id="@+id/et_input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@+id/ll_btn_layout"/>
+        android:layout_above="@+id/ll_btn_layout" />
+
 
     <LinearLayout
         android:id="@+id/ll_btn_layout"
@@ -25,35 +20,38 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_im_send_c2c"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="发送"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/btn_im_send_img"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="发送图片"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
 
         <Button
             android:id="@+id/btn_im_refresh"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="50dp"
+            android:layout_weight="1"
             android:text="消息刷新"
-            android:textSize="20dp"
-            />
+            android:textSize="20dp" />
     </LinearLayout>
 
-
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_msg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/et_input"
+        android:layout_marginBottom="20dp" />
 
 
 </RelativeLayout>

@@ -12,6 +12,7 @@ public class MsgBean {
     private String UserName;
     private Bitmap ImgContent;
     private int type;
+    private String msgId;
 
     public String getTextContent() {
         return textContent;
@@ -43,5 +44,13 @@ public class MsgBean {
 
     public void setUserName(String userName) {
         UserName = userName;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
     }
 }

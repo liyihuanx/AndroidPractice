@@ -21,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.example.danmu.danmu.Util;
 import com.google.gson.Gson;
 import com.tencent.imsdk.TIMManager;
@@ -62,7 +63,7 @@ import java.util.List;
 import liyihuan.app.android.androidpractice.R;
 import liyihuan.app.android.androidpractice.imdemo.utils.IMUtil;
 
-public class ImDemoActivity extends AppCompatActivity implements View.OnClickListener {
+public class ImDemoActivity extends AppCompatActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
     Button btn_im_send_c2c,btn_im_refresh,btn_im_send_img;
     private RecyclerView rv_msg;
     private MsgAdapter msgAdapter;
@@ -102,10 +103,71 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         // 登录账号
         IMUtil.loginIM(mUserID);
         // 消息接收
-        IMUtil.receiveAdvancedMsg();
+        receiveAdvancedMsg();
 
+        msgAdapter.setOnItemClickListener(this);
 
     }
+
+    /**
+     * 接收消息
+     */
+    public void receiveAdvancedMsg() {
+        V2TIMManager.getMessageManager().addAdvancedMsgListener(new V2TIMAdvancedMsgListener() {
+            @Override
+            public void onRecvNewMessage(V2TIMMessage msg) {
+                super.onRecvNewMessage(msg);
+                Log.d("QWER", "getGroupID: " + msg.getGroupID());
+                // TODO 解析
+//                IMUtil.decodeMsg(msg);
+                MsgBean msgBean = new MsgBean();
+                msgBean.setTextContent(msg.getTextElem().getText());
+                msgBean.setMsgId(msg.getMsgID());
+                msgBean.setType(1);
+                msgBean.setUserName(msg.getUserID());
+                rvMsgList.add(msgBean);
+                refreshData();
+
+                IMUtil.sendHasRead(mUserID);
+            }
+
+            /**
+             * 发送方感知消息已读
+             * @param receiptList
+             */
+            @Override
+            public void onRecvC2CReadReceipt(List<V2TIMMessageReceipt> receiptList) {
+                // 消息已读
+                super.onRecvC2CReadReceipt(receiptList);
+                // 由于接收方一次性可能会收到多个已读回执，所以这里采用了数组的回调形式
+                for (V2TIMMessageReceipt v2TIMMessageReceipt : receiptList) {
+                    // 消息接收者 receiver
+                    String userID = v2TIMMessageReceipt.getUserID();
+                    // 已读回执时间，聊天窗口中时间戳小于或等于 timestamp 的消息都可以被认为已读
+                    long timestamp = v2TIMMessageReceipt.getTimestamp();
+                }
+                Log.d("QWER", "onRecvC2CReadReceipt: ");
+
+            }
+
+            /**
+             * 消息撤回
+             * @param msgID 撤回的消息ID
+             */
+            @Override
+            public void onRecvMessageRevoked(String msgID) {
+                super.onRecvMessageRevoked(msgID);
+                Log.d("QWER", "onRecvMessageRevoked: " + msgID);
+                for (int i = 0; i < rvMsgList.size(); i++) {
+                    if (rvMsgList.get(i).getMsgId().equals(msgID)) {
+                        rvMsgList.get(i).setTextContent("消息已经被撤回了嘻嘻嘻");
+                    }
+                }
+                refreshData();
+            }
+        });
+    }
+
 
     @Override
     public void onClick(View view) {
@@ -121,15 +183,24 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private V2TIMMessage sendMsg;
+    private String receiver;
+
     private void sendMsg() {
         if (et_input.getText().toString().isEmpty()) {
             Toast.makeText(this, "text is empty", Toast.LENGTH_SHORT).show();
         } else {
-            V2TIMMessage sendMsg = IMUtil.createAdvancedMsg(et_input.getText().toString().trim(), "liyihuanx");
+            if (mUserID.equals("liyihuanx")){
+                receiver = "chenyalunx";
+            } else {
+                receiver = "liyihuanx";
+            }
+            sendMsg = IMUtil.createAdvancedMsg(et_input.getText().toString().trim(), receiver);
             et_input.getText().clear();
             MsgBean msgBean = new MsgBean();
             msgBean.setTextContent(sendMsg.getTextElem().getText());
             msgBean.setType(2);
+            msgBean.setMsgId(sendMsg.getMsgID());
             msgBean.setUserName(sendMsg.getUserID());
             rvMsgList.add(msgBean);
             refreshData();
@@ -143,4 +214,9 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         msgAdapter.notifyDataSetChanged();
     }
 
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        IMUtil.revokeMessage(sendMsg);
+    }
 }

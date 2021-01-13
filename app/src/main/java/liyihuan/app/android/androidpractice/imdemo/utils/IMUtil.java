@@ -14,6 +14,7 @@ import com.tencent.imsdk.v2.V2TIMSDKConfig;
 import com.tencent.imsdk.v2.V2TIMSDKListener;
 import com.tencent.imsdk.v2.V2TIMSendCallback;
 import com.tencent.imsdk.v2.V2TIMTextElem;
+import com.tencent.imsdk.v2.V2TIMValueCallback;
 
 import java.util.List;
 
@@ -81,34 +82,7 @@ public class IMUtil {
         });
     }
 
-    /**
-     * 接收消息
-     */
-    public static void receiveAdvancedMsg() {
-        msgManager.addAdvancedMsgListener(new V2TIMAdvancedMsgListener() {
-            @Override
-            public void onRecvNewMessage(V2TIMMessage msg) {
-                super.onRecvNewMessage(msg);
-                Log.d("QWER", "onRecvNewMessage: " + new Gson().toJson(msg));
-                // TODO 解析
-                decodeMsg(msg);
-            }
 
-            @Override
-            public void onRecvC2CReadReceipt(List<V2TIMMessageReceipt> receiptList) {
-                super.onRecvC2CReadReceipt(receiptList);
-                Log.d("QWER", "onRecvC2CReadReceipt: " + new Gson().toJson(receiptList));
-
-            }
-
-            @Override
-            public void onRecvMessageRevoked(String msgID) {
-                super.onRecvMessageRevoked(msgID);
-                Log.d("QWER", "onRecvMessageRevoked: " + msgID);
-
-            }
-        });
-    }
 
 
     /**
@@ -156,6 +130,77 @@ public class IMUtil {
             default:
                 break;
         }
+    }
+
+    /**
+     *  撤回消息
+     */
+    public static void revokeMessage(V2TIMMessage v2TIMMessage) {
+        V2TIMManager.getMessageManager().revokeMessage(v2TIMMessage, new V2TIMCallback() {
+            @Override
+            public void onError(int code, String desc) {
+                // 撤回消息失败
+            }
+
+            @Override
+            public void onSuccess() {
+                // 撤回消息成功
+                Log.d("QWER", "onSuccess: ");
+            }
+        });
+    }
+
+    /**
+     * 拉取历史消息
+     */
+    public static void HistoryMsg() {
+        // 第一次拉取 lastMsg 传 null，表示从最新的消息开始拉取 20 条消息
+        V2TIMManager.getMessageManager().getGroupHistoryMessageList("groupA", 20, null, new V2TIMValueCallback<List<V2TIMMessage>>() {
+            @Override
+            public void onError(int code, String desc) {
+                // 拉取失败
+            }
+
+            @Override
+            public void onSuccess(List<V2TIMMessage> v2TIMMessages) {
+                // 分页拉取返回的消息默认是按照从新到旧排列
+                if (v2TIMMessages.size() > 0) {
+                    // 获取下一次分页拉取的起始消息
+                    V2TIMMessage lastMsg = v2TIMMessages.get(v2TIMMessages.size() - 1);
+                    // 拉取剩下的20条消息
+                    V2TIMManager.getMessageManager().getGroupHistoryMessageList("groupA", 20, lastMsg, new V2TIMValueCallback<List<V2TIMMessage>>() {
+                        @Override
+                        public void onError(int code, String desc) {
+                            // 拉取消息失败
+                        }
+
+                        @Override
+                        public void onSuccess(List<V2TIMMessage> v2TIMMessages) {
+                            // 拉取消息结束
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    /**
+     * 接收方标记消息已读
+     * @param userId
+     */
+    public static void sendHasRead(String userId){
+        //将来自 haven 的消息均标记为已读
+        V2TIMManager.getMessageManager().markC2CMessageAsRead(userId, new V2TIMCallback() {
+            @Override
+            public void onError(int code, String desc) {
+                // 设置消息已读失败
+            }
+            @Override
+            public void onSuccess() {
+                // 设置消息已读成功
+                Log.d("QWER", "消息已读 ");
+            }
+        });
     }
 
 
