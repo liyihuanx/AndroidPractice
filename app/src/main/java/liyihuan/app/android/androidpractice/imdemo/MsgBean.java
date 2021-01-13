@@ -9,7 +9,9 @@ import android.graphics.Bitmap;
  */
 public class MsgBean {
     private String textContent;
+    private String UserName;
     private Bitmap ImgContent;
+    private int type;
 
     public String getTextContent() {
         return textContent;
@@ -25,5 +27,21 @@ public class MsgBean {
 
     public void setImgContent(Bitmap imgContent) {
         ImgContent = imgContent;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public String getUserName() {
+        return UserName;
+    }
+
+    public void setUserName(String userName) {
+        UserName = userName;
     }
 }

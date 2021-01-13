@@ -52,8 +52,11 @@ public class DanmuActivity extends AppCompatActivity {
 
         myDmView = findViewById(R.id.my_dm_view);
         findViewById(R.id.btn_start).setOnClickListener(v -> {
+
             DmInfo dmInfo = new DmInfo(new DamuView(this));
+            DmInfo dmInfo2 = new DmInfo(new DamuView(this));
             myDmView.getController().addDmItem(dmInfo);
+            myDmView.getController().addDmItem(dmInfo2);
 
             myDmView.getController().startThread();
         });

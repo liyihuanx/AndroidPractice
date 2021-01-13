@@ -107,8 +107,8 @@ public class Controller implements ControllerInterface {
                 currentOne.setLeft(lastOne.getRight());
             }
             waitAddList.add(dmList.get(i));
-            dmList.remove(i);
         }
+        dmList.clear();
     }
 
     /**
@@ -126,6 +126,7 @@ public class Controller implements ControllerInterface {
         dmList.add(item);
         // 如果没在绘制，则开启绘制
         if (!drawThread.isDraw()){
+            offsetX = width;
             drawThread.setDraw(true);
         }
     }

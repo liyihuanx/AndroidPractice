@@ -1,11 +1,11 @@
 package liyihuan.app.android.androidpractice.imdemo;
 
-import android.net.Uri;
 
 import androidx.annotation.NonNull;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
+import com.chad.library.adapter.base.util.MultiTypeDelegate;
 
 import liyihuan.app.android.androidpractice.R;
 
@@ -15,14 +15,27 @@ import liyihuan.app.android.androidpractice.R;
  * description: 类的描述
  */
 public class MsgAdapter extends BaseQuickAdapter<MsgBean, BaseViewHolder> {
+    private static final int TYPE_LEFT = 1;
+    private static final int TYPE_RIGHT = 2;
 
     public MsgAdapter() {
-        super(R.layout.item_msg_adapter);
+        super(null);
+
+        setMultiTypeDelegate(new MultiTypeDelegate<MsgBean>() {
+
+            @Override
+            protected int getItemType(MsgBean msgBean) {
+                return msgBean.getType();
+            }
+        });
+
+        getMultiTypeDelegate().registerItemType(TYPE_LEFT, R.layout.item_chat_type_left)
+                .registerItemType(TYPE_RIGHT, R.layout.item_chat_type_right);
     }
 
     @Override
     protected void convert(@NonNull BaseViewHolder helper, MsgBean item) {
-        helper.setText(R.id.tv_content,item.getTextContent());
-//                .setImageBitmap(R.id.iv_img,item.getImgContent());
+        helper.setText(R.id.tv_user_name,item.getUserName())
+                .setText(R.id.tv_chat_content,item.getTextContent());
     }
 }
