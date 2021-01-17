@@ -4,22 +4,29 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.tencent.imsdk.v2.V2TIMAdvancedMsgListener;
 import com.tencent.imsdk.v2.V2TIMCallback;
+import com.tencent.imsdk.v2.V2TIMConversation;
+import com.tencent.imsdk.v2.V2TIMConversationListener;
+import com.tencent.imsdk.v2.V2TIMConversationResult;
+import com.tencent.imsdk.v2.V2TIMCreateGroupMemberInfo;
+import com.tencent.imsdk.v2.V2TIMGroupInfo;
 import com.tencent.imsdk.v2.V2TIMManager;
 import com.tencent.imsdk.v2.V2TIMMessage;
 import com.tencent.imsdk.v2.V2TIMMessageManager;
-import com.tencent.imsdk.v2.V2TIMMessageReceipt;
 import com.tencent.imsdk.v2.V2TIMSDKConfig;
 import com.tencent.imsdk.v2.V2TIMSDKListener;
 import com.tencent.imsdk.v2.V2TIMSendCallback;
 import com.tencent.imsdk.v2.V2TIMTextElem;
 import com.tencent.imsdk.v2.V2TIMValueCallback;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import liyihuan.app.android.androidpractice.imdemo.GenerateTestUserSig;
-import liyihuan.app.android.androidpractice.imdemo.MsgBean;
+import liyihuan.app.android.androidpractice.imdemo.conversation.ConversationCallback;
+import liyihuan.app.android.androidpractice.imdemo.imchat.IMChatCallback;
 
 /**
  * @author created by liyihuanx
@@ -28,6 +35,8 @@ import liyihuan.app.android.androidpractice.imdemo.MsgBean;
  */
 public class IMUtil {
     private static V2TIMMessageManager msgManager = V2TIMManager.getMessageManager();
+    public static String username = "";
+    public static String to = "";
 
     /**
      * IM 初始化
@@ -150,10 +159,45 @@ public class IMUtil {
         });
     }
 
+
+    public static void getHistoryPersonalMsg(String userID, IMChatCallback callback) {
+        // 第一次拉取 lastMsg 传 null，表示从最新的消息开始拉取 20 条消息
+        V2TIMManager.getMessageManager().getC2CHistoryMessageList(userID, 200, null, new V2TIMValueCallback<List<V2TIMMessage>>() {
+            @Override
+            public void onError(int code, String desc) {
+                // 拉取失败
+            }
+
+            @Override
+            public void onSuccess(List<V2TIMMessage> v2TIMMessages) {
+                // 分页拉取返回的消息默认是按照从新到旧排列
+                if (v2TIMMessages.size() > 0) {
+                    callback.getC2CHistory(v2TIMMessages);
+                    // 获取下一次分页拉取的起始消息
+                    V2TIMMessage lastMsg = v2TIMMessages.get(v2TIMMessages.size() - 1);
+                    // 拉取剩下的20条消息
+                    V2TIMManager.getMessageManager().getC2CHistoryMessageList(userID, 200, lastMsg, new V2TIMValueCallback<List<V2TIMMessage>>() {
+                        @Override
+                        public void onError(int code, String desc) {
+                            // 拉取消息失败
+                        }
+
+                        @Override
+                        public void onSuccess(List<V2TIMMessage> v2TIMMessages) {
+                            // 拉取消息结束
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+
+
     /**
-     * 拉取历史消息
+     * 拉取群聊历史消息
      */
-    public static void HistoryMsg() {
+    public static void HistoryGroupMsg() {
         // 第一次拉取 lastMsg 传 null，表示从最新的消息开始拉取 20 条消息
         V2TIMManager.getMessageManager().getGroupHistoryMessageList("groupA", 20, null, new V2TIMValueCallback<List<V2TIMMessage>>() {
             @Override
@@ -204,4 +248,113 @@ public class IMUtil {
     }
 
 
+    public static void getConversationHistory(ConversationCallback callback){
+        // 1. 设置会话监听
+        V2TIMManager.getConversationManager().setConversationListener(new V2TIMConversationListener() {
+            // 3.1 收到会话新增的回调
+            @Override
+            public void onNewConversation(List<V2TIMConversation> conversationList) {
+                updateConversation(conversationList, true,callback);
+            }
+
+            // 3.2 收到会话更新的回调
+            @Override
+            public void onConversationChanged(List<V2TIMConversation> conversationList) {
+                updateConversation(conversationList, true,callback);
+            }
+        });
+        // 2. 先拉取50个本地会话做 UI 展示，nextSeq 第一次拉取传0
+        V2TIMManager.getConversationManager().getConversationList(0, 20,
+                new V2TIMValueCallback<V2TIMConversationResult>() {
+                    @Override
+                    public void onError(int code, String desc) {
+                        // 拉取会话列表失败
+                    }
+
+                    @Override
+                    public void onSuccess(V2TIMConversationResult v2TIMConversationResult) {
+                        Log.d("QWER", "onSuccess: " + new Gson().toJson(v2TIMConversationResult.getConversationList()));
+
+                        // 拉取成功，更新 UI 会话列表
+                        updateConversation(v2TIMConversationResult.getConversationList(), false,callback);
+                        if (!v2TIMConversationResult.isFinished()) {
+                            V2TIMManager.getConversationManager().getConversationList(v2TIMConversationResult.getNextSeq(), 20, new V2TIMValueCallback<V2TIMConversationResult>() {
+                                @Override
+                                public void onError(int code, String desc) {
+                                }
+
+                                @Override
+                                public void onSuccess(V2TIMConversationResult v2TIMConversationResult) {
+                                    // 拉取成功，更新 UI 会话列表
+                                    updateConversation(v2TIMConversationResult.getConversationList(), false,callback);
+                                }
+                            });
+                        }
+                    }
+                });
+    }
+
+
+    private static void updateConversation(List<V2TIMConversation> convList, boolean needSort,ConversationCallback callback) {
+        for (int i = 0; i < convList.size(); i++) {
+            V2TIMConversation conv = convList.get(i);
+            boolean isExit = false;
+            for (int j = 0; j < convList.size(); j++) {
+                V2TIMConversation uiConv = convList.get(j);
+                // UI 会话列表存在该会话，则替换
+                if (uiConv.getConversationID().equals(conv.getConversationID())) {
+                    convList.set(j, conv);
+                    isExit = true;
+                    break;
+                }
+            }
+            // UI 会话列表没有该会话，则新增
+            if (!isExit) {
+                convList.add(conv);
+            }
+        }
+        // 4. 按照会话 lastMessage 的 timestamp 对 UI 会话列表做排序并更新界面
+        if (needSort) {
+            Collections.sort(convList, new Comparator<V2TIMConversation>() {
+                @Override
+                public int compare(V2TIMConversation o1, V2TIMConversation o2) {
+                    if (o1.getLastMessage().getTimestamp() > o2.getLastMessage().getTimestamp()) {
+                        return -1;
+                    } else {
+                        return 1;
+                    }
+                }
+            });
+        }
+        callback.getConversation(convList);
+        Log.d("QWER", "onSuccess: " + new Gson().toJson(convList));
+
+    }
+
+
+    public static void createGroup(String GroupName,String GroupType,List<V2TIMCreateGroupMemberInfo> memberInfoList){
+        V2TIMGroupInfo v2TIMGroupInfo = new V2TIMGroupInfo();
+        v2TIMGroupInfo.setGroupName(GroupName);
+        v2TIMGroupInfo.setGroupType(GroupType);
+        v2TIMGroupInfo.setIntroduction("this is a test Work group");
+        // TODO 加入成员
+//        List<V2TIMCreateGroupMemberInfo> memberInfoList = new ArrayList<>();
+//        V2TIMCreateGroupMemberInfo memberA = new V2TIMCreateGroupMemberInfo();
+//        memberA.setUserID("vinson");
+//        V2TIMCreateGroupMemberInfo memberB = new V2TIMCreateGroupMemberInfo();
+//        memberB.setUserID("park");
+//        memberInfoList.add(memberA);
+//        memberInfoList.add(memberB);
+        V2TIMManager.getGroupManager().createGroup(
+                v2TIMGroupInfo, memberInfoList, new V2TIMValueCallback<String>() {
+                    @Override
+                    public void onError(int code, String desc) {
+                        // 创建失败
+                    }
+                    @Override
+                    public void onSuccess(String groupID) {
+                        // 创建成功
+                    }
+                });
+    }
 }

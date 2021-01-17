@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.imdemo;
+package liyihuan.app.android.androidpractice.imdemo.imchat;
 
 import android.graphics.Bitmap;
 
