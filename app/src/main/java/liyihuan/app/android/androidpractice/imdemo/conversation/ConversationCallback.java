@@ -14,4 +14,6 @@ public interface ConversationCallback {
 
     void getConversation(List<V2TIMConversation> convList);
 
+    void muteMember();
+
 }

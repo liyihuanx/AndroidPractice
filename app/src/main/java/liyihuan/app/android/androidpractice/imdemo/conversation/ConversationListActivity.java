@@ -39,6 +39,11 @@ public class ConversationListActivity extends AppCompatActivity {
                     conversationAdapter.setNewData(convList);
                     conversationAdapter.notifyDataSetChanged();
                 }
+
+                @Override
+                public void muteMember() {
+
+                }
             });
         });
 

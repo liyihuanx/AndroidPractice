@@ -1,5 +1,6 @@
 package liyihuan.app.android.androidpractice.imdemo.conversation;
 
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -29,8 +30,10 @@ class ConversationAdapter extends BaseQuickAdapter<V2TIMConversation, BaseViewHo
                 .load(item.getFaceUrl())
                 .into(iv_head);
 
-        helper.setText(R.id.tv_name, item.getShowName())
-                .setText(R.id.tv_last_msg, item.getLastMessage().getTextElem().getText());
+        helper.setText(R.id.tv_name, item.getShowName());
+//        if (!TextUtils.isEmpty(item.getLastMessage().getTextElem().getText())){
+//            helper.setText(R.id.tv_last_msg, item.getLastMessage().getTextElem().getText());
+//        }
 
     }
 }

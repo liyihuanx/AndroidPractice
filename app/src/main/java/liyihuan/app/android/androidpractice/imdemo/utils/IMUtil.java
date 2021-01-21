@@ -331,8 +331,13 @@ public class IMUtil {
 
     }
 
-
-    public static void createGroup(String GroupName,String GroupType,List<V2TIMCreateGroupMemberInfo> memberInfoList){
+    /**
+     * 创建群
+     * @param GroupName
+     * @param GroupType
+     * @param memberInfoList
+     */
+    public static void createGroup(String GroupName, String GroupType, List<V2TIMCreateGroupMemberInfo> memberInfoList) {
         V2TIMGroupInfo v2TIMGroupInfo = new V2TIMGroupInfo();
         v2TIMGroupInfo.setGroupName(GroupName);
         v2TIMGroupInfo.setGroupType(GroupType);
@@ -356,5 +361,26 @@ public class IMUtil {
                         // 创建成功
                     }
                 });
+    }
+
+    /**
+     * 禁言某人
+     * @param GroupName
+     * @param memberID
+     * @param second
+     * @param callback
+     */
+    public static void muteGroupMember(String GroupName,String memberID,int second,ConversationCallback callback){
+        V2TIMManager.getGroupManager().muteGroupMember(GroupName, memberID, second, new V2TIMCallback() {
+            @Override
+            public void onError(int code, String desc) {
+
+            }
+
+            @Override
+            public void onSuccess() {
+
+            }
+        });
     }
 }
