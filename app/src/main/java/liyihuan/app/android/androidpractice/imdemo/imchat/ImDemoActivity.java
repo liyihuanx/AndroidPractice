@@ -1,74 +1,39 @@
-package liyihuan.app.android.androidpractice.imdemo;
+package liyihuan.app.android.androidpractice.imdemo.imchat;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.annotation.TargetApi;
-import android.content.ContentUris;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.example.danmu.danmu.Util;
 import com.google.gson.Gson;
-import com.tencent.imsdk.TIMManager;
-import com.tencent.imsdk.conversation.Msg;
 import com.tencent.imsdk.v2.V2TIMAdvancedMsgListener;
-import com.tencent.imsdk.v2.V2TIMCallback;
-import com.tencent.imsdk.v2.V2TIMCustomElem;
-import com.tencent.imsdk.v2.V2TIMDownloadCallback;
-import com.tencent.imsdk.v2.V2TIMElem;
-import com.tencent.imsdk.v2.V2TIMFaceElem;
-import com.tencent.imsdk.v2.V2TIMFileElem;
-import com.tencent.imsdk.v2.V2TIMGroupChangeInfo;
-import com.tencent.imsdk.v2.V2TIMGroupMemberChangeInfo;
-import com.tencent.imsdk.v2.V2TIMGroupMemberInfo;
-import com.tencent.imsdk.v2.V2TIMGroupTipsElem;
-import com.tencent.imsdk.v2.V2TIMImageElem;
-import com.tencent.imsdk.v2.V2TIMLocationElem;
 import com.tencent.imsdk.v2.V2TIMManager;
 import com.tencent.imsdk.v2.V2TIMMessage;
-import com.tencent.imsdk.v2.V2TIMMessageManager;
 import com.tencent.imsdk.v2.V2TIMMessageReceipt;
-import com.tencent.imsdk.v2.V2TIMSDKConfig;
-import com.tencent.imsdk.v2.V2TIMSDKListener;
-import com.tencent.imsdk.v2.V2TIMSendCallback;
-import com.tencent.imsdk.v2.V2TIMSimpleMsgListener;
-import com.tencent.imsdk.v2.V2TIMSoundElem;
-import com.tencent.imsdk.v2.V2TIMTextElem;
-import com.tencent.imsdk.v2.V2TIMUserInfo;
-import com.tencent.imsdk.v2.V2TIMValueCallback;
-import com.tencent.imsdk.v2.V2TIMVideoElem;
-import com.tencent.openqq.protocol.imsdk.msg;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import liyihuan.app.android.androidpractice.R;
+import liyihuan.app.android.androidpractice.imdemo.conversation.ConversationListActivity;
 import liyihuan.app.android.androidpractice.imdemo.utils.IMUtil;
 
 public class ImDemoActivity extends AppCompatActivity implements View.OnClickListener, BaseQuickAdapter.OnItemClickListener {
-    Button btn_im_send_c2c,btn_im_refresh,btn_im_send_img;
+    Button btn_im_send_c2c, btn_im_refresh, btn_im_send_img;
     private RecyclerView rv_msg;
     private MsgAdapter msgAdapter;
     private List<MsgBean> rvMsgList;
     private EditText et_input;
+    private TextView tv_back;
 
     private String mUserID;
 
@@ -86,6 +51,9 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         btn_im_send_img = findViewById(R.id.btn_im_send_img);
         btn_im_send_img.setOnClickListener(this);
 
+        tv_back = findViewById(R.id.tv_back);
+        tv_back.setOnClickListener(this);
+
         et_input = findViewById(R.id.et_input);
 
         msgAdapter = new MsgAdapter();
@@ -95,18 +63,19 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
 
         rvMsgList = new ArrayList<>();
 
-        Intent intent = getIntent();
+        mUserID = IMUtil.username;
+        receiver = IMUtil.to;
 
-        mUserID = intent.getStringExtra("phone");
-        // IM初始化
-        IMUtil.initIM(this);
-        // 登录账号
-        IMUtil.loginIM(mUserID);
         // 消息接收
         receiveAdvancedMsg();
 
         msgAdapter.setOnItemClickListener(this);
 
+        IMUtil.getHistoryPersonalMsg(receiver, v2TIMMessages -> {
+            for (int i = 0; i < v2TIMMessages.size(); i++) {
+                Log.d("QWER", "getC2CHistory: " + v2TIMMessages.get(i).getTextElem().getText());
+            }
+        });
     }
 
     /**
@@ -117,7 +86,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onRecvNewMessage(V2TIMMessage msg) {
                 super.onRecvNewMessage(msg);
-                Log.d("QWER", "getGroupID: " + msg.getGroupID());
                 // TODO 解析
 //                IMUtil.decodeMsg(msg);
                 MsgBean msgBean = new MsgBean();
@@ -146,8 +114,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
                     // 已读回执时间，聊天窗口中时间戳小于或等于 timestamp 的消息都可以被认为已读
                     long timestamp = v2TIMMessageReceipt.getTimestamp();
                 }
-                Log.d("QWER", "onRecvC2CReadReceipt: ");
-
             }
 
             /**
@@ -157,7 +123,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
             @Override
             public void onRecvMessageRevoked(String msgID) {
                 super.onRecvMessageRevoked(msgID);
-                Log.d("QWER", "onRecvMessageRevoked: " + msgID);
                 for (int i = 0; i < rvMsgList.size(); i++) {
                     if (rvMsgList.get(i).getMsgId().equals(msgID)) {
                         rvMsgList.get(i).setTextContent("消息已经被撤回了嘻嘻嘻");
@@ -171,13 +136,15 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.btn_im_send_c2c:
                 sendMsg();
                 break;
             case R.id.btn_im_refresh:
                 refreshData();
                 break;
+            case R.id.tv_back:
+                finish();
             default:
                 break;
         }
@@ -190,11 +157,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
         if (et_input.getText().toString().isEmpty()) {
             Toast.makeText(this, "text is empty", Toast.LENGTH_SHORT).show();
         } else {
-            if (mUserID.equals("liyihuanx")){
-                receiver = "chenyalunx";
-            } else {
-                receiver = "liyihuanx";
-            }
             sendMsg = IMUtil.createAdvancedMsg(et_input.getText().toString().trim(), receiver);
             et_input.getText().clear();
             MsgBean msgBean = new MsgBean();
@@ -219,4 +181,6 @@ public class ImDemoActivity extends AppCompatActivity implements View.OnClickLis
     public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
         IMUtil.revokeMessage(sendMsg);
     }
+
+
 }
