@@ -24,17 +24,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import com.example.planet.view.SoulPlanetsView;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 
 import liyihuan.app.android.androidpractice.R;
-import liyihuan.app.android.androidpractice.match.mPlanetAdapter;
 
 /**
  * @author created by liyihuanx
