@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="liyihuan.app.android.androidpractice">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".live.LiveActivity">
+<!--        <activity android:name=".live.LiveActivity"/>-->
+        <activity android:name=".video.VoiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -17,12 +20,12 @@
             </intent-filter>
         </activity>
         <activity android:name=".imdemo.conversation.ConversationListActivity" />
-        <activity android:name=".imdemo.login.ImLoginActivity">
-        </activity>
+        <activity android:name=".imdemo.login.ImLoginActivity"/>
+        <activity android:name=".video.LocalVideoActivity"/>
         <activity android:name=".rvlayout.MyRvActivity" />
         <activity android:name=".lifecycle.LifeActivity" />
         <activity android:name=".danmu.DanmuActivity" />
-        <activity android:name=".match.PlanetActivity" />
+        <activity android:name=".planet.PlanetActivity" />
         <activity android:name=".imdemo.imchat.ImDemoActivity" />
         <activity android:name=".camera.CameraDemo" />
         <activity android:name=".tarotview.TarotActivity" />
@@ -43,7 +46,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

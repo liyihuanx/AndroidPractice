@@ -1,16 +1,12 @@
-package liyihuan.app.android.androidpractice.match;
+package liyihuan.app.android.androidpractice.planet;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.planet.view.SoulPlanetsView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import liyihuan.app.android.androidpractice.R;
 

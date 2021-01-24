@@ -1,8 +1,7 @@
-package liyihuan.app.android.androidpractice.match
+package liyihuan.app.android.androidpractice.planet
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import liyihuan.app.android.androidpractice.R
