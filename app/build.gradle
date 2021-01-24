@@ -14,6 +14,12 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [moduleName: project.getName(), packageNameForAPT: "liyihuan.app.android.androidpractice"]
+            }
+        }
+
         ndk {
             abiFilters "armeabi", "armeabi-v7a", "arm64-v8a"
         }
@@ -62,6 +68,12 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     //建议导2.7版本-（稳定功能多）
     compile 'com.google.code.gson:gson:2.7'
+
+    //  arouter 专用 注解模块
+    implementation project(":mrouter_annotation")
+
+    // arouter 专用 注解处理器
+    annotationProcessor project(':mrouter_compiler')
 }
 repositories {
     mavenCentral()

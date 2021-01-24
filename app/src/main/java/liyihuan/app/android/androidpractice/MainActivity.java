@@ -7,6 +7,7 @@ import liyihuan.app.android.androidpractice.fragment.HomeFragment;
 import liyihuan.app.android.androidpractice.fragment.MineFragment;
 import liyihuan.app.android.androidpractice.fragment.ThreeFragment;
 import liyihuan.app.android.androidpractice.fragment.TwoFragment;
+import liyihuan.app.android.mrouter_annotation.MRouter;
 
 import android.os.Bundle;
 import android.view.View;

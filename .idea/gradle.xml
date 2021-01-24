@@ -13,6 +13,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/danmu" />
+            <option value="$PROJECT_DIR$/mrouter_annotation" />
+            <option value="$PROJECT_DIR$/mrouter_compiler" />
             <option value="$PROJECT_DIR$/planet" />
           </set>
         </option>

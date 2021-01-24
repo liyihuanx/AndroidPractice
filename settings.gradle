@@ -1,3 +1,5 @@
+include ':mrouter_annotation'
+include ':mrouter_compiler'
 include ':danmu'
 include ':planet'
 include ':app'

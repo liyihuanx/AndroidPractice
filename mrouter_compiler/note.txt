@@ -1,0 +1,60 @@
+// Group模板
+ public class ARouter$$Group$$app implements ARouterGroup {
+   @Override
+   public Map<String, Class<? extends ARouterPath>> getGroupMap() {
+     Map<String, Class<? extends ARouterPath>> groupMap = new HashMap<>();
+     groupMap.put("app", ARouter$$Path$$app.class);
+     return groupMap;
+   }
+ }
+
+// Path模板
+ public class ARouter$$Path$$app implements ARouterPath {
+   @Override
+   public Map<String, RouterBean> getPathMap() {
+     Map<String, RouterBean> pathMap = new HashMap<>();
+     pathMap.put("/app/MainActivity", RouterBean.create(RouterBean.TypeEnum.ACTIVITY, MainActivity.class, "/app/MainActivity", "app"));
+     return pathMap;
+   }
+ }
+
+
+
+ // JavaPoet 方法
+            /*public class JavaPoet extends AppCompatActivity {
+                public void JavaPoetActivity(Bundle savedInstanceState) {
+                    System.out.println("liyihuanx");
+                }
+            }*/
+
+            // 方法： methodBuilder(方法名)
+            //          .addModifiers(方法类型)
+            //          .returns(返回类型)
+            //          .addParameter(参数)
+            //          .addStatement(方法语句)
+            //          .build();
+            MethodSpec methodSpec = MethodSpec.methodBuilder("JavaPoetActivity")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(ClassName.get("android.os", "Bundle"), "savedInstanceState")
+                    .addStatement("System.out.println($S)","liyihuanx")
+                    .returns(void.class)
+                    .build();
+
+            // 类: classBuilder(类名)
+            //        .addModifiers(方法类型)
+            //        .superclass(继承的类)
+            //        .addMethod(添加写好的方法)
+            TypeSpec clazz = TypeSpec.classBuilder("JavaPoet")
+                    .addMethod(methodSpec)
+                    .superclass(ClassName.get("androidx.appcompat.app", "AppCompatActivity"))
+                    .addModifiers(Modifier.PUBLIC)
+                    .build();
+
+            // 包：
+            JavaFile javaPort = JavaFile.builder("com.example.myjavapoet123", clazz).build();
+
+            try {
+                javaPort.writeTo(filer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
