@@ -12,8 +12,7 @@ public class RouterBean {
 
     // 为了以后的发展
     public enum TypeEnum {
-        ACTIVITY,
-        FRAGMENT
+        ACTIVITY
     }
 
     private TypeEnum typeEnum; // 枚举类型：Activity
@@ -142,6 +141,8 @@ public class RouterBean {
         return "RouterBean{" +
                 "path='" + path + '\'' +
                 ", group='" + group + '\'' +
+                ", typeEnum='" + typeEnum + '\'' +
+                ", myClass='" + myClass + '\'' +
                 '}';
     }
 }

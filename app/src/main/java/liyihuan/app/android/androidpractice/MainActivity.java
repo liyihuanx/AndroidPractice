@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+@MRouter(path = "app/MainActivity")
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     HomeFragment homeFragment;

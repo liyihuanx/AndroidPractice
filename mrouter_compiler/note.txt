@@ -18,6 +18,32 @@
    }
  }
 
+// 使用路由的跳转方法
+  ARouter$$Group$$personal group$$personal = new ARouter$$Group$$personal(); // Group.class对象
+  Map<String, Class<? extends ARouterPath>> groupMap = group$$personal.getGroupMap(); // 获取Map
+  Class<? extends ARouterPath> myClass = groupMap.get("personal");  //  获取path.class
+  try {
+     ARouter$$Path$$personal path = (ARouter$$Path$$personal) myClass.newInstance(); // myClass.newInstance() --> path.class对象
+     Map<String, RouterBean> pathMap = path.getPathMap();   // 获取Map
+     RouterBean bean = pathMap.get("/personal/Personal_MainActivity");
+     if (bean != null) {
+          Intent intent = new Intent(this, bean.getMyClass());
+          startActivity(intent);
+     }
+
+  } catch (Exception e) {
+     e.printStackTrace();
+  }
+
+  分析：
+  @MRouter(path = "app/MainActivity")
+  Group.get("app")  ----> 获取到Group = "app" 的path.class
+  path.class 里面有 ---> Map<String, RouterBean> pathMap
+  pathMap.get("path") ---> RouterBean
+  RouterBean.getClass() ---> 获取使用了@MRouter的activity
+  再用intent跳转
+
+// path的javaPoet
 
 
  // JavaPoet 方法
