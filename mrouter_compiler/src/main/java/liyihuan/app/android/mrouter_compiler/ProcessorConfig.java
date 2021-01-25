@@ -11,4 +11,22 @@ public interface ProcessorConfig {
 
     // Activity全类名
     public static final String ACTIVITY_PACKAGE = "android.app.Activity";
+
+    // 生成的PATH文件的类名
+    public static final String CLASS_PATH = "MRouter$$PATH";
+
+    // 生成的PATH方法名
+    public static final String FUN_PATH = "getPathMap";
+
+    // 生成的PATH方法的返回值
+    public static final String RETURN_PATH = "pathMap";
+
+    // 生成的GROUP文件的类名
+    public static final String CLASS_GROUP = "MRouter$$GROUP";
+
+    // 生成的GROUP方法名
+    public static final String FUN_GROUP = "getGroupMap";
+
+    // 生成的GROUP方法的返回值
+    public static final String RETURN_GROUP = "groupMap";
 }

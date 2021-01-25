@@ -23,6 +23,15 @@ public class jumpModule {
 //        }
 //    }
 
+    // Group模板
+//    public class ARouter$$Group$$order implements ARouterGroup {
+//        @Override
+//        public Map<String, Class<? extends ARouterPath>> getGroupMap() {
+//            Map<String, Class<? extends ARouterPath>> groupMap = new HashMap<>();
+//            groupMap.put("order", ARouter$$Path$$order.class);
+//            return groupMap;
+//        }
+//    }
     // HashMap<Group,path.class>  ----> 一个Group,对应多个path，一个path对应一个RouterBean
     //  <app,HashMap<MainActivity,info>>
     //  <app,HashMap<Main2Activity,info2>>

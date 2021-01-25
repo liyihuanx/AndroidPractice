@@ -9,7 +9,9 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -73,6 +75,9 @@ public class MRouterProcessor extends AbstractProcessor {
     // （模块传递过来的） 包名
     private String aptPackage;
 
+    // 仓库一  PATH
+    private Map<String, List<RouterBean>> mAllPathMap = new HashMap<>();
+
     /**
      * 初始化
      * @param processingEnvironment
@@ -109,8 +114,6 @@ public class MRouterProcessor extends AbstractProcessor {
         // 获取Activity type
         TypeMirror activityMirror = elementTool.getTypeElement(ProcessorConfig.ACTIVITY_PACKAGE).asType();
 
-
-
         // 获取所有被 @ARouter 注解的 元素集合
         Set<? extends Element> elements = roundEnvironment.getElementsAnnotatedWith(MRouter.class);
         for (Element element : elements) {
@@ -142,23 +145,36 @@ public class MRouterProcessor extends AbstractProcessor {
             }
 
             // 检查一下Path，顺便给Group赋值
-            if (checkPathAndGroup(routerBean)){
-                // path ok 保存在HashMap仓库里面
+            if (checkPathAndGroup(routerBean)) {
+                // path ok -->  保存在HashMap仓库里面
+                // HashMap<String,List<routerBean>> {
+                //      "app", List<routerBean> ---> MainActivity，Main2Activity 等路由信息
+                //      "order", List<routerBean>  ---> OrderActivity, Order2Activity
+                //      "mine", List<routerBean>  ---> MineActivity, Mine2Activity
+                // }
 
+                // 获取group下的list
+                List<RouterBean> routerBeanList = mAllPathMap.get(routerBean.getGroup());
+                // 没有list，创建然后添加
+                if (routerBeanList.isEmpty()){
+                    routerBeanList = new ArrayList<>();
+                    routerBeanList.add(routerBean);
+                    mAllPathMap.put(routerBean.getGroup(),routerBeanList);
+                } else {
+                    routerBeanList.add(routerBean);
+                }
             } else {
-
+                messager.printMessage(Diagnostic.Kind.ERROR, "path 不对啊！");
             }
+        } // for end
 
-
-//            try {
-//                createPath();
-//                messager.printMessage(Diagnostic.Kind.NOTE, "生成path.class文件成功~：");
-//            } catch (IOException e) {
-//                messager.printMessage(Diagnostic.Kind.ERROR, "生成path.class文件出错！：" + e.getMessage());
-//            }
-
-
+        // 生成PATH文件
+        try {
+            createPathFile();
+        } catch (IOException e) {
+            messager.printMessage(Diagnostic.Kind.ERROR, "生成path出异常：" + e.getMessage());
         }
+
 
         return true;
     }
@@ -172,7 +188,11 @@ public class MRouterProcessor extends AbstractProcessor {
         return true;
     }
 
-    private void createPath() throws IOException {
+    /**
+     * 给每个Activity生成对应的path类
+     * @throws IOException
+     */
+    private void createPathFile() throws IOException {
         // Path模板
             /*public class ARouter$$Path$$app implements ARouterPath {
                 @Override
@@ -197,8 +217,9 @@ public class MRouterProcessor extends AbstractProcessor {
                 ClassName.get(String.class), // Map<String,
                 ClassName.get(RouterBean.class) // Map<String, RouterBean>
         );
-
-        MethodSpec.Builder methodSpec = MethodSpec.methodBuilder("getPathMap")
+        // public class ARouter$$Path$$app implements ARouterPath
+        MethodSpec.Builder methodSpec = MethodSpec.methodBuilder(ProcessorConfig.FUN_PATH)
+                .addAnnotation(Override.class) // 给方法上添加注解
                 .addModifiers(Modifier.PUBLIC)
                 .returns(methodReturn);
 
@@ -207,40 +228,50 @@ public class MRouterProcessor extends AbstractProcessor {
                 ClassName.get(Map.class),
                 ClassName.get(String.class),
                 ClassName.get(RouterBean.class),
-                "pathMap",
+                ProcessorConfig.RETURN_PATH,
                 ClassName.get(HashMap.class));
+
+
+        // 第一个循环：Map<String, List<RouterBean>>
+        for (Map.Entry<String, List<RouterBean>> entry :mAllPathMap.entrySet()){
+            // 第二个循环：
+            // entry.getKey() = "app","order"
+            // entry.getValue() = List<RouterBean>
+            for (RouterBean routerBean : entry.getValue()){
+            // 每个path文件,看起来都只有一句话不一样....
 
             /* pathMap.put("/app/MainActivity",
                     RouterBean.create(RouterBean.TypeEnum.ACTIVITY,
                     MainActivity.class, "/app/MainActivity", "app")) */
 
-//        methodSpec.addStatement("$N.put($S, $T.create($T.$L, $T.class, $S, $S))",
-//                "pathMap",  // 常量
-//                "path",  // path
-//                ClassName.get(RouterBean.class),
-//                ClassName.get(RouterBean.TypeEnum.class),
-//                "ACTIVITY",
-//                ClassName.get(routerBean)
-//                "MainActivity",
-//                "path",
-//                "group"
-//        );
-
-        methodSpec.addStatement("return pathMap");
-        MethodSpec build = methodSpec.build();
+                methodSpec.addStatement("$N.put($S, $T.create($T.$L, $T.class, $S, $S))",
+                        ProcessorConfig.RETURN_PATH,  // 返回值，常量 pathMap.put(
+                        routerBean.getPath(),  // path pathMap.put(path,
+                        ClassName.get(RouterBean.class), // pathMap.put(path,RouterBean.create())
+                        ClassName.get(RouterBean.TypeEnum.class), // RouterBean.create( RouterBean.TypeEnum
+                        routerBean.getTypeEnum(), // ==>"Activity", RouterBean.create( RouterBean.TypeEnum.ACTIVITY,
+                        ClassName.get((TypeElement) routerBean.getElement()), // MainActivity.class, // ==>"MainActivity", RouterBean.create( RouterBean.TypeEnum.ACTIVITY,MainActivity.class
+                        routerBean.getPath(),
+                        routerBean.getGroup()
+                );
+                methodSpec.addStatement("return $S", ProcessorConfig.RETURN_PATH);
+                MethodSpec build = methodSpec.build();
 
 
-        // 类: classBuilder(类名)
-        //        .addModifiers(方法类型)
-        //        .superclass(继承的类)
-        //        .addMethod(添加写好的方法)
-        // public class ARouter$$Path$$app implements ARouterPath {
-        TypeSpec typeSpec = TypeSpec.classBuilder("ARouter$$Path$$app")
-                .addModifiers(Modifier.PUBLIC)
-                .addMethod(build)
-                .build();
-        // 包
-        JavaFile javaPort = JavaFile.builder("com.example.myJavapoet", typeSpec).build();
-        javaPort.writeTo(filer);
+                // 类: classBuilder(类名)
+                //        .addModifiers(方法类型)
+                //        .superclass(继承的类)
+                //        .addMethod(添加写好的方法)
+                // public class ARouter$$Path$$app implements ARouterPath {
+                TypeSpec typeSpec = TypeSpec.classBuilder(ProcessorConfig.CLASS_PATH + entry.getKey())
+                        .addModifiers(Modifier.PUBLIC)
+                        .addMethod(build)
+                        .build();
+                // 包
+                JavaFile javaPort = JavaFile.builder("com.example.myJavapoet", typeSpec).build();
+                javaPort.writeTo(filer);
+            }
+        } // for end
+
     }
 }
