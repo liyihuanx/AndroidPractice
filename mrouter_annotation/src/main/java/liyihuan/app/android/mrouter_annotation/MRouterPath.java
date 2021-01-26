@@ -11,5 +11,5 @@ import java.util.Map;
  */
 public interface MRouterPath {
 
-    Map<String, List<RouterBean>> getMRouterPath();
+    Map<String, RouterBean> getPathMap();
 }

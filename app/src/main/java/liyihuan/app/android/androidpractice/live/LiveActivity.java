@@ -12,7 +12,7 @@ import com.tencent.rtmp.TXLivePushConfig;
 import com.tencent.rtmp.TXLivePusher;
 import com.tencent.rtmp.ui.TXCloudVideoView;
 
-@MRouter(path = "app/LiveActivity")
+@MRouter(path = "/app/LiveActivity")
 public class LiveActivity extends AppCompatActivity {
 
     public static final String LicenseKey = "942f2e63c63754cb17f5da87fa50dfd4";

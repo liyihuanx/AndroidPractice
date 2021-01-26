@@ -16,7 +16,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName(), packageNameForAPT: "liyihuan.app.android.androidpractice"]
+                arguments = [moduleName: project.getName(), packageNameForAPT: "liyihuan.app.android.androidpractice.apt"]
             }
         }
 

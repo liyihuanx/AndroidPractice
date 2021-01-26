@@ -11,6 +11,6 @@ import java.util.Map;
  */
 public interface MRouterGroup {
 
-    Map<String, List<RouterBean>> getMRouterGroup();
+    Map<String, Class<? extends MRouterPath>> getGroupMap();
 
 }

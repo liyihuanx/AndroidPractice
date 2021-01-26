@@ -27,7 +27,7 @@ public class mKotlinAdapter :BaseQuickAdapter<UserBean,BaseViewHolder>(null){
    }
 
     override fun convert(helper: BaseViewHolder, item: UserBean?) {
-        helper!!.setText(R.id.name, item!!.username)
+        helper.setText(R.id.name, item!!.username)
         when (helper.itemViewType) {
             TYPE_ONE -> {
             }
