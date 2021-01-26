@@ -1,7 +1,9 @@
-package liyihuan.app.android.mrouter_annotation;
+package liyihuan.app.android.mrouter_api;
 
 import java.util.List;
 import java.util.Map;
+
+import liyihuan.app.android.mrouter_annotation.RouterBean;
 
 /**
  * @ClassName: MRouterPath

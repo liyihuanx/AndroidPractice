@@ -74,6 +74,7 @@ dependencies {
 
     // arouter 专用 注解处理器
     annotationProcessor project(':mrouter_compiler')
+    api project(":mrouter_api")
 }
 repositories {
     mavenCentral()

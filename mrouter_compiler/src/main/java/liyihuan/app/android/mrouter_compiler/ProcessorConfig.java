@@ -14,6 +14,8 @@ public interface ProcessorConfig {
     // Activity全类名
     public static final String ACTIVITY_PACKAGE = "android.app.Activity";
 
+    String MROUTER_API = "liyihuan.app.android.mrouter_api";
+
     // TODO PATH的
     // 生成的PATH文件的类名
     public static final String CLASS_PATH = "MRouter$$PATH$$";
@@ -24,7 +26,7 @@ public interface ProcessorConfig {
     // 生成的PATH方法的返回值
     public static final String RETURN_PATH = "pathMap";
 
-    public static final String API_PATH = MROUTER_PACKAGE + ".MRouterPath";
+    public static final String API_PATH = MROUTER_API + ".MRouterPath";
 
     // TODO GROUP的
     // 生成的GROUP文件的类名
@@ -36,5 +38,5 @@ public interface ProcessorConfig {
     // 生成的GROUP方法的返回值
     public static final String RETURN_GROUP = "groupMap";
 
-    public static final String API_GROUP = MROUTER_PACKAGE + ".MRouterGroup";
+    public static final String API_GROUP = MROUTER_API + ".MRouterGroup";
 }

@@ -10,6 +10,7 @@ import com.squareup.javapoet.TypeSpec;
 import com.squareup.javapoet.WildcardTypeName;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -319,8 +320,8 @@ public class MRouterProcessor extends AbstractProcessor {
 
     /**
      *
-     * @param API_PATH liyihuan.app.android.mrouter_annotation.MRouterPath
-     * @param API_GROUP liyihuan.app.android.mrouter_annotation.MRouterGroup
+     * @param API_PATH liyihuan.app.android.mrouter_api.MRouterPath
+     * @param API_GROUP liyihuan.app.android.mrouter_api.MRouterGroup
      * @throws IOException
      */
     private void createGroupFile(TypeElement API_PATH,TypeElement API_GROUP) throws IOException {
@@ -346,9 +347,15 @@ public class MRouterProcessor extends AbstractProcessor {
                 )
         );
 
-        // 方法语句：Map<String, Class<? extends ARouterPath>> groupMap = new HashMap<>()
+//      @Override
+//      public Map<String, Class<? extends ARouterPath>> getGroupMap()
         MethodSpec.Builder methodSpec = MethodSpec.methodBuilder(ProcessorConfig.FUN_GROUP)
-                .addStatement("$T<$T,$T> $N = new $T<>()",
+                .addAnnotation(Override.class)
+                .addModifiers(Modifier.PUBLIC)
+                .returns(returnType);
+
+        // 方法语句：Map<String, Class<? extends ARouterPath>> groupMap = new HashMap<>()
+        methodSpec.addStatement("$T<$T,$T> $N = new $T<>()",
                         ClassName.get(Map.class),
                         ClassName.get(String.class),
                         ParameterizedTypeName.get(ClassName.get(Class.class),
@@ -357,18 +364,35 @@ public class MRouterProcessor extends AbstractProcessor {
                         ClassName.get(HashMap.class)
                 );
 
-
+        //  groupMap.put("order", ARouter$$Path$$order.class);
         for (Map.Entry<String, String> entry : mAllGroupMap.entrySet()) {
             // entry.getKey() == group
             // entry.getValue() == path文件的名字
-            //  groupMap.put("order", ARouter$$Path$$order.class);
+
+            // groupMap.put("order", ARouter$$Path$$order.class)
+            methodSpec.addStatement("$N.put($S,$T.class)",
+                    ProcessorConfig.RETURN_GROUP,
+                    entry.getKey(),
+                    ClassName.get(aptPackage,entry.getValue())
+                    );
+            // return groupMap;
+            methodSpec.addStatement("return $N",ProcessorConfig.RETURN_GROUP);
+            MethodSpec method = methodSpec.build();
+            // 类：
+            // public class ARouter$$Group$$order implements ARouterGroup {
+            TypeSpec typeSpec = TypeSpec.classBuilder(ProcessorConfig.CLASS_GROUP + entry.getKey())
+                    .addModifiers(Modifier.PUBLIC)
+                    .addMethod(method)
+                    .addSuperinterface(ClassName.get(API_GROUP))
+                    .build();
+
+            // 包
+            JavaFile javaPort = JavaFile.builder(aptPackage, typeSpec).build();
+            javaPort.writeTo(filer);
         }
 
-        // 类：
 
-        // 包
-//        JavaFile javaPort = JavaFile.builder(aptPackage, typeSpec).build();
-//        javaPort.writeTo(filer);
+
 
     }
 
