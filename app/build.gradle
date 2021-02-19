@@ -66,6 +66,13 @@ dependencies {
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //配合rxjava2使用
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+
+
+    //协程
+    api 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7'
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core-common:1.3.4"
+
     //建议导2.7版本-（稳定功能多）
     compile 'com.google.code.gson:gson:2.7'
 
