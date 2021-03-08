@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".glodgame.DispatchGoldActivity">
+
+    <RelativeLayout
+        android:id="@+id/ll_root"
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:layout_gravity="bottom"
+        android:background="@color/c_333333">
+
+        <ImageView
+            android:id="@+id/iv_gold"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/game_prop_gold" />
+
+        <View
+            android:id="@+id/view_put_gold"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
+            android:background="@color/blue_pressed" />
+
+
+    </RelativeLayout>
+
+</FrameLayout>
