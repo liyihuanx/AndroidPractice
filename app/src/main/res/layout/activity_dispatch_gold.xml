@@ -1,33 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/ll_root"
     tools:context=".glodgame.DispatchGoldActivity">
 
-    <RelativeLayout
-        android:id="@+id/ll_root"
+
+    <Button
+        android:id="@+id/btn_start_bet"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        android:layout_gravity="bottom"
-        android:background="@color/c_333333">
+        android:layout_height="50dp" />
 
-        <ImageView
-            android:id="@+id/iv_gold"
-            android:layout_width="@dimen/dp_40"
-            android:layout_height="@dimen/dp_40"
-            android:layout_centerHorizontal="true"
-            android:background="@mipmap/game_prop_gold" />
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="400dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@color/c_333333">-->
 
-        <View
-            android:id="@+id/view_put_gold"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_centerInParent="true"
-            android:background="@color/blue_pressed" />
+<!--    </RelativeLayout>-->
+
+    <ImageView
+        android:id="@+id/iv_gold"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@mipmap/game_prop_gold" />
+
+    <View
+        android:id="@+id/view_put_gold"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignTop="@+id/ll_root"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp" />
+
+    <View
+        android:id="@+id/view_red"
+        android:layout_width="@dimen/dp_20"
+        android:layout_height="@dimen/dp_20"
+        android:background="@color/red" />
 
 
-    </RelativeLayout>
-
-</FrameLayout>
+</RelativeLayout>

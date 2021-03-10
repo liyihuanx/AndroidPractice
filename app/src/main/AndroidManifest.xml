@@ -9,13 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".glodgame.DispatchGoldActivity"></activity>
-        <activity android:name=".luckypan.LuckyPanActivity">
+        <activity android:name=".glodgame.DispatchGoldActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".luckypan.LuckyPanActivity">
+
         </activity>
         <activity android:name=".kotlin.KotlinActivity"></activity>
         <activity android:name=".live.LiveActivity" />
