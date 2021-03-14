@@ -9,16 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".touchevent.DispatchTouchEventActivity">
+        <activity android:name=".fish.FishActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".glodgame.DispatchGoldActivity"/>
+        <activity android:name=".touchevent.DispatchTouchEventActivity">
 
-        <activity android:name=".luckypan.LuckyPanActivity"></activity>
+        </activity>
+        <activity android:name=".glodgame.DispatchGoldActivity" />
+        <activity android:name=".luckypan.LuckyPanActivity" />
         <activity android:name=".kotlin.KotlinActivity" />
         <activity android:name=".live.LiveActivity" />
         <activity android:name=".video.VoiceActivity" />
