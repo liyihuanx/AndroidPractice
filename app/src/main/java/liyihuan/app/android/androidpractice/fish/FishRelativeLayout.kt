@@ -52,11 +52,11 @@ class FishRelativeLayout : RelativeLayout {
             }
         }
 
-        return super.onTouchEvent(event)
+        return true
     }
 
     private fun anima() {
-        val translateX = ObjectAnimator.ofFloat(iv_fish, "translationX", startX, touchY)
+        val translateX = ObjectAnimator.ofFloat(iv_fish, "translationX", startX, touchX)
         val translateY = ObjectAnimator.ofFloat(iv_fish, "translationY", startY, touchY)
         val set = AnimatorSet()
         set.duration = 1000
