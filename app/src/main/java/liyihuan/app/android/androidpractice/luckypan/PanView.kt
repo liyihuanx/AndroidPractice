@@ -33,7 +33,6 @@ class PanView : View {
     constructor(context: Context, attrs: AttributeSet?) : this(context, attrs, 0)
     constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
         initView(context)
-
     }
 
     private fun initView(context: Context) {

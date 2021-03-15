@@ -10,6 +10,5 @@ class FishActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_fish)
 
-        iv_fish.setImageDrawable(FishView())
     }
 }
