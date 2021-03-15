@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="liyihuan.app.android.androidpractice">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,6 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".rxjava.RxJavaActivity">
+
+        </activity>
         <activity android:name=".fish.FishActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,9 +21,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".touchevent.DispatchTouchEventActivity">
+        <activity android:name=".diffType.DiffTypeActivity">
 
         </activity>
+        <activity android:name=".touchevent.DispatchTouchEventActivity"></activity>
         <activity android:name=".glodgame.DispatchGoldActivity" />
         <activity android:name=".luckypan.LuckyPanActivity" />
         <activity android:name=".kotlin.KotlinActivity" />
@@ -51,7 +57,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
