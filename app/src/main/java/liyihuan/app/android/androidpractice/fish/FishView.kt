@@ -49,7 +49,7 @@ class FishView : Drawable() {
         mPaint.style = Paint.Style.FILL
         mPaint.setARGB(OTHER_ALPHA, 244, 92, 71)
         // 鱼的重心
-        centerPointF = PointF(4.18f * FishDrawable.HEAD_RADIUS, 4.18f * FishDrawable.HEAD_RADIUS)
+        centerPointF = PointF(4.18f * HEAD_RADIUS, 4.18f * HEAD_RADIUS)
 
 
         val valueAnimator = ValueAnimator.ofInt(0, 540 * 100)
@@ -114,10 +114,10 @@ class FishView : Drawable() {
         makeFins(canvas, pointFinsLeft, FINS_LEFT, angle)
 
         // 身体控制点
-        val contralLeft = calculatePointF(headPoint, FishDrawable.BODY_LENGHT * 0.56f, angle - 130)
-        val contralRight = calculatePointF(headPoint, FishDrawable.BODY_LENGHT * 0.56f, angle + 130)
+        val contralLeft = calculatePointF(headPoint, BODY_LENGHT * 0.56f, angle - 130)
+        val contralRight = calculatePointF(headPoint, BODY_LENGHT * 0.56f, angle + 130)
 
-        val endPoint = calculatePointF(headPoint, FishDrawable.BODY_LENGHT, angle - 180)
+        val endPoint = calculatePointF(headPoint, BODY_LENGHT, angle - 180)
         val point1 = calculatePointF(headPoint, HEAD_RADIUS, angle - 80)
         val point2 = calculatePointF(endPoint, HEAD_RADIUS * 0.7f, angle - 90)
         val point3 = calculatePointF(endPoint, HEAD_RADIUS * 0.7f, angle + 90)
@@ -188,7 +188,7 @@ class FishView : Drawable() {
 
     // 尾巴
     private fun makeTail(canvas: Canvas, mainPoint: PointF, length: Float, maxWidth: Float, angle: Float) {
-        val newWidth = Math.abs(Math.sin(Math.toRadians(currentAngle * 1.7 * waveFrequence)) * maxWidth + FishDrawable.HEAD_RADIUS / 5 * 3).toFloat()
+        val newWidth = Math.abs(Math.sin(Math.toRadians(currentAngle * 1.7 * waveFrequence)) * maxWidth + HEAD_RADIUS / 5 * 3).toFloat()
 
         //endPoint为三角形底边中点
         val endPoint = calculatePointF(mainPoint, length, angle - 180)
@@ -234,5 +234,9 @@ class FishView : Drawable() {
 
     override fun getIntrinsicWidth(): Int {
         return (8.38f * HEAD_RADIUS).toInt()
+    }
+
+    public fun getCenterPoint() :PointF{
+        return centerPointF
     }
 }

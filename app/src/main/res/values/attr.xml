@@ -21,4 +21,9 @@
         <attr name="text_select" format="color" />
         <attr name="text_unselect" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="Wave">
+        <attr name="color" format="color"/>
+        <attr name="text" format="string"/>
+    </declare-styleable>
 </resources>
