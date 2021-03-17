@@ -11,18 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".waveball.WaveLoadingBallActivity">
+        <activity android:name=".star.StartActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rxjava.RxJavaActivity"></activity>
-        <activity android:name=".fish.FishActivity">
+        <activity android:name=".waveball.WaveLoadingBallActivity">
 
         </activity>
-        <activity android:name=".diffType.DiffTypeActivity"></activity>
+        <activity android:name=".rxjava.RxJavaActivity" />
+        <activity android:name=".fish.FishActivity"></activity>
+        <activity android:name=".diffType.DiffTypeActivity" />
         <activity android:name=".touchevent.DispatchTouchEventActivity" />
         <activity android:name=".glodgame.DispatchGoldActivity" />
         <activity android:name=".luckypan.LuckyPanActivity" />
