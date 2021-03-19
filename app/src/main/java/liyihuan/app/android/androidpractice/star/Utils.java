@@ -1,10 +1,6 @@
 package liyihuan.app.android.androidpractice.star;
 
-/**
- * 工具类
- * <p>
- * Created by wangchenlong on 16/1/5.
- */
+
 public class Utils {
     // 映射到下一个域
     public static double mapValueFromRangeToRange(double value, double fromLow, double fromHigh, double toLow, double toHigh) {

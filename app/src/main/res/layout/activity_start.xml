@@ -4,12 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".star.StartActivity">
+    tools:context=".star.StarActivity">
 
-    <liyihuan.app.android.androidpractice.star.LikeButtonView
-        android:id="@+id/view_dots"
-        android:layout_centerInParent="true"
-        android:layout_width="320dp"
-        android:layout_height="320dp"/>
+    <Button
+        android:id="@+id/btn_start"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <liyihuan.app.android.androidpractice.star.StarLayout
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>

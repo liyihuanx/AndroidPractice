@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <liyihuan.app.android.androidpractice.star.ShootDotsView
+        android:id="@+id/view_dots"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center" />
+
+    <liyihuan.app.android.androidpractice.star.CircleView
+        android:id="@+id/view_circle"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center" />
+
+    <ImageView
+        android:id="@+id/iv_star"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_star_rate_off" />
+
+</FrameLayout>
