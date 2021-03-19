@@ -7,12 +7,16 @@ import android.util.Log
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_start.*
+import liyihuan.app.android.androidpractice.MRouterConfig
 import liyihuan.app.android.androidpractice.R
+import liyihuan.app.android.mrouter_api.RouterManager
 
 class StarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
-
+        btn_start.setOnClickListener {
+            RouterManager().instance.openUrl(this, MRouterConfig.module_app.MainActivity)
+        }
     }
 }

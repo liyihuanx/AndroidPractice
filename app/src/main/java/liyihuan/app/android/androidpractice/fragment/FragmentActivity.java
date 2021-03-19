@@ -1,13 +1,4 @@
-package liyihuan.app.android.androidpractice;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import liyihuan.app.android.androidpractice.fragment.HomeFragment;
-import liyihuan.app.android.androidpractice.fragment.MineFragment;
-import liyihuan.app.android.androidpractice.fragment.ThreeFragment;
-import liyihuan.app.android.androidpractice.fragment.TwoFragment;
-import liyihuan.app.android.mrouter_annotation.MRouter;
+package liyihuan.app.android.androidpractice.fragment;
 
 import android.os.Bundle;
 import android.view.View;
@@ -15,8 +6,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-@MRouter(path = "/app/MainActivity")
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import liyihuan.app.android.androidpractice.R;
+import liyihuan.app.android.mrouter_annotation.MRouter;
+
+@MRouter(path = "/app/FragmentActivity")
+public class FragmentActivity extends AppCompatActivity implements View.OnClickListener {
 
     HomeFragment homeFragment;
     TwoFragment twoFragment;
@@ -42,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_main);
         initView();
         initFragment();
 
