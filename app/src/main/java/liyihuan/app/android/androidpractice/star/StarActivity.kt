@@ -2,6 +2,7 @@ package liyihuan.app.android.androidpractice.star
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.animation.DecelerateInterpolator
@@ -18,5 +19,7 @@ class StarActivity : AppCompatActivity() {
         btn_start.setOnClickListener {
             RouterManager().instance.openUrl(this, MRouterConfig.module_app.MainActivity)
         }
+
+
     }
 }

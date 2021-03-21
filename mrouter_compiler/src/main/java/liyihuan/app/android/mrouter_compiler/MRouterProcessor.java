@@ -98,8 +98,10 @@ public class MRouterProcessor extends AbstractProcessor {
 
         options = processingEnvironment.getOptions().get(ProcessorConfig.OPTIONS);
         aptPackage = processingEnvironment.getOptions().get(ProcessorConfig.APT_PACKAGE);
-        messager.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>> options <<<<<<<<<" + options);
-        messager.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>> aptPackage <<<<<<<<<" + aptPackage);
+
+        // 打印
+//        messager.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>> options <<<<<<<<<" + options);
+//        messager.printMessage(Diagnostic.Kind.NOTE, ">>>>>>>>>> aptPackage <<<<<<<<<" + aptPackage);
 
 
     }

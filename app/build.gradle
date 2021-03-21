@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 29
@@ -17,7 +18,7 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-                arguments = [moduleName: project.getName(), packageNameForAPT: "liyihuan.app.android.androidpractice.apt"]
+                arguments = [moduleName: project.getName(), packageNameForAPT: "liyihuan.app.android.androidpractice"]
             }
         }
 
@@ -77,11 +78,11 @@ dependencies {
     //建议导2.7版本-（稳定功能多）
     compile 'com.google.code.gson:gson:2.7'
 
-    //  arouter 专用 注解模块
+    //  mrouter 专用 注解模块
     implementation project(":mrouter_annotation")
 
-    // arouter 专用 注解处理器
-    annotationProcessor project(':mrouter_compiler')
+    // mrouter 专用 注解处理器
+    kapt project(':mrouter_compiler')
     api project(":mrouter_api")
 }
 repositories {

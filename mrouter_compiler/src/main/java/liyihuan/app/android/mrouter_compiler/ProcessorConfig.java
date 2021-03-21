@@ -39,4 +39,20 @@ public interface ProcessorConfig {
     public static final String RETURN_GROUP = "groupMap";
 
     public static final String API_GROUP = MROUTER_API + ".MRouterGroup";
+
+
+    /************* 下面是变量的一些参数 ******************/
+
+    public static final String PARAMETER_PACKAGE = "liyihuan.app.android.mrouter_annotation";
+
+    String PARAMETER = PARAMETER_PACKAGE + ".Parameter";
+
+    public static final String API_PARAMETER = MROUTER_API + ".ParameterGet";
+
+    String INPUT_PARAMETER = "targetParameter";
+
+    String FUN_PARAMETER = "getParameter";
+
+    // String全类名
+    public static final String STRING = "java.lang.String";
 }
