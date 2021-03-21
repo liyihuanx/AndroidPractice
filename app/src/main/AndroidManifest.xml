@@ -11,18 +11,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".waveball.WaveLoadingBallActivity">
+        <activity android:name=".MainActivity">
+
+        </activity>
+        <activity android:name=".star.StarActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rxjava.RxJavaActivity"></activity>
-        <activity android:name=".fish.FishActivity">
-
-        </activity>
-        <activity android:name=".diffType.DiffTypeActivity"></activity>
+        <activity android:name=".waveball.WaveLoadingBallActivity"></activity>
+        <activity android:name=".rxjava.RxJavaActivity" />
+        <activity android:name=".fish.FishActivity" />
+        <activity android:name=".diffType.DiffTypeActivity" />
         <activity android:name=".touchevent.DispatchTouchEventActivity" />
         <activity android:name=".glodgame.DispatchGoldActivity" />
         <activity android:name=".luckypan.LuckyPanActivity" />
@@ -44,7 +46,6 @@
         <activity android:name=".wechat.WechatActivity" />
         <activity android:name=".swipecard.SwipeCardActivity" />
         <activity android:name=".timecount.TimeCountActivity" />
-        <activity android:name=".MainActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

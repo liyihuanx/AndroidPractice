@@ -1,21 +1,13 @@
 package liyihuan.app.android.androidpractice.danmu;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.bumptech.glide.request.transition.Transition;
 import com.example.danmu.danmu.OnDMAddListener;
 import com.example.danmu.danmu.control.DamuBean;
 import com.example.danmu.danmu.entity.BaseDmEntity;
@@ -24,7 +16,6 @@ import com.example.danmu.mydanmu.bean.DmInfo;
 import com.example.danmu.mydanmu.view.MyDmView;
 
 
-import liyihuan.app.android.androidpractice.MainActivity;
 import liyihuan.app.android.androidpractice.R;
 
 public class DanmuActivity extends AppCompatActivity {

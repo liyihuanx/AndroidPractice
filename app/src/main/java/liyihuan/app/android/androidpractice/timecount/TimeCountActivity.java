@@ -1,7 +1,7 @@
 package liyihuan.app.android.androidpractice.timecount;
 
 import androidx.appcompat.app.AppCompatActivity;
-import liyihuan.app.android.androidpractice.MainActivity;
+
 import liyihuan.app.android.androidpractice.R;
 
 import android.os.Bundle;
