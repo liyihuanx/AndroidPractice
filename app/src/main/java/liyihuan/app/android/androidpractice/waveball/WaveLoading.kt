@@ -2,13 +2,11 @@ package liyihuan.app.android.androidpractice.waveball
 
 import android.animation.ValueAnimator
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
+import com.example.planet.utils.SizeUtils
 import liyihuan.app.android.androidpractice.diffType.ScreenUtils
 
 /**
@@ -20,6 +18,8 @@ class WaveLoading : View {
 
     private lateinit var mPath: Path
     private lateinit var mPaint: Paint
+    private lateinit var textPaint: Paint
+
 
     private var centerY = 0
     private var centerX = 0
@@ -36,6 +36,7 @@ class WaveLoading : View {
     private fun initView(context: Context) {
         mPath = Path()
         mPaint = Paint()
+        textPaint = Paint()
         mPaint.flags = Paint.ANTI_ALIAS_FLAG
         mPaint.isDither = true
         mPaint.style = Paint.Style.FILL
@@ -44,6 +45,12 @@ class WaveLoading : View {
 
         centerY = ScreenUtils.getScreenHeight(context)
         centerX = ScreenUtils.getScreenWidth(context)
+
+        //文字画笔
+        textPaint = Paint(Paint.ANTI_ALIAS_FLAG)
+        textPaint.color = Color.WHITE
+        textPaint.typeface = Typeface.DEFAULT_BOLD
+        textPaint.textSize = SizeUtils.dp2px(context, 80f).toFloat()
 
         // 用sin ？？
         val valueAnimator = ValueAnimator.ofFloat(0f, 1f)
@@ -76,8 +83,17 @@ class WaveLoading : View {
 
 
     override fun onDraw(canvas: Canvas) {
-
-        getActionPath(canvas, presentX, presentY)
+        // 先写一个蓝色的字
+        textPaint.color = Color.rgb(41, 163, 254)
+        drawText(canvas)
+        // 再根据path剪裁画布
+        val clipPath = getActionPath(canvas, presentX, presentY)
+        canvas.save()
+        canvas.clipPath(clipPath)
+        // 在裁剪下来的画布写白色的字
+        textPaint.color = Color.WHITE
+        drawText(canvas)
+        canvas.restore()
     }
 
 
@@ -86,7 +102,7 @@ class WaveLoading : View {
      * presentX 控制path路径的起点 (0 --> 1)
      * presentY
      */
-    private fun getActionPath(canvas: Canvas, presentX: Float, presentY: Float) {
+    private fun getActionPath(canvas: Canvas, presentX: Float, presentY: Float): Path {
         // 起点设置在一个屏幕之外
         var startX = -centerX.toFloat()
         startX += presentX * centerX
@@ -111,5 +127,20 @@ class WaveLoading : View {
         //自动闭合补出左边的直线
         mPath.close()
         canvas.drawPath(mPath, mPaint)
+        return mPath
+    }
+
+    private fun drawText(canvas: Canvas) {
+        val rect = Rect(0, 0, centerX, centerY)
+        textPaint.textAlign = Paint.Align.CENTER
+
+
+        val fontMetrics = textPaint.fontMetrics
+        val top = fontMetrics.top
+        val bottom = fontMetrics.bottom
+
+        val centerY = (rect.centerY() - top / 2 - bottom / 2)
+
+        canvas.drawText("李逸欢", rect.centerX().toFloat(), centerY, textPaint)
     }
 }

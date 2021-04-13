@@ -3,15 +3,19 @@ package liyihuan.app.android.androidpractice
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.activity_main.*
 import liyihuan.app.android.androidpractice.touchevent.BadAdapter
 import liyihuan.app.android.mrouter_annotation.MRouter
+import liyihuan.app.android.mrouter_annotation.Parameter
 
 @MRouter(path = "/app/MainActivity")
 class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListener {
+
+
+    @Parameter
+    lateinit var name: String
 
     private var data = ArrayList<String>()
 
@@ -29,7 +33,7 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListene
     }
 
 
-    private fun initData(){
+    private fun initData() {
         data.add("112233")
 
     }

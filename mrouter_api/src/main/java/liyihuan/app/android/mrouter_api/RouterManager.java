@@ -77,8 +77,7 @@ public class RouterManager {
         }
         try {
             // 拼接成完成的apt生成的GROUP对象  liyihuan.app.android.androidpractice
-            // 实际的包名却是 liyihuan.app.android.androidpractice.apt
-            String groupClassName = context.getPackageName() + ".apt." + GROUP_TITLE + group;
+            String groupClassName = context.getPackageName() + "." + GROUP_TITLE + group;
 
             MRouterGroup mRouterGroup = groupLruCache.get(groupClassName);
             // 列表没有对应的，用反射生成
