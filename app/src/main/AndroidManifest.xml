@@ -11,17 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
-
-        </activity>
-        <activity android:name=".star.StarActivity">
+        <activity android:name=".kotlin.XieChengActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".waveball.WaveLoadingBallActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".star.StarActivity">
+
+        </activity>
+        <activity android:name=".waveball.WaveLoadingBallActivity" />
         <activity android:name=".rxjava.RxJavaActivity" />
         <activity android:name=".fish.FishActivity" />
         <activity android:name=".diffType.DiffTypeActivity" />
