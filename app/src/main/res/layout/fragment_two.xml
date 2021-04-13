@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/vp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Two_Fragment"
-        android:textSize="20dp"/>
+        android:layout_height="200dp"/>
 
 </RelativeLayout>

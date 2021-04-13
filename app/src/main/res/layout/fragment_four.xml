@@ -5,11 +5,10 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tvToMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="HOME_FRAGMENT"
+        android:text="Four_Fragment"
         android:textSize="20dp"/>
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.fragment.Home;
+package liyihuan.app.android.androidpractice.Indicator.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,9 +17,9 @@ import liyihuan.app.android.androidpractice.R;
  * @Author: liyihuan
  * @Date: 2020/10/18 14:41
  */
-public class HomeThreeFragment extends Fragment {
+public class HomeFourFragment extends Fragment {
 
-    public HomeThreeFragment(){
+    public HomeFourFragment(){
 
     }
 
@@ -27,6 +27,6 @@ public class HomeThreeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home_one,null);
+        return inflater.inflate(R.layout.fragment_home_two,null);
     }
 }

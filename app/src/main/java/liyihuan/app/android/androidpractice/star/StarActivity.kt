@@ -17,7 +17,12 @@ class StarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start)
         btn_start.setOnClickListener {
-            RouterManager().instance.openUrl(this, MRouterConfig.module_app.MainActivity)
+            RouterManager.getInstance()
+                    .build(MRouterConfig.module_app.MainActivity)
+                    .withString("name", "liyihuanx")
+                    .navigation(this)
+
+
         }
 
 

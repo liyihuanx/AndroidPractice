@@ -9,6 +9,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import liyihuan.app.android.androidpractice.touchevent.BadAdapter
 import liyihuan.app.android.mrouter_annotation.MRouter
 import liyihuan.app.android.mrouter_annotation.Parameter
+import liyihuan.app.android.mrouter_api.ParameterManager
 
 @MRouter(path = "/app/MainActivity")
 class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListener {
@@ -23,6 +24,8 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListene
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        ParameterManager.getInstance().register(this)
+        Log.d("QWER", "onCreate: $name")
         initData()
         val adapter = MainAdapter(data)
         val layout = LinearLayoutManager(this)

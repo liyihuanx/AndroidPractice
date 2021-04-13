@@ -54,7 +54,7 @@ public class RouterManager {
     // 单例模式
     public static RouterManager instance;
 
-    public RouterManager getInstance() {
+    public static RouterManager getInstance() {
         if (instance == null) {
             synchronized (RouterManager.class) {
                 if (instance == null) {
@@ -71,10 +71,9 @@ public class RouterManager {
     }
 
 
-    public void openUrl(Context context, String path) {
-        if (!checkPath(path)) {
-            throw new IllegalArgumentException("传入的Path路径不对");
-        }
+
+    public Object openUrl(Context context, BundleManager bundleManager) {
+
         try {
             // 拼接成完成的apt生成的GROUP对象  liyihuan.app.android.androidpractice
             String groupClassName = context.getPackageName() + "." + GROUP_TITLE + group;
@@ -103,7 +102,8 @@ public class RouterManager {
                 case ACTIVITY:
                     Class<?> myClass = routerBean.getMyClass();
                     Intent intent = new Intent(context, myClass);
-                    context.startActivity(intent);
+                    intent.putExtras(bundleManager.getBundle());
+                    context.startActivity(intent, bundleManager.getBundle());
                     break;
             }
 
@@ -111,6 +111,15 @@ public class RouterManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return null;
+    }
+
+    public BundleManager build(String path) {
+        if (!checkPath(path)) {
+            throw new IllegalArgumentException("传入的Path路径不对");
+        }
+        return new BundleManager();
     }
 
     /**
@@ -141,4 +150,5 @@ public class RouterManager {
 
         return true;
     }
+
 }
