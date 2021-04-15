@@ -1,13 +1,10 @@
-package liyihuan.app.android.androidpractice.imageView;
+package liyihuan.app.android.androidpractice.viewGroupPractice;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import liyihuan.app.android.androidpractice.R;
 

@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="liyihuan.app.android.androidpractice">
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -9,16 +11,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".fragment.LazyActivity">
+        <activity android:name=".datasource.DataSoureActivity"></activity>
+        <activity android:name=".kotlin.Xc2Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".fragment.FragmentActivity"/>
+        <activity android:name=".fragment.LazyActivity"></activity>
+        <activity android:name=".fragment.FragmentActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".star.StarActivity"></activity>
+        <activity android:name=".star.StarActivity" />
         <activity android:name=".waveball.WaveLoadingBallActivity" />
         <activity android:name=".rxjava.RxJavaActivity" />
         <activity android:name=".fish.FishActivity" />
@@ -55,7 +59,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

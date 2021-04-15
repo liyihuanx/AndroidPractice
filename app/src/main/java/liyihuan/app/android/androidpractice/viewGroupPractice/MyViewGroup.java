@@ -1,4 +1,4 @@
-package liyihuan.app.android.androidpractice.imageView;
+package liyihuan.app.android.androidpractice.viewGroupPractice;
 
 import android.content.Context;
 import android.util.AttributeSet;
