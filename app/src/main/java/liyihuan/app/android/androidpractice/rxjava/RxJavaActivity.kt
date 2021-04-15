@@ -5,7 +5,9 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import io.reactivex.Observable
 import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import liyihuan.app.android.androidpractice.R
 
 
@@ -20,14 +22,17 @@ class RxJavaActivity : AppCompatActivity() {
             it.onNext("2")
             it.onNext("3")
             it.onComplete()
-        }.subscribe({
+        }.subscribeOn(Schedulers.io()) // 切到IO
+        .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
 
-        }, {
-
-        })
+//        .subscribe({
+//
+//        }, {
+//
+//        })
 
         // 观察者
-        val observer= object : Observer<String> {
+        val observer = object : Observer<String> {
             override fun onComplete() {
                 Log.d("QWER", "onComplete: ")
             }
@@ -45,6 +50,6 @@ class RxJavaActivity : AppCompatActivity() {
             }
         }
 
-//        observable.subscribe(observer)
+        observable.subscribe(observer)
     }
 }
