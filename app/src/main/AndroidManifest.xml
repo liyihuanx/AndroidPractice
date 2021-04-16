@@ -11,6 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".http.NewHttpActivity"></activity>
         <activity android:name=".datasource.api.HttpActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,10 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".kotlin.Xc2Activity">
-
-        </activity>
-        <activity android:name=".fragment.LazyActivity"></activity>
+        <activity android:name=".kotlin.Xc2Activity"></activity>
+        <activity android:name=".fragment.LazyActivity" />
         <activity android:name=".fragment.FragmentActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".star.StarActivity" />

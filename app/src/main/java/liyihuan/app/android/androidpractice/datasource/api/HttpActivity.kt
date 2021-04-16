@@ -22,20 +22,52 @@ class HttpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_data_soure)
 
-//        okhttp3()
-//        retrofitRequest()
-//        rxjava()
         btnDataSource.setOnClickListener {
-            realHttp()
+//            okhttp3()
+//            retrofitRequest()
+//            rxjava()
+//            realHttp()
+//            rxJavaConcat()
+            retrofitPostRequest()
         }
 
+    }
+
+    /**
+     * 缓存-本地-网络
+     * 谁有取谁，缓存策略
+     */
+    @SuppressLint("CheckResult")
+    fun rxJavaConcat() {
+        val memory = Observable.create<String> {
+//            it.onNext("memory")
+            it.onComplete()
+        }.subscribeOn(Schedulers.io())
+
+
+        val diskSource = Observable.create<String> {
+            it.onNext("diskSource")
+            it.onComplete()
+        }.subscribeOn(Schedulers.io())
+
+        val network = Observable.create<String> {
+            it.onNext("network")
+            it.onComplete()
+        }.subscribeOn(Schedulers.io())
+
+        Observable.concat(memory, diskSource, network)
+                .firstElement()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    Log.d("QWER", "rxJavaConcat: $it")
+                }
     }
 
 
     /**
      * okhttp简单实用
      */
-    fun okhttp3(){
+    fun okhttp3() {
         val url = "http://wwww.baidu.com"
         val request = Request.Builder()
                 .url(url)
@@ -59,7 +91,7 @@ class HttpActivity : AppCompatActivity() {
     /**
      * retrofit的简单使用
      */
-    fun retrofitRequest(){
+    fun retrofitRequest() {
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://www.wanandroid.com/")
                 .client(OkHttpClient())
@@ -71,7 +103,7 @@ class HttpActivity : AppCompatActivity() {
 
         val chapters = apiService.getChapters()
 
-        chapters.enqueue(object : retrofit2.Callback<ChapterBean>{
+        chapters.enqueue(object : retrofit2.Callback<ChapterBean> {
             override fun onFailure(call: retrofit2.Call<ChapterBean>, t: Throwable) {
                 Log.d("QWER", "onFailure: ${t.message}")
             }
@@ -85,11 +117,14 @@ class HttpActivity : AppCompatActivity() {
 
     }
 
+
+
+
     /**
      * rxjava 简单使用
      */
     @SuppressLint("CheckResult")
-    fun rxjava():ApiService{
+    fun rxjava(): ApiService {
         val retrofit = Retrofit.Builder()
                 .baseUrl("https://www.wanandroid.com/")
                 .client(OkHttpClient())
@@ -116,22 +151,19 @@ class HttpActivity : AppCompatActivity() {
     }
 
 
-
-
     @SuppressLint("CheckResult")
-    fun realHttp(){
+    fun realHttp() {
         fakeHttp()
                 .subscribeOn(Schedulers.io()) // 切到IO
                 .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
                 .subscribe({
-            // 接口调用成功
-            Log.d("QWER", "realHttp: ${Gson().toJson(it)} ")
-        },{
-            // 报错
-            Log.d("QWER", "onFailure: ${it.message}")
-        })
+                    // 接口调用成功
+                    Log.d("QWER", "realHttp: ${Gson().toJson(it)} ")
+                }, {
+                    // 报错
+                    Log.d("QWER", "onFailure: ${it.message}")
+                })
     }
-
 
     // private var remoteQuest: () -> Observable<R>
     fun fakeHttp(): Observable<ChapterBean> {
@@ -141,10 +173,24 @@ class HttpActivity : AppCompatActivity() {
     }
 
 
-    // apiService里的接口
-    fun fakeApi(): Observable<Unit>{
-        return Observable.create<Unit> {
+    @SuppressLint("CheckResult")
+    fun retrofitPostRequest() {
+        fakePostHttp()
+                .subscribeOn(Schedulers.io()) // 切到IO
+                .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
+                .subscribe({
+                    Log.d("QWER", "retrofitPostRequest: ${Gson().toJson(it)} ")
+                }, {
+                    Log.d("QWER", "onFailure: ${it.message}")
 
-        }
+                })
     }
+
+
+    fun fakePostHttp(): Observable<Any> {
+        return SimpleDataSource { // 对请求的接口进行配置，包装
+            rxjava().register("liyihuan","12345678","12345678") // 请求接口
+        }.startFetchData()
+    }
+
 }

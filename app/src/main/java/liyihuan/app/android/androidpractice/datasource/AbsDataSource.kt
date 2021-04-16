@@ -27,27 +27,28 @@ abstract class AbsDataSource<R>(private var cacheProvide: LocalCacheProvide<R>? 
         }
     }
 
-    override final fun remoteRequest(): Observable<R> {
-        return Observable.create<R> {
-            apiCall().subscribe(object : Observer<R> {
-                override fun onComplete() {
-                    it.onComplete()
-                }
-
-                override fun onSubscribe(d: Disposable) {
-                }
-
-                override fun onNext(t: R) {
-                    if (t != null) {
-                        it.onNext(t)
-                    }
-                }
-
-                override fun onError(e: Throwable) {
-                    it.onError(e)
-                }
-            })
-        }
+    final override fun remoteRequest(): Observable<R> {
+        return apiCall()
+//        return Observable.create<R> {
+//            apiCall().subscribe(object : Observer<R> {
+//                override fun onComplete() {
+//                    it.onComplete()
+//                }
+//
+//                override fun onSubscribe(d: Disposable) {
+//                }
+//
+//                override fun onNext(t: R) {
+//                    if (t != null) {
+//                        it.onNext(t)
+//                    }
+//                }
+//
+//                override fun onError(e: Throwable) {
+//                    it.onError(e)
+//                }
+//            })
+//        }
     }
 
     abstract fun apiCall(): Observable<R>
