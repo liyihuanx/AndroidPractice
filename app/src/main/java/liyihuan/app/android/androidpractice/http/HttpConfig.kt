@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * @Author: liyihuan
  * @Date: 2021/4/19 21:35
  */
-class HttpConfig : ConfigInterface{
+public class HttpConfig : ConfigInterface{
     /**
      * 获取头Http地址
      */
@@ -33,7 +33,8 @@ class HttpConfig : ConfigInterface{
     override fun client(): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
 
-//        okHttpClientBuilder.addInterceptor()
+        // 添加头部拦截器
+        okHttpClientBuilder.addInterceptor(HeadInterceptor())
         // 超时的时间
         okHttpClientBuilder.connectTimeout(5000,TimeUnit.SECONDS)
         return okHttpClientBuilder.build()

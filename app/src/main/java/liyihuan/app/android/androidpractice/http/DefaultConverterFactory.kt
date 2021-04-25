@@ -19,10 +19,10 @@ import java.nio.charset.Charset
  */
 class DefaultConverterFactory(gson: Gson) : Converter.Factory() {
 
+    // 模仿GsonResponseBodyConverter写的,可以在responseBodyConverter返回自己想要的格式
     private val mGson = gson
 
     override fun responseBodyConverter(type: Type, annotations: Array<Annotation>, retrofit: Retrofit): Converter<ResponseBody, *>? {
-
         val adapter = mGson.getAdapter(TypeToken.get(type))
         return GsonResponseBodyConverter<Any>(mGson, type, adapter)
     }

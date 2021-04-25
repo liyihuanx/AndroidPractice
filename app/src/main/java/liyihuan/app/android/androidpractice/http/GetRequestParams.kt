@@ -19,7 +19,8 @@ class GetRequestParams : IRequestParam {
         }
         //收集所有参数
         for (i in 0 until oriHttpUrl.querySize()) {
-            params.put(oriHttpUrl.queryParameterName(i), oriHttpUrl.queryParameterValue(i))
+//            params.
+//            params.put(oriHttpUrl.queryParameterName(i), oriHttpUrl.queryParameterValue(i))
         }
         // 做一个加密
         // String sign = MD5加密

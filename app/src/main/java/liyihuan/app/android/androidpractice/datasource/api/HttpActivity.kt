@@ -131,7 +131,6 @@ class HttpActivity : AppCompatActivity() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .build()
-
         return retrofit.create(ApiService::class.java)
 //        val apiService = retrofit.create(ApiService::class.java)
 //

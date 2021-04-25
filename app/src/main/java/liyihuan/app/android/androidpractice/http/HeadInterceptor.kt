@@ -22,8 +22,14 @@ class HeadInterceptor : Interceptor{
                 .addHeader("APPID","12345")
                 .addHeader("VERSION","1.0.0")
                 .build()
+
+        // 中间可以加上自己的配置
+        val parmas = HashMap<String, String>()
+
+        val inRequest = ParamsContext(request, parmas).getInRequest()
+
+
         // 传递给下一层拦截器获取他的返回结果
-        val response = chain.proceed(request) // 响应信息
-        return response
+        return chain.proceed(inRequest)
     }
 }
