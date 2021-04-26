@@ -21,9 +21,15 @@ class ParamsContext(request: Request, parmas: Map<String, String>) {
 
     fun getInRequest(): Request {
         when(request!!.method().toUpperCase()){
-            "GET" ->{}
-            "POST" ->{}
-            else ->{}
+            "GET" ->{
+                iRequestParam = GetRequestParams()
+            }
+            "POST" ->{
+                iRequestParam = PostRequestParams()
+            }
+            else ->{
+                throw RuntimeException("not support request method")
+            }
         }
         return iRequestParam!!.getRequest(request!!, parmas!!)
     }

@@ -18,7 +18,7 @@ class NewHttpActivity : AppCompatActivity() {
 
         btnFakeHttp.setOnClickListener {
             RepositoryManager.getRepo(TestRepository::class.java)
-                    .fakeHttp()
+                    .fakeHttp2()
                     .subscribeOn(Schedulers.io()) // 切到IO
                     .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
                     .subscribe({
@@ -26,7 +26,19 @@ class NewHttpActivity : AppCompatActivity() {
                     }, {
                         Log.d("QWER", "onCreate: ${it.message}")
                     })
-
         }
+
+        btnFakeHttp2.setOnClickListener {
+            RepositoryManager.getRepo(TestRepository2::class.java)
+                    .fakeHttp3()
+                    .subscribeOn(Schedulers.io()) // 切到IO
+                    .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
+                    .subscribe({
+                        Log.d("QWER", "onCreate: ${Gson().toJson(it)}")
+                    }, {
+                        Log.d("QWER", "onCreate: ${it.message}")
+                    })
+        }
+
     }
 }

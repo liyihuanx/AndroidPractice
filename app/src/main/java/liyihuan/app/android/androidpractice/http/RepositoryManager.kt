@@ -23,6 +23,7 @@ object RepositoryManager {
      */
     fun <T> getRepo(childRepo: Class<T>): T {
         if (BaseRepository::class.java.isAssignableFrom(childRepo)) {
+            //[TestRepository.class, TestRepository()对象]
             var newRepo = repoMap[childRepo]
             if (newRepo == null) {
                 try {

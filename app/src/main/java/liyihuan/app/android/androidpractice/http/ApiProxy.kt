@@ -1,5 +1,7 @@
 package liyihuan.app.android.androidpractice.http
 
+import android.util.Log
+import com.google.gson.Gson
 import retrofit2.Retrofit
 import java.util.*
 
@@ -16,7 +18,7 @@ class ApiProxy(retrofit: Retrofit) {
     private var retrofit = retrofit
 
 
-
+    //[TestService,retrofit]
     fun <T> create(tClass: Class<T>): T {
         var service = apiCache[tClass]
         if (service == null) {

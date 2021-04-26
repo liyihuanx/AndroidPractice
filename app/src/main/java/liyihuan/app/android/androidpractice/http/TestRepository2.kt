@@ -10,12 +10,11 @@ import liyihuan.app.android.androidpractice.datasource.api.ChapterBean
  * @Author: liyihuan
  * @Date: 2021/4/21 22:20
  */
-open class TestRepository : BaseRepository<TestService>(){
+open class TestRepository2 : BaseRepository<TestService2>(){
 
-    fun fakeHttp2(): Observable<ChapterBean> {
+    fun fakeHttp3(): Observable<ChapterBean> {
         return SimpleDataSource { // 对请求的接口进行配置，包装
-            apiService.getChapters2() // 请求接口
+            apiService.getChapters3() // 请求接口
         }.startFetchData()
     }
-
 }
