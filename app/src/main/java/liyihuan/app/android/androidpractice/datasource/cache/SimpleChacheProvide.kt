@@ -19,4 +19,8 @@ class SimpleChacheProvide<R>(private val saveCallResultFunc: (data: R) -> Unit, 
         return loadFromLocalFunc.invoke()
     }
 
+    override fun checkLocalAvailable(): Boolean {
+        return true
+    }
+
 }

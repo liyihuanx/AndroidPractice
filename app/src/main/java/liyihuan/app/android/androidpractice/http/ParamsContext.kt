@@ -7,11 +7,11 @@ import okhttp3.Request
  * @date 2021/4/20
  * description: 类的描述
  */
-class ParamsContext(request: Request, parmas: Map<String, String>) {
+class ParamsContext(request: Request, parmas: HashMap<String, String>) {
 
     private var iRequestParam: IRequestParam? = null
     private var request: Request? = null
-    private var parmas: Map<String, String>? = null
+    private var parmas: HashMap<String, String>? = null
 
     init {
         this.request = request

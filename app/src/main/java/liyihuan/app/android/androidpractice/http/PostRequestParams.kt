@@ -10,7 +10,7 @@ import okhttp3.Request
  * @Date: 2021/4/26 20:45
  */
 class PostRequestParams : IRequestParam {
-    override fun getRequest(request: Request, params: Map<String, String>): Request {
+    override fun getRequest(request: Request, params: HashMap<String, String>): Request {
         var newRequest: Request? = null
         val oriBody = request.body()
         if (oriBody is FormBody) {

@@ -35,6 +35,7 @@ public class HttpConfig : ConfigInterface{
 
         // 添加头部拦截器
         okHttpClientBuilder.addInterceptor(HeadInterceptor())
+        okHttpClientBuilder.addInterceptor(CustomLogInterceptor())
         // 超时的时间
         okHttpClientBuilder.connectTimeout(5000,TimeUnit.SECONDS)
         return okHttpClientBuilder.build()

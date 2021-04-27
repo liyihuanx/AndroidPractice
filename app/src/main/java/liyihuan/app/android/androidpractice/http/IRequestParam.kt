@@ -9,5 +9,5 @@ import okhttp3.Request
  */
 interface IRequestParam {
 
-    fun getRequest(request: Request, params: Map<String, String>): Request
+    fun getRequest(request: Request, params: HashMap<String, String>): Request
 }

@@ -21,5 +21,5 @@ interface LocalCacheProvide<R> {
     /**
      * 检查数据可用
      */
-    fun checkLocalAvailable(): Boolean{return true}
+    fun checkLocalAvailable(): Boolean
 }

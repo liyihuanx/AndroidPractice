@@ -2,6 +2,8 @@ package liyihuan.app.android.androidpractice.http
 
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * @ClassName: HeadInterceptor
@@ -24,9 +26,12 @@ class HeadInterceptor : Interceptor{
                 .build()
 
         // 中间可以加上自己的配置
-        val parmas = HashMap<String, String>()
+        val params = HashMap<String, String>()
+        params["APPID"] = "12345"
+        params["VERSION"] = "1.0.0"
 
-        val inRequest = ParamsContext(request, parmas).getInRequest()
+
+        val inRequest = ParamsContext(request, params).getInRequest()
 
 
         // 传递给下一层拦截器获取他的返回结果

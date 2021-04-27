@@ -21,4 +21,8 @@ class DbCacheProvider<T>(private var db: DbProvider<T>) : LocalCacheProvide<T> {
 
         fun insertCache(data: T)
     }
+
+    override fun checkLocalAvailable(): Boolean {
+        return true
+    }
 }

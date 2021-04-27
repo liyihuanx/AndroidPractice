@@ -34,9 +34,9 @@ class NewHttpActivity : AppCompatActivity() {
                     .subscribeOn(Schedulers.io()) // 切到IO
                     .observeOn(AndroidSchedulers.mainThread()) // 回到主线程
                     .subscribe({
-                        Log.d("QWER", "onCreate: ${Gson().toJson(it)}")
+                        Log.d("QWER", "fakeHttp3: ${Gson().toJson(it)}")
                     }, {
-                        Log.d("QWER", "onCreate: ${it.message}")
+                        Log.d("QWER", "fakeHttp3-error: ${it.message}")
                     })
         }
 
