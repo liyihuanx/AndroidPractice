@@ -20,7 +20,7 @@ class PostRequestParams : IRequestParam {
             for (i in 0 until formBody.size()) {
                 val key = formBody.name(i)
                 val value = formBody.value(i)
-//                params.put(key, value)
+                params[key] = value
             }
             //添加公共参数到新的body
             for (key in params.keys) {

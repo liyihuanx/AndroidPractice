@@ -10,7 +10,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-
+/**
+ * 打印出请求的Url和结果
+ */
 public class CustomLogInterceptor implements Interceptor {
 
     @Override
