@@ -10,6 +10,15 @@ public class UserBean {
     private String username;
     private int type;
 
+    public UserBean(){
+
+    }
+
+    public UserBean(String username,int type){
+        this.username = username;
+        this.type = type;
+    }
+
     public String getUsername() {
         return username;
     }

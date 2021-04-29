@@ -18,6 +18,13 @@
             android:text="TimeCount"
             android:textSize="@dimen/dp_20" />
 
+
+        <EditText
+            android:id="@+id/etSearch"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+
     </LinearLayout>
 
 
