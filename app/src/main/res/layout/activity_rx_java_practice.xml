@@ -21,9 +21,21 @@
 
         <EditText
             android:id="@+id/etSearch"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="50dp"/>
 
+        <EditText
+            android:id="@+id/etPhone"
+            android:hint="手机号"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
+
+        <EditText
+            android:id="@+id/etPwd"
+            android:hint="密码"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
     </LinearLayout>
 

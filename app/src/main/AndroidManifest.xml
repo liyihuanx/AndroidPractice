@@ -12,14 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rxjava.RxJavaPracticeActivity">
+        <activity android:name=".refresh.SmartRefreshActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".http.NewHttpActivity"/>
+        <activity android:name=".rxjava.RxJavaPracticeActivity">
+
+        </activity>
+        <activity android:name=".http.NewHttpActivity" />
         <activity android:name=".datasource.api.HttpActivity" />
         <activity android:name=".kotlin.Xc2Activity" />
         <activity android:name=".fragment.LazyActivity" />

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <FrameLayout
+        android:id="@+id/flLoading"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="加载中..."
+            android:textSize="@dimen/dp_20"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/flLoadEnd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="加载结束..."
+            android:textSize="@dimen/dp_20"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:id="@+id/flLoadFail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="@dimen/dp_5"
+            android:text="加载失败..."
+            android:textSize="@dimen/dp_20"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+</FrameLayout>

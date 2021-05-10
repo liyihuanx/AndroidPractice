@@ -53,7 +53,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation "androidx.core:core-ktx:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-//    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.47'
     api 'com.tencent.imsdk:imsdk:5.1.2'
     implementation 'com.github.bumptech.glide:glide:4.6.1'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.6.1'
@@ -62,13 +62,13 @@ dependencies {
     implementation 'com.tencent.liteavsdk:LiteAVSDK_Smart:latest.release'
 
     //rxjava
-    compile "io.reactivex.rxjava2:rxjava:2.1.1"
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.squareup.retrofit2:retrofit:2.3.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation "io.reactivex.rxjava2:rxjava:2.1.1"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //配合rxjava2使用
-    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 
 
     //协程
@@ -79,7 +79,7 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.48'
 
     //建议导2.7版本-（稳定功能多）
-    compile 'com.google.code.gson:gson:2.7'
+    implementation 'com.google.code.gson:gson:2.7'
 
     //  mrouter 专用 注解模块
     implementation project(":mrouter_annotation")
@@ -87,6 +87,8 @@ dependencies {
     // mrouter 专用 注解处理器
     kapt project(':mrouter_compiler')
     api project(":mrouter_api")
+
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
 }
 repositories {
     mavenCentral()
