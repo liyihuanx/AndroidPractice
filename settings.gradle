@@ -1,7 +1,5 @@
 include ':mrouter_api'
 include ':mrouter_annotation'
 include ':mrouter_compiler'
-include ':danmu'
-include ':planet'
 include ':app'
 rootProject.name = "AndroidPractice"

@@ -12,16 +12,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".refresh.SmartRefreshActivity">
+        <activity android:name=".chat.ChatActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".rxjava.RxJavaPracticeActivity">
+        <activity android:name=".refresh.SmartRefreshActivity">
 
         </activity>
+        <activity android:name=".rxjava.RxJavaPracticeActivity"></activity>
         <activity android:name=".http.NewHttpActivity" />
         <activity android:name=".datasource.api.HttpActivity" />
         <activity android:name=".kotlin.Xc2Activity" />
@@ -44,8 +45,6 @@
         <activity android:name=".video.LocalVideoActivity" />
         <activity android:name=".rvlayout.MyRvActivity" />
         <activity android:name=".lifecycle.LifeActivity" />
-        <activity android:name=".danmu.DanmuActivity" />
-        <activity android:name=".planet.PlanetActivity" />
         <activity android:name=".imdemo.imchat.ImDemoActivity" />
         <activity android:name=".camera.CameraDemo" />
         <activity android:name=".tarotview.TarotActivity" />

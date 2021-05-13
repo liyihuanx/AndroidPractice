@@ -10,9 +10,9 @@ import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.RelativeLayout
-import com.example.planet.utils.SizeUtils
 import kotlinx.android.synthetic.main.activity_dispatch_gold.*
 import liyihuan.app.android.androidpractice.R
+import liyihuan.app.android.androidpractice.utils.SizeUtils
 import java.util.*
 
 class DispatchGoldActivity : AppCompatActivity() {

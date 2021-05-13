@@ -4,9 +4,9 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
-import com.example.planet.utils.SizeUtils
 import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.utils.ScreenUtils
+import liyihuan.app.android.androidpractice.utils.SizeUtils
 
 /**
  * @author created by liyihuanx

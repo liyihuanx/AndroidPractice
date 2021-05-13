@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#FFFFFFFF"
+    tools:parentTag="android.widget.LinearLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF1D2028"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <ImageButton
+                android:id="@+id/btnVoice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/ic_voice_input" />
+
+            <ImageButton
+                android:id="@+id/btnKeyboard"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/ic_keyboard_input"
+                android:visibility="gone" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/voice_panel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/btn_voice_normal"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="@string/voice_record_press_talk"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                tools:visibility="gone" />
+
+            <TextView
+                android:id="@+id/bannedPanel"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_gravity="bottom"
+                android:background="@drawable/edit_back"
+                android:clickable="true"
+                android:gravity="center"
+                android:text="您已被禁言"
+                android:textColor="@color/white"
+                android:textSize="16dp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <LinearLayout
+                android:id="@+id/text_panel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/edit_back"
+                android:gravity="bottom"
+                android:orientation="horizontal"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/inputEt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint=""
+                    android:maxLines="4"
+                    android:minHeight="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textColor="@color/white"
+                    android:textCursorDrawable="@null"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/btnEmoticon"
+            android:layout_width="34dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/ic_face_input" />
+
+        <FrameLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginRight="5dp">
+
+            <ImageButton
+                android:id="@+id/btn_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:background="@null"
+                android:src="@drawable/ic_add_input"
+                android:visibility="gone" />
+
+            <ImageButton
+                android:id="@+id/btn_send"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:src="@drawable/btn_send"
+                android:visibility="visible" />
+        </FrameLayout>
+    </LinearLayout>
+
+    <!--<View-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="1px"-->
+    <!--android:background="@color/color_dddddd" />-->
+
+    <FrameLayout
+        android:id="@+id/bottomView"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="#FF1D2028"
+        android:visibility="gone"
+        tools:visibility="visible"
+        >
+
+        <ViewStub
+            android:id="@+id/viewStubOperate"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF1D2028"
+            android:layout="@layout/base_chat_input_operate" />
+
+        <ViewStub
+            android:id="@+id/viewStubEmoji"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#FF1D2028"
+            android:layout="@layout/base_chat_input_emotion" />
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/flGiftRoot"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="#FF1D2028"
+        android:visibility="gone" />
+
+
+</merge>

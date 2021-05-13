@@ -6,8 +6,8 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.animation.LinearInterpolator
-import com.example.planet.utils.SizeUtils
 import liyihuan.app.android.androidpractice.diffType.ScreenUtils
+import liyihuan.app.android.androidpractice.utils.SizeUtils
 
 /**
  * @author created by liyihuanx

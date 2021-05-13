@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">AndroidPractice</string>
+
+
+
+    <string name="voice_record_press_talk">按下说话</string>
+    <string name="voice_record_release_end">松开结束</string>
+    <string name="voice_record_flingup_cancel">手指上滑，取消发送</string>
+    <string name="voice_record_cancel_send">松开手指，取消发送</string>
+
+    <string name="chat_resend">重新发送</string>
+    <string name="chat_del">删除</string>
+    <string name="chat_revoke">撤回</string>
+    <string name="chat_revoke_failed">撤回失败</string>
+    <string name="chat_revoke_time_exceed">消息已经超出撤回时间限制</string>
+    <string name="chat_revoke_by_self">您撤回了一条消息</string>
+    <string name="chat_revoke_by_other">%1$s撤回了一条消息</string>
+    <string name="chat_save">保存</string>
+    <string name="chat_file_too_large">文件过大，发送失败</string>
+    <string name="chat_file_not_exist">文件不存在，发送失败</string>
+    <string name="chat_image_preview_title">图片预览</string>
+    <string name="chat_image_preview_send">发送</string>
+    <string name="chat_image_preview_load_err">图片加载失败</string>
+    <string name="chat_image_preview_ori">原图发送</string>
+    <string name="chat_typing">对方正在输入…</string>
+    <string name="chat_content_bad">内容含有敏感词</string>
 </resources>
