@@ -6,7 +6,7 @@
     android:background="#FF1D2028">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/operateRv"
+        android:id="@+id/rvOperate"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:overScrollMode="never"

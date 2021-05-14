@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rlEmotionView"
+    android:id="@+id/rlEmojiView"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:background="#FF1D2028">
+
+    <TextView
+        android:id="@+id/tvEmojiTip"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dp_20"
+        android:textStyle="bold"
+        android:text="该功能展未开通"
+        android:gravity="center"/>
 
 <!--    <com.qizhou.emoji.EmotionKindViewPager-->
 <!--        android:id="@+id/emotionView"-->

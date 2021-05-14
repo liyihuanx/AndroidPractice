@@ -102,7 +102,7 @@
         </FrameLayout>
 
         <ImageView
-            android:id="@+id/btnEmoticon"
+            android:id="@+id/btnEmoji"
             android:layout_width="34dp"
             android:layout_height="40dp"
             android:layout_marginLeft="10dp"
@@ -116,28 +116,27 @@
             android:layout_marginRight="5dp">
 
             <ImageButton
-                android:id="@+id/btn_add"
+                android:id="@+id/btnOperate"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:background="@null"
-                android:src="@drawable/ic_add_input"
-                android:visibility="gone" />
+                android:src="@drawable/ic_add_input" />
 
             <ImageButton
-                android:id="@+id/btn_send"
+                android:id="@+id/btnSend"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@null"
                 android:src="@drawable/btn_send"
-                android:visibility="visible" />
+                android:visibility="gone" />
         </FrameLayout>
     </LinearLayout>
 
-    <!--<View-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="1px"-->
-    <!--android:background="@color/color_dddddd" />-->
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="1px"-->
+<!--        android:background="#dddddd" />-->
 
     <FrameLayout
         android:id="@+id/bottomView"
