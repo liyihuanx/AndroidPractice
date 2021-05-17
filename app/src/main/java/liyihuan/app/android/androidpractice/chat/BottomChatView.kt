@@ -6,31 +6,34 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
-import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import kotlinx.android.synthetic.main.view_bottom_chat.view.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.runBlocking
 import liyihuan.app.android.androidpractice.R
-import liyihuan.app.android.androidpractice.fish.FishRelativeLayout
-import java.security.Key
+import liyihuan.app.android.androidpractice.chat.voice.IVoiceRecord
 
 /**
  * @author created by liyihuanx
  * @date 2021/5/13
  * description: 类的描述
  */
-class BottomChatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : LinearLayout(context, attrs, defStyleAttr), View.OnClickListener, View.OnTouchListener {
-
+class BottomChatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) :
+        LinearLayout(context, attrs, defStyleAttr),
+        View.OnClickListener,
+        View.OnTouchListener {
     private var rlEmojiView: RelativeLayout? = null
     private var tvEmojiTip: TextView? = null
 
     private var rlOperate: RelativeLayout? = null
     private var rvOperate: RecyclerView? = null
+
+    private var iVoiceRecord: IVoiceRecord? = null
+    public fun setIVoiceRecord(iVoiceRecord: IVoiceRecord) {
+        this.iVoiceRecord = iVoiceRecord
+    }
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_bottom_chat, this, true)
@@ -45,62 +48,100 @@ class BottomChatView @JvmOverloads constructor(context: Context, attrs: Attribut
         btnSend.setOnClickListener(this)
         btnOperate.setOnClickListener(this)
         inputEt.setOnTouchListener(this)
+        voicePanelText.setOnTouchListener(this)
     }
 
     override fun onClick(v: View) {
         when (v) {
             // 表情
             btnEmoji -> {
-                if (isEmojiPanelShow()) {
-                    hideAllPanel()
-                    postDelayed({
-                        showEmoji(true)
-                    }, 50)
-                } else {
-                    showEmoji(true)
-                }
+                changePanelState("Emoji")
+            }
+            btnOperate -> {
+                changePanelState("Operate")
             }
             // 语音
             btnVoice -> {
-
+                showVoiceOrEdit("Voice")
             }
-
             btnKeyboard -> {
-
+                showVoiceOrEdit("Edit", true)
             }
             // 发送
             btnSend -> {
 
-            }
-            btnOperate -> {
-                if (isOperatePanelShow()) {
-                    hideAllPanel()
-                    postDelayed({
-                        showOtherOperate(true)
-                    }, 50)
-                } else {
-                    showOtherOperate(true)
-                }
 
             }
         }
     }
+
+
+    /**
+     * 表情和其他的切换
+     */
+    private fun changePanelState(type: String) {
+        if (!isBottomViewShow()) { // 承载布局没有显示
+            showVoiceOrEdit("Edit")
+            hideAllPanel() // 隐藏所有
+            postDelayed({
+                // 延迟显示
+                if (type == "Emoji") showEmoji(true) else showOtherOperate(true)
+            }, 50)
+        } else {
+            val isPanelShow = if (type == "Emoji") !isEmojiPanelShow() else !isOperatePanelShow()
+            if (isPanelShow) {
+                hideAllPanel() // 隐藏所有
+                if (type == "Emoji") showEmoji(true) else showOtherOperate(true)
+            }
+        }
+    }
+
+
+    /**
+     * 左侧语音和键盘icon切换
+     */
+    private fun showVoiceOrEdit(flag: String, isNeedKeyBoard: Boolean = false) {
+        hideAllPanel()
+        if (flag == "Voice") {
+            // 显示voice相关
+            inputEt.visibility = View.GONE
+            voicePanelText.visibility = View.VISIBLE
+            btnKeyboard.visibility = View.VISIBLE
+            btnVoice.visibility = View.GONE
+        } else {
+            // 显示输入相关
+            inputEt.visibility = View.VISIBLE
+            voicePanelText.visibility = View.GONE
+            btnKeyboard.visibility = View.GONE
+            btnVoice.visibility = View.VISIBLE
+
+            inputEt.requestFocus()
+            if (isNeedKeyBoard) {
+                KeyBoardUtil.openKeyBoard(inputEt)
+            }
+        }
+    }
+
 
     /**
      * 表情面板显示状态
      */
     private fun isEmojiPanelShow(): Boolean {
-        if (rlEmojiView != null) {
-            return rlEmojiView!!.visibility == View.GONE
-        }
-        return false
+        return (rlEmojiView?.visibility ?: View.GONE) == View.VISIBLE  // 为null就是没唤起过,就是没显示过
     }
 
+    /**
+     * 其他操作面板显示状态
+     */
     private fun isOperatePanelShow(): Boolean {
-        if (rlOperate != null) {
-            return rlOperate!!.visibility == View.GONE
-        }
-        return false
+        return (rlOperate?.visibility ?: View.GONE) == View.VISIBLE
+    }
+
+    /**
+     * 承载布局的显示状态
+     */
+    private fun isBottomViewShow(): Boolean {
+        return bottomView.visibility == View.VISIBLE
     }
 
 
@@ -108,17 +149,9 @@ class BottomChatView @JvmOverloads constructor(context: Context, attrs: Attribut
         KeyBoardUtil.hideKeyBoardByView(inputEt)
     }
 
-    /**
-     * 展示表情面板 or 其他操作面板
-     */
-//    private fun showEmojiOrOperate(isShowEmoji: Boolean, isShowOperate: Boolean) {
-//        bottomView.visibility = if (isShowEmoji or isShowEmoji) View.VISIBLE else View.GONE
-//        showEmoji(isShowEmoji)
-//        showOtherOperate(isShowOperate)
-//    }
 
     /**
-     * 显示emoji表情面板
+     * 加载emoji表情面板
      * 使用ViewStub懒加载
      */
     private fun showEmoji(show: Boolean) {
@@ -132,7 +165,7 @@ class BottomChatView @JvmOverloads constructor(context: Context, attrs: Attribut
     }
 
     /**
-     * 显示其他操作面板
+     * 加载其他操作面板
      */
     private fun showOtherOperate(show: Boolean) {
         if (show && rlOperate == null) {
@@ -182,7 +215,31 @@ class BottomChatView @JvmOverloads constructor(context: Context, attrs: Attribut
 
                 if (MotionEvent.ACTION_DOWN == event.action) {
                     hideAllPanel()
+                    voicePanelText.visibility = View.GONE
                     KeyBoardUtil.openKeyBoard(inputEt)
+                }
+                return true
+            }
+
+            voicePanelText -> {
+                var y = 0f
+                val offSetY = 200f // 取消发送需要的最小距离
+                when (event.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        y = event.y // 获取按下的位置
+                        iVoiceRecord?.voiceRecordStart()
+                    }
+                    MotionEvent.ACTION_MOVE -> {
+                        val currentY = event.y
+                        if (y - currentY > offSetY) {
+                            iVoiceRecord?.voiceRecordCancel()
+                        } else {
+                            iVoiceRecord?.voiceRecordIng()
+                        }
+                    }
+                    MotionEvent.ACTION_UP -> {
+                        iVoiceRecord?.voiceRecordFinish()
+                    }
                 }
                 return true
             }

@@ -44,7 +44,7 @@
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/voice_panel"
+                android:id="@+id/voicePanelText"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_gravity="bottom"
@@ -56,24 +56,10 @@
                 android:textSize="16dp"
                 android:textStyle="bold"
                 android:visibility="gone"
-                tools:visibility="gone" />
-
-            <TextView
-                android:id="@+id/bannedPanel"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_gravity="bottom"
-                android:background="@drawable/edit_back"
-                android:clickable="true"
-                android:gravity="center"
-                android:text="您已被禁言"
-                android:textColor="@color/white"
-                android:textSize="16dp"
-                android:visibility="gone"
                 tools:visibility="visible" />
 
             <LinearLayout
-                android:id="@+id/text_panel"
+                android:id="@+id/textPanel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_back"
