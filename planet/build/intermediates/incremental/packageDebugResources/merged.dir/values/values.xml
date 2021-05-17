@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <string name="app_name">Soul Planet</string>
+    <declare-styleable name="SoulPlanetsView">
+        <attr name="autoScrollMode">
+            <enum name="disable" value="0"/>
+            <enum name="decelerate" value="1"/>
+            <enum name="uniform" value="2"/>
+        </attr>
+        <attr format="boolean" name="manualScroll"/>
+        <attr format="float" name="radiusPercent"/>
+        <attr format="float" name="scrollSpeed"/>
+        <attr format="color" name="lightColor"/>
+        <attr format="color" name="darkColor"/>
+        <attr format="float" name="startAngleX"/>
+        <attr format="float" name="startAngleY"/>
+    </declare-styleable>
+</resources>

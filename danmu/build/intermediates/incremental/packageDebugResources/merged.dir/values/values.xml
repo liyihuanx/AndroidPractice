@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="dm_direction">
+        <enum name="right_left" value="1"/>
+        <enum name="left_right" value="2"/>
+        <enum name="up_down" value="3"/>
+        <enum name="down_up" value="4"/>
+    </attr>
+    <attr format="dimension" name="dm_h_space"/>
+    <attr format="integer" name="dm_sleep"/>
+    <attr format="dimension" name="dm_span"/>
+    <attr format="integer" name="dm_span_time"/>
+    <attr format="dimension" name="dm_v_space"/>
+    <dimen name="head_size">32dp</dimen>
+    <string name="app_name">dmlib2</string>
+    <declare-styleable name="DMSurfaceView">
+        <attr name="dm_direction"/>
+        <attr name="dm_span"/>
+        <attr name="dm_span_time"/>
+        <attr name="dm_sleep"/>
+        <attr name="dm_v_space"/>
+        <attr name="dm_h_space"/>
+    </declare-styleable>
+    <declare-styleable name="DMTextureView">
+        <attr name="dm_direction"/>
+        <attr name="dm_span"/>
+        <attr name="dm_span_time"/>
+        <attr name="dm_sleep"/>
+        <attr name="dm_v_space"/>
+        <attr name="dm_h_space"/>
+    </declare-styleable>
+</resources>

@@ -34,6 +34,8 @@ class SmartRefreshActivity : AppCompatActivity() {
                 emptyView, 10, 1, true) {
             loadData()
         }
+
+
         smartRefreshHelper.refresh()
     }
 
