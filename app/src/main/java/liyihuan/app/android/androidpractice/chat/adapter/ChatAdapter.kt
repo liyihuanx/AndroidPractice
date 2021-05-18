@@ -1,5 +1,8 @@
 package liyihuan.app.android.androidpractice.chat.adapter
 
+import liyihuan.app.android.androidpractice.chat.viewholder.BaseMsgViewHolder
+import liyihuan.app.android.androidpractice.chat.viewholder.ViewHolderHelper
+
 /**
  * @ClassName: ChatAdapter
  * @Description: java类作用描述
@@ -8,5 +11,18 @@ package liyihuan.app.android.androidpractice.chat.adapter
  */
 class ChatAdapter : BaseMsgMultiTypeAdapter(arrayListOf()) {
 
+    private var holder2ViewType: HashMap<Class<out BaseMsgViewHolder<*>>, Int> = HashMap()
 
+
+    init {
+        // 获取所有类型
+        val allViewHolderType = ViewHolderHelper.getAllViewHolderType()
+        // 给holder的记数用作类型
+        var holderType = 0
+        // 遍历
+        for (holder in allViewHolderType) {
+            holderType++
+            holder2ViewType[holder] = holderType
+        }
+    }
 }
