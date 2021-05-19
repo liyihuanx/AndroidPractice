@@ -9,6 +9,6 @@ import com.tencent.imsdk.TIMTextElem
  * @Date: 2021/5/17 22:35
  */
 
-class TextMsgBean : IMMessage<TIMTextElem>(){
+class VoiceMsgBean : IMMessage<TIMTextElem>(){
 
 }

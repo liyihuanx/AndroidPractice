@@ -4,6 +4,7 @@ import android.widget.TextView
 import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.chat.adapter.ChatAdapter
 import liyihuan.app.android.androidpractice.chat.bean.TextMsgBean
+import liyihuan.app.android.androidpractice.chat.bean.VoiceMsgBean
 
 /**
  * @ClassName: TextViewHolder
@@ -11,7 +12,7 @@ import liyihuan.app.android.androidpractice.chat.bean.TextMsgBean
  * @Author: liyihuan
  * @Date: 2021/5/17 22:35
  */
-class TextViewHolder : BaseMsgViewHolder<TextMsgBean>() {
+class VoiceViewHolder : BaseMsgViewHolder<VoiceMsgBean>() {
     protected lateinit var bodyTextView: TextView
 
 
@@ -25,6 +26,6 @@ class TextViewHolder : BaseMsgViewHolder<TextMsgBean>() {
     }
 
     override fun bindContentView() {
-        bodyTextView.text = "12345"
+
     }
 }

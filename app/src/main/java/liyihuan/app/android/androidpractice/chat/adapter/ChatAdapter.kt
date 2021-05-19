@@ -23,6 +23,11 @@ class ChatAdapter : BaseMsgMultiTypeAdapter(arrayListOf()) {
         for (holder in allViewHolderType) {
             holderType++
             holder2ViewType[holder] = holderType
+            addHolderInfo(holderType,  holder)
         }
+    }
+
+    override fun getDefItemViewType(position: Int): Int {
+        return holder2ViewType[ViewHolderHelper.getViewHolder(getItem(position))]!!
     }
 }

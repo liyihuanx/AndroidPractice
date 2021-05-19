@@ -2,6 +2,7 @@ package liyihuan.app.android.androidpractice.chat.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseViewHolder
+import liyihuan.app.android.androidpractice.chat.bean.IMMessage
 
 /**
  * @ClassName: RecyclerViewHolder
@@ -10,8 +11,7 @@ import com.chad.library.adapter.base.BaseViewHolder
  * @Date: 2021/5/17 22:02
  */
 
-abstract class RecyclerViewHolder<T : RecyclerView.Adapter<*>, V : BaseViewHolder?, K>(val adapter: T? = null) {
-
-    abstract fun convert(holder: V, data: K, position: Int)
+abstract class RecyclerViewHolder<K>(val adapter:  RecyclerView.Adapter<*>? = null) {
+    abstract fun convert(holder: BaseViewHolder, data: K, position: Int)
 
 }

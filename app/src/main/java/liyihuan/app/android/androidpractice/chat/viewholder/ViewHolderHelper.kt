@@ -1,8 +1,9 @@
 package liyihuan.app.android.androidpractice.chat.viewholder
 
+import com.tencent.imsdk.TIMElemType
 import liyihuan.app.android.androidpractice.chat.bean.IMMessage
 import liyihuan.app.android.androidpractice.chat.bean.TextMsgBean
-import java.lang.NullPointerException
+import liyihuan.app.android.androidpractice.chat.bean.VoiceMsgBean
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -14,12 +15,13 @@ import kotlin.collections.ArrayList
  */
 object ViewHolderHelper {
 
-
-    private val viewHolderFactory: HashMap<Class<out IMMessage>, Class<out BaseMsgViewHolder<*>>> = HashMap<Class<out IMMessage?>, Class<out BaseMsgViewHolder<*>>>()
+    private val viewHolderFactory: HashMap<Class<out IMMessage<*>>, Class<out BaseMsgViewHolder<*>>> = HashMap()
 
     // 注册所有类型的viewHolder
     init {
         registerViewHolder(TextMsgBean::class.java, TextViewHolder::class.java)
+        registerViewHolder(VoiceMsgBean::class.java, VoiceViewHolder::class.java)
+
     }
 
     /**
@@ -27,7 +29,7 @@ object ViewHolderHelper {
      *     TextMsgBean.class,TextMsgViewHolder.class
      *
      */
-    private fun registerViewHolder(bean: Class<out IMMessage>, viewHolder: Class<out BaseMsgViewHolder<*>>) {
+    private fun registerViewHolder(bean: Class<out IMMessage<*>>, viewHolder: Class<out BaseMsgViewHolder<*>>) {
         viewHolderFactory[bean] = viewHolder
     }
 
@@ -36,8 +38,12 @@ object ViewHolderHelper {
      * 根据类型返回
      */
     @JvmStatic
-    fun getViewHolder(bean: Class<out IMMessage>): Class<out BaseMsgViewHolder<*>>? {
-        return viewHolderFactory[bean]
+    fun getViewHolder(message: IMMessage<*>?): Class<out BaseMsgViewHolder<*>>? {
+        return when (message?.getMsgType()) {
+            TIMElemType.Text -> TextViewHolder::class.java
+            TIMElemType.Sound -> VoiceViewHolder::class.java
+            else -> TextViewHolder::class.java
+        }
     }
 
 

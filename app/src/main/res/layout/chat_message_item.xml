@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="6dp"
+    android:paddingBottom="6dp">
+
+    <TextView
+        android:id="@+id/message_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:textColor="#bcbcbc"
+        android:textSize="12dp"
+        android:visibility="gone"
+        tools:text="12:00"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/message_item_portrait_left"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/message_item_time"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="8dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/message_item_portrait_right"
+        android:layout_width="@dimen/dp_40"
+        android:layout_height="@dimen/dp_40"
+        android:layout_below="@id/message_item_time"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="6dp"
+        android:src="@mipmap/ic_launcher"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+
+    <TextView
+        android:id="@+id/message_item_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_item_time"
+        android:layout_marginTop="-3dp"
+        android:layout_marginBottom="3dp"
+        android:layout_toLeftOf="@id/message_item_portrait_right"
+        android:layout_toRightOf="@id/message_item_portrait_left"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:maxWidth="160dip"
+        android:singleLine="true"
+        android:textColor="#000000"
+        android:textSize="12dp"
+        android:visibility="gone"
+        tools:text="哈哈哈哈"
+        tools:visibility="visible" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_item_nickname"
+        android:layout_toLeftOf="@id/message_item_portrait_right"
+        android:layout_toRightOf="@id/message_item_portrait_left">
+
+        <LinearLayout
+            android:id="@+id/message_item_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/message_item_progress"
+                android:layout_width="20dip"
+                android:layout_height="20dip"
+                android:layout_gravity="center"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/chat_progress_small_white"
+                android:visibility="gone"
+                tools:progress="30"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/message_item_send_status"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="2dp"
+                android:layout_marginRight="2dp"
+                android:src="@drawable/chat_icon_msg_send_failed"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <FrameLayout
+                android:id="@+id/message_item_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:color/transparent"
+                android:minHeight="@dimen/dp_40" />
+
+        </LinearLayout>
+    </FrameLayout>
+</RelativeLayout>
