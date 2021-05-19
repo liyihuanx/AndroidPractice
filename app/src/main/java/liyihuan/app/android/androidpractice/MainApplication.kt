@@ -1,6 +1,7 @@
 package liyihuan.app.android.androidpractice
 
 import android.app.Application
+import liyihuan.app.android.androidpractice.chat.im.ImHelper
 import liyihuan.app.android.androidpractice.datasource.AppCache
 
 /**

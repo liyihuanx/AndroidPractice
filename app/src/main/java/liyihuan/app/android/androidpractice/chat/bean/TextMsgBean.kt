@@ -11,4 +11,8 @@ import com.tencent.imsdk.TIMTextElem
 
 class TextMsgBean : IMMessage<TIMTextElem>(){
 
+    fun createMsg(paramBeen: String) {
+
+    }
+
 }
