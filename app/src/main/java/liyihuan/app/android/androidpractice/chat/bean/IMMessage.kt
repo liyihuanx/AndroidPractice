@@ -1,8 +1,6 @@
 package liyihuan.app.android.androidpractice.chat.bean
 
-import com.tencent.imsdk.TIMElem
-import com.tencent.imsdk.TIMElemType
-import com.tencent.imsdk.TIMMessage
+import com.tencent.imsdk.*
 
 /**
  * @ClassName: IMMessage
@@ -29,8 +27,7 @@ abstract class IMMessage<T : TIMElem> {
      *          这里都是自己配置的
      *              "headPic":"",
      *              "nickName":"liyihuan",
-     *              "textContent":
-     *              "我发送一条数据给你",
+     *              "textContent":"我发送一条数据给你",
      *              "userId":"liyihuan",
      *              "mTxMessage":{"msg":{}},"userAction":0}
      *              }
@@ -42,9 +39,14 @@ abstract class IMMessage<T : TIMElem> {
     /**
      * SDK消息内部实体
      */
-    protected var timMessage: TIMMessage = TIMMessage()
-    protected var timElem: T? = null
+    var timMessage: TIMMessage = TIMMessage()
+    var timElem: T? = null
 
+
+    var userId = ""
+    var userName = ""
+    var userHeadImg = ""
+    var msgContent = ""
 
     fun setTxMsg(txMessage: TIMMessage) {
         timMessage = txMessage
@@ -60,4 +62,42 @@ abstract class IMMessage<T : TIMElem> {
     fun getMsgType(): TIMElemType? {
         return timElem?.type
     }
+
+    open fun parseFrom(): IMMessage<*>? {
+        if (isSelf()) {
+
+        } else {
+            getSenderProfile(object : TIMValueCallBack<TIMUserProfile> {
+                override fun onSuccess(timUserProfile: TIMUserProfile) {
+                    userId = timUserProfile.identifier
+                    userName = timUserProfile.nickName
+                    userHeadImg = timUserProfile.faceUrl
+                }
+
+                override fun onError(code: Int, desc: String?) {
+
+                }
+
+            })
+        }
+        if (timMessage.elementCount > 0) {
+            timElem = timMessage.getElement(0) as T
+            parseIMMessage(timElem!!)
+        }
+        return this
+    }
+
+    /**
+     * 获取消息发送者的信息
+     *
+     * @return
+     */
+    open fun getSenderProfile(callBack: TIMValueCallBack<TIMUserProfile>) {
+        timMessage.getSenderProfile(callBack)
+    }
+
+    /**
+     * 解析数据
+     */
+    protected abstract fun parseIMMessage(elem: T)
 }

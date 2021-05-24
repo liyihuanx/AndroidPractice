@@ -32,22 +32,17 @@
             android:textColor="#404040"
             android:textSize="@dimen/dp_16"
             android:textStyle="bold" />
+
+
     </RelativeLayout>
 
-
-    <Button
-        android:id="@+id/btnSend"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvChatContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomChatView"
-        app:layout_constraintTop_toBottomOf="@+id/ll_top" />
-
+        app:layout_constraintTop_toBottomOf="@+id/ll_top"
+        app:layout_constraintBottom_toTopOf="@+id/bottomChatView" />
 
     <liyihuan.app.android.androidpractice.chat.BottomChatView
         android:id="@+id/bottomChatView"

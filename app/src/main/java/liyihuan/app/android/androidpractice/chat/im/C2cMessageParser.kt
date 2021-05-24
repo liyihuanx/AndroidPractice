@@ -30,8 +30,6 @@ class C2cMessageParser : C2cMsgParser {
             try {
                 val dataJson = e.text // parseIMMessage --> this.text = elem.getText();
                 val jb: JSONObject = JSONObject(dataJson)
-                val userAction = jb.opt("userAction").toString()
-                Log.d("QWER", "parse: $dataJson")
                 val classType = TextMsgBean::class.java
 
                 been = Gson().fromJson(dataJson, classType) // 转换成对应的Bean类

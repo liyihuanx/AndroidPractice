@@ -67,7 +67,6 @@ abstract class BaseMsgMultiTypeAdapter(data: List<IMMessage<*>>) : BaseQuickAdap
         val itemMsgID = getItemMsgType(item)
         // item的类型 --> 自己设置的吗？？
         val itemViewType = helper.itemViewType
-        Log.d("QWER", "BaseMsgMultiTypeAdapter: $itemViewType")
         var holder = multiTypeViewHolders[itemViewType]?.get(itemMsgID)
         // 如果holder的实例为null
         if (holder == null) {

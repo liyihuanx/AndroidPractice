@@ -26,6 +26,7 @@ import liyihuan.app.android.androidpractice.imdemo.GenerateTestUserSig
 class ChatActivity : AppCompatActivity(), IVoiceRecord, ImMsgListener {
 
     private var anchor: TIMMessage? = null
+    private val chatAdapter = ChatAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,11 +34,12 @@ class ChatActivity : AppCompatActivity(), IVoiceRecord, ImMsgListener {
         bottomChatView.setIVoiceRecord(this)
         ImHelper.initIm(application)
         ImManager.login(
-                RECEIVER_ID,
-                GenerateTestUserSig.genTestUserSig(RECEIVER_ID),
+                USER_ID,
+                GenerateTestUserSig.genTestUserSig(USER_ID),
                 object : ImCallback {
                     override fun onSuc() {
                         Log.d("QWER", "onSuc: 登录成功")
+                        getConversation()
                     }
 
                     override fun onFail(code: Int, msg: String?) {
@@ -49,23 +51,14 @@ class ChatActivity : AppCompatActivity(), IVoiceRecord, ImMsgListener {
         ImMsgDispatcher.addC2CListener(this)
 
 
-        val chatAdapter = ChatAdapter()
-
-        val list = ArrayList<IMMessage<*>>()
-        list.add(TextMsgBean())
-        chatAdapter.setNewData(list)
         rvChatContent.adapter = chatAdapter
         rvChatContent.layoutManager = LinearLayoutManager(this)
 
-        btnSend.setOnClickListener {
-
-            getConversation()
-        }
 
 
     }
 
-    fun sendMsg(){
+    private fun sendMsg(){
         val msgBean = TextMsgBean()
         msgBean.createMsg("我发送一条数据给你")
         ImSender.sendC2CTextMessage(RECEIVER_ID, msgBean, object : ImCallback {
@@ -79,12 +72,21 @@ class ChatActivity : AppCompatActivity(), IVoiceRecord, ImMsgListener {
         })
     }
 
-    fun getConversation(){
-        val conversation = TIMManager.getInstance().getConversation(TIMConversationType.C2C, USER_ID)
+    private fun getConversation() {
+        val conversation = TIMManager.getInstance().getConversation(TIMConversationType.C2C, RECEIVER_ID)
         val timConversationExt = TIMConversationExt(conversation)
-        timConversationExt.getMessage(40,anchor,object : TIMValueCallBack<List<TIMMessage>>{
-            override fun onSuccess(t: List<TIMMessage>?) {
-                Log.d("QWER", "onSuc: $t")
+        timConversationExt.getMessage(5, anchor, object : TIMValueCallBack<List<TIMMessage>> {
+            override fun onSuccess(list: List<TIMMessage>?) {
+                list?.get(0)?.let {
+                    C2cMessageParser().parse(it)
+                }
+                val newlist = list?.map {
+                    C2cMessageParser().parse(it)
+                }?.reversed()?.filterNotNull()
+                if (newlist != null) {
+                    chatAdapter.addData(0,newlist)
+                }
+
             }
 
             override fun onError(code: Int, desc: String?) {

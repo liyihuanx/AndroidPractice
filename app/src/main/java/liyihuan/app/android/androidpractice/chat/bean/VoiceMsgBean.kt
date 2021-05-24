@@ -10,5 +10,7 @@ import com.tencent.imsdk.TIMTextElem
  */
 
 class VoiceMsgBean : IMMessage<TIMTextElem>(){
+    override fun parseIMMessage(elem: TIMTextElem) {
 
+    }
 }

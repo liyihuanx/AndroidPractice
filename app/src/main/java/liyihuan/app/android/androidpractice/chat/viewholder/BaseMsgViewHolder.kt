@@ -10,7 +10,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.chat.adapter.ChatAdapter
 import liyihuan.app.android.androidpractice.chat.bean.IMMessage
-
+import com.example.module_fangroup.util.*
 /**
  * @ClassName: BaseMsgViewHolder
  * @Description: java类作用描述
@@ -38,15 +38,21 @@ abstract class BaseMsgViewHolder<K : IMMessage<*>>(adapter: ChatAdapter? = null)
     protected lateinit var mViewHolder: BaseViewHolder
 
 
+    //
+    protected val LeftPadding: Int = ViewUtil.dip2px(10f)
+    protected val RightPadding: Int = ViewUtil.dip2px(10f)
+    protected val TopPadding: Int = ViewUtil.dip2px(6f)
+    protected val BottomPadding: Int = ViewUtil.dip2px(6f)
+
     override fun convert(holder: BaseViewHolder, data: K, position: Int) {
-        Log.d("QWER", "BaseMsgViewHolder-convert ")
         view = holder.itemView
         message = data
         mContext = view.context
         mViewHolder = holder
 
         inflateView()
-        initItemInfo()
+        setItemViewData()
+        bindContentView()
     }
 
 
@@ -78,7 +84,7 @@ abstract class BaseMsgViewHolder<K : IMMessage<*>>(adapter: ChatAdapter? = null)
     /**
      * 设置每条消息Item的所有信息
      */
-    private fun initItemInfo() {
+    private fun setItemViewData() {
         setMsgContent()
     }
 
@@ -97,9 +103,16 @@ abstract class BaseMsgViewHolder<K : IMMessage<*>>(adapter: ChatAdapter? = null)
         if (isReceivedMessage()) {
             setGravity(bodyContainer, Gravity.LEFT)
             contentContainer.setBackgroundResource(leftBackground())
+            avatarLeft.visibility = View.VISIBLE
+            avatarRight.visibility = View.GONE
+
+            nameTextView.text = message.userName
+            nameTextView.visibility = View.VISIBLE
         } else {
             setGravity(bodyContainer, Gravity.RIGHT)
             contentContainer.setBackgroundResource(rightBackground())
+            avatarLeft.visibility = View.GONE
+            avatarRight.visibility = View.VISIBLE
         }
     }
 

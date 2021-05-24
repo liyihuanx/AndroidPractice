@@ -1,8 +1,9 @@
 package liyihuan.app.android.androidpractice.chat.viewholder
 
+import android.util.Log
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import liyihuan.app.android.androidpractice.R
-import liyihuan.app.android.androidpractice.chat.adapter.ChatAdapter
 import liyihuan.app.android.androidpractice.chat.bean.TextMsgBean
 
 /**
@@ -25,6 +26,16 @@ class TextViewHolder : BaseMsgViewHolder<TextMsgBean>() {
     }
 
     override fun bindContentView() {
-        bodyTextView.text = "12345"
+        bodyTextView.text = message.msgContent
+
+        if (isReceivedMessage()) {
+//            bodyTextView.setBackgroundResource(leftBackground())
+            bodyTextView.setPadding(LeftPadding, bodyTextView.paddingTop, RightPadding, bodyTextView.paddingBottom)
+        } else {
+//            bodyTextView.setBackgroundResource(rightBackground())
+            bodyTextView.setTextColor(ContextCompat.getColor(mContext, R.color.white))
+            bodyTextView.setPadding(LeftPadding, bodyTextView.paddingTop, RightPadding, bodyTextView.paddingBottom)
+        }
+
     }
 }
