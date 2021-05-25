@@ -2,7 +2,6 @@
     <string name="app_name">AndroidPractice</string>
 
 
-
     <string name="voice_record_press_talk">按下说话</string>
     <string name="voice_record_release_end">松开结束</string>
     <string name="voice_record_flingup_cancel">手指上滑，取消发送</string>

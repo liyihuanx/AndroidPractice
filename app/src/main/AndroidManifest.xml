@@ -2,8 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="liyihuan.app.android.androidpractice">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <application
         android:name=".MainApplication"
         android:allowBackup="true"
@@ -12,18 +10,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".chat.ChatActivity"
-            android:windowSoftInputMode="adjustResize">
+        <activity android:name=".hovertop.HoverTopActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".refresh.SmartRefreshActivity">
+        <activity
+            android:name=".chat.ChatActivity"
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
-        <activity android:name=".rxjava.RxJavaPracticeActivity"></activity>
+        <activity android:name=".refresh.SmartRefreshActivity"></activity>
+        <activity android:name=".rxjava.RxJavaPracticeActivity" />
         <activity android:name=".http.NewHttpActivity" />
         <activity android:name=".datasource.api.HttpActivity" />
         <activity android:name=".kotlin.Xc2Activity" />
@@ -65,5 +65,7 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>

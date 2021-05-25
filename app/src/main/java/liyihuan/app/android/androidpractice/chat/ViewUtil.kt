@@ -31,6 +31,7 @@ object ViewUtil {
     /**
      * 描述：dip转换为px
      */
+    @JvmStatic
     fun dip2px(dipValue: Float): Int {
         val scale =
                 Resources.getSystem().displayMetrics.density
