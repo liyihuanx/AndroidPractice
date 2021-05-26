@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <liyihuan.app.android.androidpractice.hovertop.MyScrollView
+        android:id="@+id/sv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/ll_title_top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="#2c5aff">
+
+                <View
+                    android:id="@+id/v_title_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:gravity="center"
+                    android:text="状\n态\n改\n变"
+                    android:textColor="#ffffff"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1600dp"
+                android:gravity="center"
+                android:background="#b5f581"
+                android:text="内\n容\n区\n域"
+                android:textColor="#ffffff"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
+    </liyihuan.app.android.androidpractice.hovertop.MyScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="#f10303">
+
+        <View
+            android:id="@+id/v_title_line_1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:text="头部"
+            android:textColor="#ffffff"
+            android:textSize="18sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#fff"/>
+
+    </LinearLayout>
+</RelativeLayout>
