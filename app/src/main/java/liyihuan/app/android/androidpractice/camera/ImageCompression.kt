@@ -31,10 +31,10 @@ class ImageCompression(context: Context) : AsyncTask<String, Void, String>() {
                 return mOutputFilePath!!
             }
             val mediaStorageDir = File(
-                Environment.getExternalStorageDirectory().toString()
-                    + "/Android/data/"
-                    + context.get()?.applicationContext?.packageName
-                    + "/Files/Compressed")
+                    Environment.getExternalStorageDirectory().toString()
+                            + "/Android/data/"
+                            + context.get()?.applicationContext?.packageName
+                            + "/Files/Compressed")
             if (!mediaStorageDir.exists()) {
                 mediaStorageDir.mkdirs()
             }
@@ -66,7 +66,7 @@ class ImageCompression(context: Context) : AsyncTask<String, Void, String>() {
 
     override fun onPostExecute(imagePath: String?) {
         // imagePath is path of new compressed image.
-        if (mCompressCallback != null&&imagePath!==null) {
+        if (mCompressCallback != null && imagePath !== null) {
             mCompressCallback!!.getPicSucc(mutableListOf(imagePath))
         }
     }

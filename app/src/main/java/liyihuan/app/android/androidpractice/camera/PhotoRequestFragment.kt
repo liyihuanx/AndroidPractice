@@ -39,10 +39,20 @@ class PhotoRequestFragment : Fragment() {
                     if (isNeedCrop()) {
 
                     } else {
+                        val originFileData =
+                                ContentUriUtil.getDataFromUri(context!!, data.data!!, ContentUriUtil.ContentType.image)
+                        originFileData?.let {
 
+                            ImageCompression(context!!)
+                                    .setOutputFilePath(PicIntentHelper.compressFilePath)
+                                    .setCompressCallback(object : PicCallback {
+                                        override fun getPicSucc(pathList: MutableList<String>) {
+                                            callback?.getPicSucc(pathList)
+                                        }
+
+                                    }).execute(it)
+                        }
                     }
-
-//                    callback?.getPicSucc()
                 }
             }
             PictureHelper.REQUEST_CODE_CAMERA -> {

@@ -119,7 +119,7 @@ object PicIntentHelper {
         //是否将数据保留在Bitmap中返回
 //        intent.putExtra("return-data", true);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, outputUri)
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString())
+        intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
         intent.putExtra("noFaceDetection", true) // no face detection
 
         /* https://juejin.im/entry/586dbd798d6d8100586ac8e2

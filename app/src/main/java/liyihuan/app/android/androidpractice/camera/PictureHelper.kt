@@ -59,7 +59,7 @@ class PictureHelper(activity: FragmentActivity) {
      */
     fun showOperate(callback: PicCallback, cropInfo: CropInfo? = null) {
         photoRequestFragment.callback = callback
-        photoRequestFragment.size = cropInfo
+        photoRequestFragment.cropInfo = cropInfo
 
         val operateDialog = activity.get()?.let { Dialog(it, R.style.BottomViewWhiteMask) }
         val contentView = LayoutInflater.from(activity.get())
