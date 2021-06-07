@@ -2,6 +2,7 @@ package liyihuan.app.android.androidpractice.camera
 
 import android.app.Dialog
 import android.content.Intent
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -57,7 +58,7 @@ class PictureHelper(activity: FragmentActivity) {
     /**
      * 选择相册或者相机的dialog
      */
-    fun showOperate(callback: PicCallback, cropInfo: CropInfo? = null) {
+    fun showOperate(cropInfo: CropInfo? = null, callback: PicCallback) {
         photoRequestFragment.callback = callback
         photoRequestFragment.cropInfo = cropInfo
 
@@ -105,9 +106,12 @@ class PictureHelper(activity: FragmentActivity) {
 
     private fun openCamera() {
         activity.get()?.let {
+            val mCameraFilePath = PicIntentHelper.cameraFilePath
+            photoRequestFragment.mCameraFilePath = mCameraFilePath
+            Log.d("QWER", "openCamera: ${PicIntentHelper.cameraFilePath}")
             photoRequestFragment.startActivityForResult(
                     PicIntentHelper.takePhotoIntent(
-                            it, PicIntentHelper.cameraFilePath
+                            it, mCameraFilePath
                     ),
                     REQUEST_CODE_CAMERA)
         }
