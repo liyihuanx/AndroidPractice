@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".forresult.ForResultActivity">
+
+    <Button
+        android:id="@+id/BtnForResult"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="BtnForResult"
+        android:textSize="@dimen/dp_20" />
+
+    <FrameLayout
+        android:id="@+id/flViewGroup"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

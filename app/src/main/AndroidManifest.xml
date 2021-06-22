@@ -12,6 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".camera.AlbumCameraActivity" />
         <activity android:name=".loopview.LoopActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,10 +27,13 @@
 
         </activity>
         <activity android:name=".hovertop.HoverTopActivity"/>
+        <activity android:name=".forresult.ForResult2Activity" />
+        <activity android:name=".forresult.ForResultActivity" />
         <activity
             android:name=".chat.ChatActivity"
             android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".refresh.SmartRefreshActivity" />
+        <activity android:name=".refresh.SmartRefreshActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".rxjava.RxJavaPracticeActivity" />
         <activity android:name=".http.NewHttpActivity" />
         <activity android:name=".datasource.api.HttpActivity" />
@@ -65,8 +69,8 @@
         <activity android:name=".timecount.TimeCountActivity" />
 
         <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="liyihuan.app.android.androidpractice.fileprovider"
+            android:name=".camera.ImagePickProvider"
+            android:authorities="${applicationId}.android7.fileProvider"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -74,5 +78,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
