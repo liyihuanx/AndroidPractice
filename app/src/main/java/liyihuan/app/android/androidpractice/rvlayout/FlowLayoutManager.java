@@ -1,14 +1,19 @@
 package liyihuan.app.android.androidpractice.rvlayout;
 
+import android.graphics.PointF;
 import android.graphics.Rect;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.LinearSmoothScroller;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import liyihuan.app.android.androidpractice.danmu.ScollLinearLayoutManager;
 
 /**
  * Created by xiangcheng on 17/3/18.
