@@ -14,6 +14,7 @@ class MainApplication :Application() {
     override fun onCreate() {
         super.onCreate()
         AppCache.setContext(this)
+        ActivityManager.get().init(this)
         ImHelper.init()
     }
 }
