@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".camera.AlbumCameraActivity" />
-        <activity android:name=".loopview.LoopActivity">
+        <activity android:name=".loopview.LoopActivity"/>
         <activity android:name=".clazz.ClazzActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +21,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".camera.AlbumCameraActivity"></activity>
-        <activity android:name=".danmu.DanMuActivity">
+        <activity android:name=".danmu.DanMuActivity"/>
+        <activity android:name=".hovertop.ScrollActivity"/>
 
-        </activity>
-        <activity android:name=".hovertop.ScrollActivity">
-
-        </activity>
         <activity android:name=".hovertop.HoverTopActivity"/>
         <activity android:name=".forresult.ForResult2Activity" />
         <activity android:name=".forresult.ForResultActivity" />
@@ -52,7 +48,6 @@
         <activity android:name=".glodgame.DispatchGoldActivity" />
         <activity android:name=".luckypan.LuckyPanActivity" />
         <activity android:name=".kotlin.KotlinActivity" />
-        <activity android:name=".live.LiveActivity" />
         <activity android:name=".video.VoiceActivity" />
         <activity android:name=".imdemo.conversation.ConversationListActivity" />
         <activity android:name=".imdemo.login.ImLoginActivity" />
