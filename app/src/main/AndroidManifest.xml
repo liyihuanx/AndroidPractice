@@ -3,6 +3,10 @@
     package="liyihuan.app.android.androidpractice">
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".MainApplication"
@@ -12,27 +16,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".camera.AlbumCameraActivity" />
-        <activity android:name=".loopview.LoopActivity">
+        <activity android:name=".invoke.InvokeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".danmu.DanMuActivity">
+        <activity android:name=".camera.AlbumCameraActivity" />
+        <activity android:name=".loopview.LoopActivity">
 
         </activity>
-        <activity android:name=".hovertop.ScrollActivity">
-
-        </activity>
-        <activity android:name=".hovertop.HoverTopActivity"/>
+        <activity android:name=".danmu.DanMuActivity"></activity>
+        <activity android:name=".hovertop.ScrollActivity"></activity>
+        <activity android:name=".hovertop.HoverTopActivity" />
         <activity android:name=".forresult.ForResult2Activity" />
         <activity android:name=".forresult.ForResultActivity" />
         <activity
             android:name=".chat.ChatActivity"
-            android:windowSoftInputMode="adjustResize"/>
-        <activity android:name=".refresh.SmartRefreshActivity"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".refresh.SmartRefreshActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".rxjava.RxJavaPracticeActivity" />
         <activity android:name=".http.NewHttpActivity" />
@@ -55,9 +59,7 @@
         <activity android:name=".imdemo.conversation.ConversationListActivity" />
         <activity android:name=".imdemo.login.ImLoginActivity" />
         <activity android:name=".video.LocalVideoActivity" />
-        <activity android:name=".rvlayout.MyRvActivity">
-
-        </activity>
+        <activity android:name=".rvlayout.MyRvActivity"></activity>
         <activity android:name=".lifecycle.LifeActivity" />
         <activity android:name=".imdemo.imchat.ImDemoActivity" />
         <activity android:name=".camera.CameraDemo" />
@@ -78,10 +80,5 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
