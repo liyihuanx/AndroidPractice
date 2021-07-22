@@ -86,4 +86,5 @@
     <color name="gray81">#CFCFCF</color>
     <color name="c_20f26355">#20F26355</color>
     <color name="c_f7f8f9">#f7f8f9</color>
+    <color name="transparent">#00000000</color>
 </resources>

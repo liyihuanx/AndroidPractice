@@ -16,19 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".invoke.InvokeActivity">
+        <activity
+            android:name=".recyclerview.HalfActivity"
+            android:theme="@style/dialogStyle2" />
+        <activity android:name=".recyclerview.RecyclerViewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".invoke.InvokeActivity" />
         <activity android:name=".camera.AlbumCameraActivity" />
-        <activity android:name=".loopview.LoopActivity">
-
-        </activity>
-        <activity android:name=".danmu.DanMuActivity"></activity>
-        <activity android:name=".hovertop.ScrollActivity"></activity>
+        <activity android:name=".loopview.LoopActivity" />
+        <activity android:name=".danmu.DanMuActivity" />
+        <activity android:name=".hovertop.ScrollActivity" />
         <activity android:name=".hovertop.HoverTopActivity" />
         <activity android:name=".forresult.ForResult2Activity" />
         <activity android:name=".forresult.ForResultActivity" />
@@ -59,7 +61,7 @@
         <activity android:name=".imdemo.conversation.ConversationListActivity" />
         <activity android:name=".imdemo.login.ImLoginActivity" />
         <activity android:name=".video.LocalVideoActivity" />
-        <activity android:name=".rvlayout.MyRvActivity"></activity>
+        <activity android:name=".rvlayout.MyRvActivity" />
         <activity android:name=".lifecycle.LifeActivity" />
         <activity android:name=".imdemo.imchat.ImDemoActivity" />
         <activity android:name=".camera.CameraDemo" />
