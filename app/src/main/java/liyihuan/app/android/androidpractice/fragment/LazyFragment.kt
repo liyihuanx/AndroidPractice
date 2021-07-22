@@ -111,10 +111,15 @@ abstract class LazyFragment : Fragment() {
 
     }
 
+    override fun onStop() {
+        super.onStop()
+        currentVisibleStatus = false
+    }
+
+
     override fun onDestroy() {
         super.onDestroy()
         isViewCreated = false
-        currentVisibleStatus = false
     }
 
     private fun dispatchChild(visible: Boolean) {

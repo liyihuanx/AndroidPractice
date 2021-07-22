@@ -5,11 +5,13 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Observable
 import kotlinx.android.synthetic.main.activity_main.*
 import liyihuan.app.android.androidpractice.touchevent.BadAdapter
 import liyihuan.app.android.mrouter_annotation.MRouter
 import liyihuan.app.android.mrouter_annotation.Parameter
 import liyihuan.app.android.mrouter_api.ParameterManager
+import java.util.concurrent.TimeUnit
 
 @MRouter(path = "/app/MainActivity")
 class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListener {
@@ -33,6 +35,10 @@ class MainActivity : AppCompatActivity(), MainAdapter.OnRecyclerItemClickListene
         rv_list.adapter = adapter
         adapter.itemClickListener = this
 
+        Observable.timer(10, TimeUnit.SECONDS)
+                .subscribe {
+                    Log.d("QWER", "onCreate: ")
+                }
     }
 
 

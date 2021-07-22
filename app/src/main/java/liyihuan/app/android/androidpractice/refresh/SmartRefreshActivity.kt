@@ -30,13 +30,22 @@ class SmartRefreshActivity : AppCompatActivity() {
         rvSmartRefresh.layoutManager = LinearLayoutManager(this)
         rvSmartRefresh.adapter = adapter
 
-        smartRefreshHelper = SmartRefreshHelper(adapter, rvSmartRefresh, smartRefreshLayout,
-                emptyView, 10, 1, true) {
-            loadData()
+        smartRefreshLayout.setOnRefreshListener {
+
+            it.finishRefresh(false)
         }
 
+        smartRefreshLayout.setOnLoadMoreListener {
+            it.finishLoadMore(false)
+        }
 
-        smartRefreshHelper.refresh()
+        smartRefreshLayout.autoRefresh()
+//        smartRefreshHelper = SmartRefreshHelper(adapter, rvSmartRefresh, smartRefreshLayout,
+//                emptyView, 10, 1, true) {
+//            loadData()
+//        }
+//
+//        smartRefreshHelper.refresh()
     }
 
 
@@ -75,10 +84,6 @@ class SmartRefreshActivity : AppCompatActivity() {
         }
 //
 //        // 下拉刷新
-//        smartRefreshLayout.setOnRefreshListener {
-//            list.add(0, "刷新添加的item")
-//            adapter.notifyDataSetChanged()
-//            it.finishRefresh()
-//        }
+
     }
 }
