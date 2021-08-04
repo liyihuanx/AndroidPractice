@@ -6,8 +6,5 @@ package liyihuan.app.android.androidpractice.invoke
  * description: 类的描述
  */
 public interface ILocation {
-
     fun getLocation()
-
-
 }

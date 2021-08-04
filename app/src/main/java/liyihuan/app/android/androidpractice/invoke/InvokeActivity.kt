@@ -9,7 +9,7 @@ import java.lang.reflect.InvocationHandler
 import java.lang.reflect.Method
 import java.lang.reflect.Proxy
 
-class InvokeActivity : AppCompatActivity() {
+class InvokeActivity : AppCompatActivity(), ILocation by LocationManage() {
 
     private var obj: ILocation? = null
 
@@ -19,9 +19,15 @@ class InvokeActivity : AppCompatActivity() {
 
         Log.d("QWER", "onCreate: ")
 
+        getLocation()
+
         btn.setOnClickListener {
 //            val classLoader = ILocation::class.java.classLoader
-//            Proxy.newProxyInstance(classLoader, arrayOf(ILocation::class.java), MyInvocationHandler(obj))
+//            val newProxyInstance = Proxy.newProxyInstance(classLoader, arrayOf(ILocation::class.java), MyInvocationHandler(obj))
+
+            val locationProxy = LocationProxy(LocationManage())
+            locationProxy.getLocation()
+
             tv.text = "6666"
         }
     }

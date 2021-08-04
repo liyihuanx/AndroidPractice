@@ -86,6 +86,10 @@ dependencies {
     api project(":mrouter_api")
 
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.2'
+
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
+
 }
 repositories {
     mavenCentral()

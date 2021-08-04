@@ -16,15 +16,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".recyclerview.HalfActivity"
-            android:theme="@style/dialogStyle2" />
-        <activity android:name=".recyclerview.RecyclerViewActivity">
+        <activity android:name=".viewpager2.pager.VP2MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".viewpager2.Viewpager2Activity">
+
+        </activity>
+        <activity
+            android:name=".recyclerview.HalfActivity"
+            android:theme="@style/dialogStyle2" />
+        <activity android:name=".recyclerview.RecyclerViewActivity">
+
         </activity>
         <activity android:name=".camera.AlbumCameraActivity" />
         <activity android:name=".loopview.LoopActivity" />
