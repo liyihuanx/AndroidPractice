@@ -61,6 +61,7 @@ fun main() {
     KotlinReflect::class.declaredFunctions.forEach {
         println(it.returnType.arguments)
     }
+
 }
 
 
