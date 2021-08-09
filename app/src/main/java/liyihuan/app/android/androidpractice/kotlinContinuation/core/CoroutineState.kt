@@ -1,5 +1,8 @@
 package liyihuan.app.android.androidpractice.kotlinContinuation.core
 
+import android.util.Log
+import liyihuan.app.android.androidpractice.kotlinContinuation.log
+
 
 sealed class CoroutineState {
     private var disposableList: DisposableList = DisposableList.Nil
