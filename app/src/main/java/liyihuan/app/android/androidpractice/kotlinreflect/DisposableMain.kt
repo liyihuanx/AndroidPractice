@@ -1,8 +1,11 @@
 package liyihuan.app.android.androidpractice.kotlinreflect
 
 import com.google.gson.Gson
+import liyihuan.app.android.androidpractice.kotlinContinuation.core.CompletionHandlerDisposable
 import liyihuan.app.android.androidpractice.kotlinContinuation.log
 import java.util.concurrent.atomic.AtomicReference
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /**
  * @ClassName: DisposableMain
@@ -36,6 +39,21 @@ class DisposableImpl : Disposable {
     override fun dispose() {
         log("dispose")
     }
+}
 
+
+private suspend fun joinSuspend() = suspendCoroutine<Unit> { continuation ->
+    doOnCompleted {
+        continuation.resume(Unit)
+    }
+}
+
+private fun doOnCompleted(block: () -> Unit): Disposable {
+    val disposable = DisposableImpl()
+
+    CoroutineState.Complete<String>().let {
+        block.invoke()
+    }
+    return disposable
 }
 

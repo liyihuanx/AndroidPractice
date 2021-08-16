@@ -22,13 +22,7 @@ suspend fun main() {
         val hello = hello()
         log(hello)
         log(3)
-        val job1 = launch {
-            log(4)
-            val hello = hello()
-            log(hello)
-            log(5)
-        }
-        job1.join()
+
     }
 
     log(job.isActive)
