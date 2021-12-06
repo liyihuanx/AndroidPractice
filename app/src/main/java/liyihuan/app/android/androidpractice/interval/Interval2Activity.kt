@@ -1,14 +1,18 @@
 package liyihuan.app.android.androidpractice.interval
 
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_interval.*
 import liyihuan.app.android.androidpractice.R
 import java.util.concurrent.TimeUnit
 
-class IntervalActivity : AppCompatActivity() {
+/**
+ * @author L.Y.
+ * @date 2021/12/01 10:16
+ * @Description
+ */
+class Interval2Activity : AppCompatActivity() {
     private val interval by lazy { LAIntervalUtils(2, TimeUnit.SECONDS,0).life(this) }
 
 
@@ -22,11 +26,6 @@ class IntervalActivity : AppCompatActivity() {
             }.start {
                 Log.d("QWER", "start: $it")
             }
-        }
-
-        btnJump.setOnClickListener {
-            val intent = Intent(this, Interval2Activity::class.java)
-            startActivity(intent)
         }
     }
 }

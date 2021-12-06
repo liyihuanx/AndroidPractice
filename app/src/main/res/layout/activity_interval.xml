@@ -13,5 +13,10 @@
         android:layout_height="50dp"
         android:text="计时" />
 
+    <Button
+        android:id="@+id/btnJump"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="跳转" />
 
 </LinearLayout>
