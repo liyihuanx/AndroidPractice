@@ -16,16 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".rippleview.rippleviewActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".recyclerbg.RecyclerBgActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".interval.IntervalActivity"/>
-        <activity android:name=".commondialog.DialogActivity"/>
-        <activity android:name=".viewpager2.pager.VP2MainActivity"/>
+        <activity android:name=".appbarlayout.AppBarLayoutActivity"/>
+        <activity android:name=".rippleview.rippleviewActivity" />
+        <activity android:name=".interval.IntervalActivity" >
+
+        </activity>
+        <activity android:name=".commondialog.DialogActivity" />
+        <activity android:name=".viewpager2.pager.VP2MainActivity" />
         <activity android:name=".viewpager2.Viewpager2Activity" />
         <activity
             android:name=".recyclerview.HalfActivity"
@@ -47,7 +47,13 @@
             android:name=".refresh.SmartRefreshActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".rxjava.RxJavaPracticeActivity" />
-        <activity android:name=".http.NewHttpActivity" />
+        <activity android:name=".http.NewHttpActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".datasource.api.HttpActivity" />
         <activity android:name=".kotlin.Xc2Activity" />
         <activity android:name=".fragment.LazyActivity" />

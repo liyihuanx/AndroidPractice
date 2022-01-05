@@ -8,9 +8,22 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activitiy_app_bar_layout2.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_app_bar_layout.xml" value="0.3" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_app_bar_layout2.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_chat.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_im_demo.xml" value="0.3375" />
         <entry key="..\:/MyPractice/app/src/main/res/layout/activity_interval.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_new_http.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_recycler_bg.xml" value="0.2851851851851852" />
         <entry key="..\:/MyPractice/app/src/main/res/layout/activity_rippleview.xml" value="0.29074074074074074" />
         <entry key="..\:/MyPractice/app/src/main/res/layout/dialog_base_common.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_app_bar.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_splash.xml" value="0.2851851851851852" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_splash2.xml" value="0.2851851851851852" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_type_one.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_type_two.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/view_bottom_chat.xml" value="0.3375" />
       </map>
     </option>
   </component>

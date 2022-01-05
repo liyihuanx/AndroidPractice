@@ -14,9 +14,21 @@
         android:text="计时" />
 
     <Button
-        android:id="@+id/btnJump"
+        android:id="@+id/btnPause"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="跳转" />
+        android:text="暂停" />
+
+    <Button
+        android:id="@+id/btnResume"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="恢复" />
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="充值" />
 
 </LinearLayout>

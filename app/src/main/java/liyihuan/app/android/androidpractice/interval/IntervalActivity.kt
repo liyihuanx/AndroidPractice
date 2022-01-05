@@ -9,7 +9,7 @@ import liyihuan.app.android.androidpractice.R
 import java.util.concurrent.TimeUnit
 
 class IntervalActivity : AppCompatActivity() {
-    private val interval by lazy { LAIntervalUtils(2, TimeUnit.SECONDS,0).life(this) }
+    private val interval by lazy { LAIntervalUtils(1, TimeUnit.SECONDS,0).life(this) }
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,14 +19,21 @@ class IntervalActivity : AppCompatActivity() {
         btnInterval.setOnClickListener {
             interval.subscribe {
                 Log.d("QWER", "subscribe: $it")
-            }.start {
-                Log.d("QWER", "start: $it")
-            }
+            }.start()
         }
 
-        btnJump.setOnClickListener {
-            val intent = Intent(this, Interval2Activity::class.java)
-            startActivity(intent)
+        btnPause.setOnClickListener {
+            interval.pause()
+//            val intent = Intent(this, Interval2Activity::class.java)
+//            startActivity(intent)
+        }
+
+        btnResume.setOnClickListener {
+            interval.resume()
+        }
+
+        btnReset.setOnClickListener {
+            interval.reset()
         }
     }
 }
