@@ -66,8 +66,8 @@ dependencies {
     //rxjava
     implementation "io.reactivex.rxjava2:rxjava:2.1.1"
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
     //配合rxjava2使用
     implementation 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
@@ -94,6 +94,7 @@ dependencies {
 
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect"
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
 
 }
 repositories {
