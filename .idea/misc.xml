@@ -8,14 +8,28 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/bg_voice_sending.xml" value="0.3729166666666667" />
-        <entry key="app/src/main/res/layout/activity_chat.xml" value="0.35260416666666666" />
-        <entry key="app/src/main/res/layout/base_chat_input_voice_record.xml" value="0.35260416666666666" />
-        <entry key="app/src/main/res/layout/view_bottom_chat.xml" value="0.35260416666666666" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activitiy_app_bar_layout2.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_app_bar_layout.xml" value="0.3" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_app_bar_layout2.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_chat.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_data_soure.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_http2.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_im_demo.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_interval.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_new_http.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_recycler_bg.xml" value="0.2851851851851852" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/activity_rippleview.xml" value="0.29074074074074074" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/dialog_base_common.xml" value="0.33094994892747703" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_app_bar.xml" value="0.28888888888888886" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_splash.xml" value="0.2851851851851852" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_splash2.xml" value="0.2851851851851852" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_type_one.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/item_type_two.xml" value="0.3375" />
+        <entry key="..\:/MyPractice/app/src/main/res/layout/view_bottom_chat.xml" value="0.3375" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

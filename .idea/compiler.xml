@@ -21,6 +21,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="AndroidPractice.app" target="11" />
+      <module name="AndroidPractice.mrouter_api" target="11" />
       <module name="mrouter_annotation" target="1.7" />
       <module name="mrouter_compiler" target="1.7" />
     </bytecodeTargetLevel>

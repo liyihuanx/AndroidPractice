@@ -4,11 +4,16 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_data_soure.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.launch
 import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.datasource.SimpleDataSource
 import okhttp3.*
@@ -16,6 +21,10 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.IOException
+import java.lang.Exception
+import java.util.*
+import java.util.concurrent.TimeoutException
+import kotlin.collections.ArrayList
 
 class HttpActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,11 +33,11 @@ class HttpActivity : AppCompatActivity() {
 
         btnDataSource.setOnClickListener {
 //            okhttp3()
-//            retrofitRequest()
+            retrofitRequest()
 //            rxjava()
 //            realHttp()
 //            rxJavaConcat()
-            retrofitPostRequest()
+//            retrofitPostRequest()
         }
 
     }
@@ -91,12 +100,31 @@ class HttpActivity : AppCompatActivity() {
     /**
      * retrofit的简单使用
      */
-    fun retrofitRequest() {
+    private fun retrofitRequest() {
+        lifecycleScope.launch {
+            flow {
+                var count = 0
+                emit(count)
+                count+=1
+
+
+            }.retryWhen { cause, attempt ->
+                Log.d("QWER", "retryWhen: ${cause.cause} ---- ${cause.message} ")
+                attempt < 3
+            }.collect {
+                Log.d("QWER", "接收到数据")
+            }
+        }
+    }
+
+    fun http(block:(List<ChapterBean.DataBean>?)->Unit){
+        val okHttpClient = OkHttpClient()
+
         val retrofit = Retrofit.Builder()
-                .baseUrl("https://www.wanandroid.com/")
-                .client(OkHttpClient())
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+            .baseUrl("https://www.wanandroid.com/")
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
 
         val apiService = retrofit.create(ApiService::class.java)
@@ -109,14 +137,11 @@ class HttpActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: retrofit2.Call<ChapterBean>, response: retrofit2.Response<ChapterBean>) {
-                Log.d("QWER", "response: ${Gson().toJson(response)}")
-
+                block.invoke(response.body()?.data)
             }
 
         })
-
     }
-
 
 
 
