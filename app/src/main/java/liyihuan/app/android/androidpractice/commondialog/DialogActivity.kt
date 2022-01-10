@@ -6,6 +6,7 @@ import android.util.Log
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_dialog.*
 import liyihuan.app.android.androidpractice.R
 
@@ -14,23 +15,16 @@ class DialogActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dialog)
 
+        TLiveDataBus.with<String>("name").setStickyData("11111")
+
         btnOpenDialog.setOnClickListener {
-            BaseCommonDialog.Builder
-                    .setContent("111111")
-                    .setBtnCancel("Cancel")
-                    .setBtnConfirm("Ok")
-                    .setCoverLayout(R.layout.dialog_cover)
-                    .setListener(object : CommonDialogListener {
-                        override fun onCancel(dialog: DialogFragment, any: Any) {
-                            Toast.makeText(dialog.context, "onCancel", Toast.LENGTH_SHORT).show()
-                        }
+            TLiveDataBus.with<String>("name").observe(this, Observer {
+                Log.d("QWER", "普通事件: $it")
+            })
 
-                        override fun onConfirm(dialog: DialogFragment, any: Any) {
-                            Toast.makeText(dialog.context, "onConfirm", Toast.LENGTH_SHORT).show()
-                        }
-                    })
-                    .build().show(supportFragmentManager,"")
-
+            TLiveDataBus.with<String>("name").observerSticky(this, true, Observer {
+                Log.d("QWER", "粘性事件: $it")
+            })
         }
     }
 }
