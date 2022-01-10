@@ -2,6 +2,7 @@ package liyihuan.app.android.androidpractice.http2.request
 
 import com.google.gson.Gson
 import liyihuan.app.android.androidpractice.http.CustomLogInterceptor
+import liyihuan.app.android.androidpractice.http2.HttpUrl
 import liyihuan.app.android.androidpractice.http2.interceptor.CustomLogInterceptor2
 import liyihuan.app.android.androidpractice.http2.interceptor.HeadInterceptor
 
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class HttpConfig : IHttpConfig {
 
     override fun getBaseUrl(): String {
-        return "https://www.wanandroids.com/"
+        return HttpUrl.httpUrl
     }
 
     override fun client(): OkHttpClient {

@@ -12,9 +12,6 @@ import okhttp3.ResponseBody
 class CustomLogInterceptor2 : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-
-        Log.d("QWER", "intercept: ${request.headers().toMultimap()}")
-
         Log.d(
             "QWER", "请求参数: " + String.format(
                 "result\nUrl=%s\nbody=%s",
