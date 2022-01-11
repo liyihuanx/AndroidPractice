@@ -1,5 +1,8 @@
 package liyihuan.app.android.androidpractice.http2.request
 
+import android.util.Log
+import liyihuan.app.android.androidpractice.http2.HttpHostUrl
+import okhttp3.HttpUrl
 import retrofit2.Retrofit
 import java.util.*
 
@@ -36,7 +39,7 @@ object HttpProvider {
 
 
     var isRetry = false
-
+    var retryCount = 0
     /**
      * 创建Retrofit
      */
@@ -44,16 +47,13 @@ object HttpProvider {
     fun newRetrofit(configClass: Class<out IHttpConfig>): Retrofit {
         var retrofit = retrofitMap[configClass.simpleName]
         // 没创建过，或者需要重试需要换一个域名的
-        if (retrofit == null || isRetry) {
+        if (retrofit == null) {
             try {
                 // retrofit
                 val builder = Retrofit.Builder()
-                // 我的Http配置
+                // 我的Http配置 重试的话就会新建一个代替前面的
                 val config = configClass.newInstance()
-                (config as HttpConfig).isRetry = isRetry
                 config.build(builder)
-                (config as HttpConfig).isRetry = false
-
                 val build = builder.build()
                 // 保存起来复用
                 retrofitMap[configClass.simpleName] = build
@@ -63,7 +63,20 @@ object HttpProvider {
                 e.printStackTrace()
             }
         }
-        // 重置
+        // 通过反射修改baseUrl
+
+        if (isRetry) {
+            retryCount += 1
+
+        }
+        val baseUrlField = Retrofit::class.java.getDeclaredField("baseUrl")
+        baseUrlField.isAccessible = true
+        baseUrlField.set(
+            retrofit!!,
+            HttpUrl.parse(HttpHostUrl.httpUrl)
+        )
+        Log.d("QWER", "新的Url地址为: ${retrofit.baseUrl().host()}")
+
         isRetry = false
         return retrofit!!
     }

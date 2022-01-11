@@ -5,7 +5,7 @@ package liyihuan.app.android.androidpractice.http2
  * @date 2022/01/10
  * @Description
  */
-object HttpUrl {
+object HttpHostUrl {
     const val httpUrl = "https://www.wanandroid.com/"
     private const val httpUrl1 = "https://www.wanandroid1.com/"
     private const val httpUrl2 = "https://www.wanandroid2.com/"
@@ -14,4 +14,12 @@ object HttpUrl {
 
     val HttpList = arrayListOf<String>(httpUrl1, httpUrl2, httpUrl3, httpUrl)
 
+
+    fun getNextHttpUtl(index: Int): String {
+        return if (index >= HttpList.size) {
+            HttpList[0]
+        } else {
+            HttpList[index]
+        }
+    }
 }

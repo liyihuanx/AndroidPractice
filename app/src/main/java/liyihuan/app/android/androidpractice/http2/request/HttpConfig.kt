@@ -1,8 +1,7 @@
 package liyihuan.app.android.androidpractice.http2.request
 
 import com.google.gson.Gson
-import liyihuan.app.android.androidpractice.http.CustomLogInterceptor
-import liyihuan.app.android.androidpractice.http2.HttpUrl
+import liyihuan.app.android.androidpractice.http2.HttpHostUrl
 import liyihuan.app.android.androidpractice.http2.interceptor.CustomLogInterceptor2
 import liyihuan.app.android.androidpractice.http2.interceptor.HeadInterceptor
 
@@ -18,22 +17,8 @@ import java.util.concurrent.TimeUnit
  */
 class HttpConfig : IHttpConfig {
 
-    var url = HttpUrl.HttpList[0]
-
-    var isRetry = false
-
     override fun getBaseUrl(): String {
-        if (isRetry) {
-            // 先拿到当前域名的下标
-            val index = HttpUrl.HttpList.indexOf(this.url)
-            // 最后一个了，就回到第一个
-            url = if (HttpUrl.HttpList.size < index + 1) {
-                HttpUrl.HttpList[0]
-            } else {
-                HttpUrl.HttpList[index + 1]
-            }
-        }
-        return url
+        return HttpHostUrl.HttpList[0]
     }
 
     override fun client(): OkHttpClient {

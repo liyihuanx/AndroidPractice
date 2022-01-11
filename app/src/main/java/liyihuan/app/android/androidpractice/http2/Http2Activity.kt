@@ -32,7 +32,6 @@ class Http2Activity : AppCompatActivity() {
     private fun getHttpTest(){
         lifecycleScope.launch {
             flow {
-                Log.d("QWER", "getHttpTest: ")
                 val httpResult = getRepo(ConfigRepository::class.java).config()
                 emit(httpResult)
             }.flowOn(Dispatchers.IO)

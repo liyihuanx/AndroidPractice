@@ -65,7 +65,7 @@ object TLiveDataBus {
                 }
             })
 
-            super.observe(owner, StickyObserver(this, sticky, observer))
+//            super.observe(owner, StickyObserver(this, sticky, observer))
         }
 
         /**
