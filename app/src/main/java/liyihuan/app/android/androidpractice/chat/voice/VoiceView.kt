@@ -22,7 +22,6 @@ class VoiceView @JvmOverloads constructor(context: Context, attrs: AttributeSet?
     init {
         LayoutInflater.from(context).inflate(R.layout.base_chat_input_voice_record, this, true)
         setBackgroundResource(R.drawable.bg_voice_sending)
-        microphone
         microphone.setBackgroundResource(R.drawable.animation_voice)
         frameAnimation = microphone.background as AnimationDrawable
     }
