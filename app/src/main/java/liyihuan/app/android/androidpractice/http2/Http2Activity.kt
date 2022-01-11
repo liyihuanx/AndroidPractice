@@ -14,6 +14,7 @@ import kotlinx.coroutines.withContext
 import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.fragment.FragmentActivity
 import liyihuan.app.android.androidpractice.http2.RepositoryManager.getRepo
+import liyihuan.app.android.androidpractice.http2.request.HttpProvider
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
@@ -36,8 +37,9 @@ class Http2Activity : AppCompatActivity() {
                 emit(httpResult)
             }.flowOn(Dispatchers.IO)
                 .retryWhen { cause, attempt ->
+                    HttpProvider.isRetry = true
                     Log.d("QWER", "重试次数: $attempt")
-                    attempt < 1
+                    attempt < 4
                 }
                 .catch { ex ->
                     Log.d("QWER", "error :${ex.javaClass.simpleName} : ${ex.message} ")

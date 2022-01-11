@@ -35,6 +35,7 @@ object HttpProvider {
 //    }
 
 
+    var isRetry = false
 
     /**
      * 创建Retrofit
@@ -42,14 +43,17 @@ object HttpProvider {
     @JvmStatic
     fun newRetrofit(configClass: Class<out IHttpConfig>): Retrofit {
         var retrofit = retrofitMap[configClass.simpleName]
-        if (retrofit == null) {
+        // 没创建过，或者需要重试需要换一个域名的
+        if (retrofit == null || isRetry) {
             try {
                 // retrofit
                 val builder = Retrofit.Builder()
                 // 我的Http配置
                 val config = configClass.newInstance()
+                (config as HttpConfig).isRetry = isRetry
                 config.build(builder)
-                // retrofit 和 http配置 结合
+                (config as HttpConfig).isRetry = false
+
                 val build = builder.build()
                 // 保存起来复用
                 retrofitMap[configClass.simpleName] = build
@@ -59,6 +63,8 @@ object HttpProvider {
                 e.printStackTrace()
             }
         }
+        // 重置
+        isRetry = false
         return retrofit!!
     }
 

@@ -1,5 +1,7 @@
 package liyihuan.app.android.androidpractice.http2
 
+import liyihuan.app.android.androidpractice.http2.request.HttpProvider
+
 /**
  * @ClassName: RepositoryManager
  * @Description: java类作用描述
@@ -25,7 +27,7 @@ object RepositoryManager {
         if (BaseRepository::class.java.isAssignableFrom(childRepo)) {
             //[TestRepository.class, TestRepository()对象]
             var newRepo = repoMap[childRepo]
-            if (newRepo == null) {
+            if (newRepo == null || HttpProvider.isRetry) {
                 try {
                     // TestRepository
                     newRepo = childRepo.newInstance() as BaseRepository<*>

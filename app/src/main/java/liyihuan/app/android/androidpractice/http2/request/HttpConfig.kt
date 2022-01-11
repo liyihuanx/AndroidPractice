@@ -18,8 +18,22 @@ import java.util.concurrent.TimeUnit
  */
 class HttpConfig : IHttpConfig {
 
+    var url = HttpUrl.HttpList[0]
+
+    var isRetry = false
+
     override fun getBaseUrl(): String {
-        return HttpUrl.httpUrl
+        if (isRetry) {
+            // 先拿到当前域名的下标
+            val index = HttpUrl.HttpList.indexOf(this.url)
+            // 最后一个了，就回到第一个
+            url = if (HttpUrl.HttpList.size < index + 1) {
+                HttpUrl.HttpList[0]
+            } else {
+                HttpUrl.HttpList[index + 1]
+            }
+        }
+        return url
     }
 
     override fun client(): OkHttpClient {
@@ -44,7 +58,7 @@ class HttpConfig : IHttpConfig {
         // 影响的就是Call或者Observable
 //        builder.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         // 构建
-        builder.build()
+//        builder.build()
     }
 
 }
