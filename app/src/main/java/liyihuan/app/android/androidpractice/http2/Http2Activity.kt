@@ -24,7 +24,18 @@ class Http2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_http2)
 
         btnHttp.setOnClickListener {
-            getHttpTest()
+            getHttpTest2()
+        }
+    }
+
+    private fun getHttpTest2() {
+        requestHttp<List<ChapterBean>> {
+            doWork {
+                getRepo(ConfigRepository::class.java).config()
+            }
+            onResult {
+
+            }
         }
     }
 
@@ -36,12 +47,17 @@ class Http2Activity : AppCompatActivity() {
                 emit(httpResult)
             }.flowOn(Dispatchers.IO)
                 .retryWhen { cause, attempt ->
-                    HttpProvider.isRetry = true
                     Log.d("QWER", "重试次数: $attempt")
+                    HttpHostUrl.isRetry = true
+                    HttpHostUrl.retryCount = attempt.toInt()
                     attempt < 4
                 }
                 .catch { ex ->
                     Log.d("QWER", "error :${ex.javaClass.simpleName} : ${ex.message} ")
+                }
+                .onCompletion {
+                    HttpHostUrl.isRetry = false
+                    Log.d("QWER", "http: end")
                 }
                 .collect {
 

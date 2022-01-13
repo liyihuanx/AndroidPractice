@@ -64,18 +64,13 @@ object HttpProvider {
             }
         }
         // 通过反射修改baseUrl
-
-        if (isRetry) {
-            retryCount += 1
-
-        }
-        val baseUrlField = Retrofit::class.java.getDeclaredField("baseUrl")
-        baseUrlField.isAccessible = true
-        baseUrlField.set(
-            retrofit!!,
-            HttpUrl.parse(HttpHostUrl.httpUrl)
-        )
-        Log.d("QWER", "新的Url地址为: ${retrofit.baseUrl().host()}")
+//        val baseUrlField = Retrofit::class.java.getDeclaredField("baseUrl")
+//        baseUrlField.isAccessible = true
+//        baseUrlField.set(
+//            retrofit!!,
+//            HttpUrl.parse(HttpHostUrl.httpUrl)
+//        )
+//        Log.d("QWER", "新的Url地址为: ${retrofit.baseUrl().host()}")
 
         isRetry = false
         return retrofit!!

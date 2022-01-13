@@ -3,6 +3,7 @@ package liyihuan.app.android.androidpractice.http2.request
 import com.google.gson.Gson
 import liyihuan.app.android.androidpractice.http2.HttpHostUrl
 import liyihuan.app.android.androidpractice.http2.interceptor.CustomLogInterceptor2
+import liyihuan.app.android.androidpractice.http2.interceptor.HostReplaceInterceptor
 import liyihuan.app.android.androidpractice.http2.interceptor.HeadInterceptor
 
 import okhttp3.OkHttpClient
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
 class HttpConfig : IHttpConfig {
 
     override fun getBaseUrl(): String {
-        return HttpHostUrl.HttpList[0]
+        return HttpHostUrl.httpUrl
     }
 
     override fun client(): OkHttpClient {
@@ -27,6 +28,8 @@ class HttpConfig : IHttpConfig {
         // 添加头部拦截器
         okHttpClientBuilder.addInterceptor(HeadInterceptor())
         okHttpClientBuilder.addInterceptor(CustomLogInterceptor2())
+        okHttpClientBuilder.addInterceptor(HostReplaceInterceptor())
+
         // 超时的时间
         okHttpClientBuilder.connectTimeout(5000, TimeUnit.SECONDS)
         return okHttpClientBuilder.build()

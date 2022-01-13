@@ -95,8 +95,71 @@ dependencies {
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
     implementation "org.jetbrains.kotlin:kotlin-reflect"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-
+    implementation 'org.aspectj:aspectjrt:1.8.13'
 }
 repositories {
     mavenCentral()
+}
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+android.applicationVariants.all { variant ->
+
+// add the versionName & versionCode to the apk file name
+    variant.outputs.all { output ->
+        def newPath = outputFileName.replace(".apk", "-${variant.versionName}.${variant.versionCode}.apk")
+        outputFileName = new File(outputFileName, newPath)
+
+
+        def fullName = ""
+        output.name.tokenize('-').eachWithIndex { token, index ->
+            fullName = fullName + (index == 0 ? token : token.capitalize())
+        }
+
+        JavaCompile javaCompile = variant.javaCompiler
+
+        MessageHandler handler = new MessageHandler(true)
+        javaCompile.doLast {
+            String[] javaArgs = ["-showWeaveInfo",
+                                 "-1.8",
+                                 "-inpath", javaCompile.destinationDir.toString(),
+                                 "-aspectpath", javaCompile.classpath.asPath,
+                                 "-d", javaCompile.destinationDir.toString(),
+                                 "-classpath", javaCompile.classpath.asPath,
+                                 "-bootclasspath", project.android.bootClasspath.join(
+                    File.pathSeparator)]
+
+            String[] kotlinArgs = ["-showWeaveInfo",
+                                   "-1.8",
+                                   "-inpath", project.buildDir.path + "/tmp/kotlin-classes/" + fullName,
+                                   "-aspectpath", javaCompile.classpath.asPath,
+                                   "-d", project.buildDir.path + "/tmp/kotlin-classes/" + fullName,
+                                   "-classpath", javaCompile.classpath.asPath,
+                                   "-bootclasspath", project.android.bootClasspath.join(
+                    File.pathSeparator)]
+
+            new Main().run(javaArgs, handler)
+            new Main().run(kotlinArgs, handler)
+
+            def log = project.logger
+            for (IMessage message : handler.getMessages(null, true)) {
+                switch (message.getKind()) {
+                    case IMessage.ABORT:
+                    case IMessage.ERROR:
+                    case IMessage.FAIL:
+                        log.error message.message, message.thrown
+                        break
+                    case IMessage.WARNING:
+                    case IMessage.INFO:
+                        log.info message.message, message.thrown
+                        break
+                    case IMessage.DEBUG:
+                        log.debug message.message, message.thrown
+                        break
+                }
+            }
+        }
+    }
 }

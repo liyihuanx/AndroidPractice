@@ -15,11 +15,15 @@ object HttpHostUrl {
     val HttpList = arrayListOf<String>(httpUrl1, httpUrl2, httpUrl3, httpUrl)
 
 
-    fun getNextHttpUtl(index: Int): String {
-        return if (index >= HttpList.size) {
+    fun getNextHttpUtl(): String {
+        return if (retryCount >= HttpList.size) {
             HttpList[0]
         } else {
-            HttpList[index]
+            HttpList[retryCount]
         }
     }
+
+    var isRetry = false
+    var retryCount = 0
+
 }
