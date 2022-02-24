@@ -17,14 +17,20 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".aop.AopActivity">
+            android:name=".recyclerviewbug.RecyclerviewBugActivity"
+            android:exported="true" >
+
+        </activity>
+        <activity android:name=".http2.Http2Activity" >
+
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity android:name=".http2.Http2Activity"/>
         <activity android:name=".recyclerbg.RecyclerBgActivity" />
         <activity android:name=".appbarlayout.AppBarLayoutActivity" />
         <activity android:name=".rippleview.rippleviewActivity" />

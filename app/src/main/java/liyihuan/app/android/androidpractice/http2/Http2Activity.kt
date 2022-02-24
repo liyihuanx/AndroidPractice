@@ -1,5 +1,6 @@
 package liyihuan.app.android.androidpractice.http2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +16,7 @@ import liyihuan.app.android.androidpractice.R
 import liyihuan.app.android.androidpractice.fragment.FragmentActivity
 import liyihuan.app.android.androidpractice.http2.RepositoryManager.getRepo
 import liyihuan.app.android.androidpractice.http2.request.HttpProvider
+import liyihuan.app.android.androidpractice.recyclerviewbug.RecyclerviewBugActivity
 import retrofit2.HttpException
 import java.net.UnknownHostException
 
@@ -24,7 +26,9 @@ class Http2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_http2)
 
         btnHttp.setOnClickListener {
-            getHttpTest2()
+            val intent = Intent(this,RecyclerviewBugActivity::class.java)
+            startActivity(intent)
+//            getHttpTest2()
         }
     }
 
